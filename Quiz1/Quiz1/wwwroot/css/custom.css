@@ -1,0 +1,25 @@
+﻿/* Different sizes text for index*/
+.display-5 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+.display-6 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+/* Make the image fully responsive in carousel */
+.carousel-inner img {
+    width: 100%;
+    height: 100%;
+}
+/* Make dropdown menu links stay inside menu width*/
+a.dropdown-item {
+    width: auto;
+}
+/* Make cursor change to pointer when hovering on Book list table row*/
+.row-clicable {
+    cursor: pointer;
+}

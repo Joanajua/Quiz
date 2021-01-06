@@ -13,17 +13,52 @@ namespace Quiz1
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AppIdentityDbContext>(options =>
+                options.UseNpgsql(
+                    _configuration.GetConnectionString("IdentityConnection")));
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseNpgsql(
+                    _configuration.GetConnectionString("AppConnection")));
+
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 10;
+            }).AddEntityFrameworkStores<AppIdentityDbContext>();
+
             services.AddControllersWithViews();
+
+            // For Authorisation -- building and using a policy
+            services.AddMvc(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            }).AddXmlSerializerFormatters();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ManageRolesAndUsers",
+                    policy => policy.RequireClaim("Manage Roles and Users"));
+                options.AddPolicy("ManageBookRecords",
+                    policy => policy.RequireClaim("Manage Book Records"));
+                options.AddPolicy("ManageCheckInAndCheckOut",
+                    policy => policy.RequireClaim("Manage Check In and Check Out"));
+            });
+
+            services.AddScoped<AppIdentityDbContext>();
+            services.AddScoped<ApplicationDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,15 +70,19 @@ namespace Quiz1
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                // When in production shows Error page to user.
+                app.UseExceptionHandler("/Error");
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
+
+                // The default HSTS value is 30 days.
+                // You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
