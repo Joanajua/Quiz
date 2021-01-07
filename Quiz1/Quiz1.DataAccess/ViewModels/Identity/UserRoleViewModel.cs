@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Quiz1.DataAccess.ViewModels
+﻿namespace Quiz1.DataAccess.ViewModels.Identity
 {
     public class UserRoleViewModel
     {

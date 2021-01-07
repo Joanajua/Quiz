@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Quiz1.DataAccess.ViewModels
+namespace Quiz1.DataAccess.ViewModels.Identity
 {
     public class LoginViewModel
     {

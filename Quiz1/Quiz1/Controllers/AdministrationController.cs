@@ -8,12 +8,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Quiz1.DataAccess.Models;
-using Quiz1.DataAccess.ViewModels;
+using Quiz1.DataAccess.Models.Identity;
+using Quiz1.DataAccess.ViewModels.Identity;
 
 namespace Quiz1.Controllers
 {
-    [Authorize(Policy = "ManageRolesAndUsers")]
+    //[Authorize(Policy = "ManageRolesAndUsers")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -481,7 +481,7 @@ namespace Quiz1.Controllers
                 ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
                 return NotFound();
             }
-            else
+            try
             {
                 var result = await _userManager.DeleteAsync(user);
 
@@ -497,6 +497,28 @@ namespace Quiz1.Controllers
 
                 return View("ListUsers");
             }
+            // If the exception is DbUpdateException, we know we are not able to
+            // delete the role as there are users in the role being deleted.
+            catch (DbUpdateException ex)
+            {
+                // Log the exception to a file.
+                _logger.LogError($"Exception Occured : {ex}");
+                // Pass the ErrorTitle and ErrorMessage that you want to show to
+                // the user using ViewBag. The Error view retrieves this data
+                // from the ViewBag and displays to the user.
+                ViewBag.ErrorTitle = $"{user.UserName} user is in use by you";
+                ViewBag.ErrorMessage =
+                    $"{user.UserName} user cannot be deleted by you. " +
+                    "If you want to delete this user, please ask another user with 'Can Manage Roles and Users' permissions to delete it.";
+                return View("Error");
+            }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

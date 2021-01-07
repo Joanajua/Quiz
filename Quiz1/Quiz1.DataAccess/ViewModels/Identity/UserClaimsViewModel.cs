@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Quiz1.DataAccess.Models;
+using Quiz1.DataAccess.Models.Identity;
 
-namespace Quiz1.DataAccess.ViewModels
+namespace Quiz1.DataAccess.ViewModels.Identity
 {
     public class UserClaimsViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Quiz1.DataAccess.ViewModels
+namespace Quiz1.DataAccess.ViewModels.Identity
 {
     public class CreateRoleViewModel
     {

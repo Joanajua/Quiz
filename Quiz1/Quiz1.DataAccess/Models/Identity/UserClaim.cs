@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Quiz1.DataAccess.Models
+namespace Quiz1.DataAccess.Models.Identity
 {
     public class UserClaim
     {

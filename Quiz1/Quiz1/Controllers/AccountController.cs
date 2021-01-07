@@ -1,14 +1,10 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.V3.Pages.Internal.Account;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Quiz1.DataAccess.ViewModels;
+using Quiz1.DataAccess.ViewModels.Identity;
 
-namespace Quiz1.Web.Controllers
+namespace Quiz1.Controllers
 {
     [Authorize]
     public class AccountController : Controller

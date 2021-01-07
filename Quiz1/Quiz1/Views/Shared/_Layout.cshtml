@@ -42,20 +42,20 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="List">Books</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="Index">Quizzes</a>
                         </li>
 
-                        @*If claim is "Manage Book Record" user can see "Add book" button*@
-                        @if (signInManager.IsSignedIn(User) && User.HasClaim("Manage Book Records", "Manage Book Records"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Create">Add Book</a>
-                            </li>
-                        }
+                        @*If claim is "Can Manage Quizzes" user can see "Add Quiz" button*@
+                        @*@if (signInManager.IsSignedIn(User) && User.HasClaim("Can Manage Quizzes", "Can Manage Quizzes"))
+                        {*@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="Create">Add Quiz</a>
+                        </li>
+                        @*}  *@
 
                         @*If claim is "Manage Roles and Users" user can see "Manage" buttons*@
-                        @if (signInManager.IsSignedIn(User) && User.HasClaim("Manage Roles and Users", "Manage Roles and Users"))
-                        {
+                        @*@if (signInManager.IsSignedIn(User) && User.HasClaim("Can Manage Roles and Users", "Can Manage Roles and Users"))
+                        {*@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -68,7 +68,7 @@
                                        asp-action="ListRoles">Roles</a>
                                 </div>
                             </li>
-                        }
+                        @*}*@
                     </ul>
                     <ul class="navbar-nav flex-row-reverse">
                         @if (signInManager.IsSignedIn(User))

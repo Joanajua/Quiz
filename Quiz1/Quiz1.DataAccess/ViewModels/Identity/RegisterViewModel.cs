@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using Quiz1.DataAccess.Utilities;
 
-namespace Quiz1.DataAccess.ViewModels
+namespace Quiz1.DataAccess.ViewModels.Identity
 {
     public class RegisterViewModel
     {

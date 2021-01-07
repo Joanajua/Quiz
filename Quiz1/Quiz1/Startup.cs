@@ -54,12 +54,12 @@ namespace Quiz1
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("ManageRolesAndUsers",
-                    policy => policy.RequireClaim("Manage Roles and Users"));
-                options.AddPolicy("ManageBookRecords",
-                    policy => policy.RequireClaim("Manage Book Records"));
-                options.AddPolicy("ManageCheckInAndCheckOut",
-                    policy => policy.RequireClaim("Manage Check In and Check Out"));
+                options.AddPolicy("Admin",
+                    policy => policy.RequireClaim("Can Manage Roles and Users", "Can Manage Quizzes"));
+                options.AddPolicy("PlayOnly",
+                    policy => policy.RequireClaim("Can Play Quizzes"));
+                options.AddPolicy("ReadOnly",
+                    policy => policy.RequireClaim("Can Play Quizzes"));
             });
 
             services.AddScoped<AppIdentityDbContext>();
