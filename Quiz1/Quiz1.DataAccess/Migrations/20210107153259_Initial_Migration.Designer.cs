@@ -10,8 +10,8 @@ using Quiz1.DataAccess;
 namespace Quiz1.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210107092056_Innitial_Migration")]
-    partial class Innitial_Migration
+    [Migration("20210107153259_Initial_Migration")]
+    partial class Initial_Migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -81,10 +81,28 @@ namespace Quiz1.DataAccess.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("QuizTitle")
+                    b.Property<DateTime?>("CreationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LongDescription")
+                        .IsRequired()
+                        .HasColumnType("character varying(400)")
+                        .HasMaxLength(400);
+
+                    b.Property<string>("ShortDescription")
                         .IsRequired()
                         .HasColumnType("character varying(100)")
                         .HasMaxLength(100);
+
+                    b.Property<string>("Subtitle")
+                        .IsRequired()
+                        .HasColumnType("character varying(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("QuizId");
 

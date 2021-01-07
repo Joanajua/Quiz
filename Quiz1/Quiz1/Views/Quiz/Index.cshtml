@@ -16,7 +16,7 @@
         <tr>
             <th></th>
             <th>
-                @Html.DisplayNameFor(model => model.QuizTitle)
+                @Html.DisplayNameFor(model => model.Title)
             </th>
             <th></th>
         </tr>
@@ -32,7 +32,7 @@
                         <span>@(i++)</span>
                     </th>
                     <td>
-                        @Html.DisplayFor(modelItem => item.QuizTitle)
+                        @Html.DisplayFor(modelItem => item.Title)
                     </td>
                     <td>
                         @if (signInManager.IsSignedIn(User) && User.HasClaim("Can Manage Quizzes", "Can Manage Quizzes"))

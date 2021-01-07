@@ -51,7 +51,7 @@ namespace Quiz1.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("QuizTitle")] Quiz quiz)
+        public async Task<IActionResult> Create([Bind("Title")] Quiz quiz)
         {
             if (ModelState.IsValid)
             {
@@ -83,7 +83,7 @@ namespace Quiz1.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("QuizTitle")] Quiz quiz)
+        public async Task<IActionResult> Edit(int id, [Bind("Title")] Quiz quiz)
         {
             if (id != quiz.QuizId)
             {

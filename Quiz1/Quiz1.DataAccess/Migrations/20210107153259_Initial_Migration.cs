@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Quiz1.DataAccess.Migrations
 {
-    public partial class Innitial_Migration : Migration
+    public partial class Initial_Migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +14,11 @@ namespace Quiz1.DataAccess.Migrations
                 {
                     QuizId = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    QuizTitle = table.Column<string>(maxLength: 100, nullable: false)
+                    Title = table.Column<string>(maxLength: 50, nullable: false),
+                    Subtitle = table.Column<string>(maxLength: 100, nullable: false),
+                    ShortDescription = table.Column<string>(maxLength: 100, nullable: false),
+                    LongDescription = table.Column<string>(maxLength: 400, nullable: false),
+                    CreationTime = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {

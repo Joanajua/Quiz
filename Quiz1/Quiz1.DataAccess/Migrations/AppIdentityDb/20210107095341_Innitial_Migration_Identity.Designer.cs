@@ -10,8 +10,8 @@ using Quiz1.DataAccess;
 namespace Quiz1.DataAccess.Migrations.AppIdentityDb
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20210107095341_Innitial_Migration_Identity")]
-    partial class Innitial_Migration_Identity
+    [Migration("20210107095341_Initial_Migration_Identity")]
+    partial class Initial_Migration_Identity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

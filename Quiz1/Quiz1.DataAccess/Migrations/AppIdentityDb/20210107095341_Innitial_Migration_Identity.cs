@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Quiz1.DataAccess.Migrations.AppIdentityDb
 {
-    public partial class Innitial_Migration_Identity : Migration
+    public partial class Initial_Migration_Identity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
