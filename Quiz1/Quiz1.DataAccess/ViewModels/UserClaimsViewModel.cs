@@ -7,10 +7,10 @@ namespace Quiz1.DataAccess.ViewModels
     {
         public UserClaimsViewModel()
         {
-            Claims = new List<UserClaim>();
+            Claims = new List<UserClaims>();
         }
 
         public string UserId { get; set; }
-        public List<UserClaim> Claims { get; set; }
+        public List<UserClaims> Claims { get; set; }
     }
 }

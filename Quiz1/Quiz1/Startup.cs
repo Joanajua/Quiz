@@ -8,6 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Quiz1.DataAccess;
 
 namespace Quiz1
 {
@@ -27,7 +32,7 @@ namespace Quiz1
                 options.UseNpgsql(
                     _configuration.GetConnectionString("IdentityConnection")));
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(
                     _configuration.GetConnectionString("AppConnection")));
 
@@ -58,7 +63,7 @@ namespace Quiz1
             });
 
             services.AddScoped<AppIdentityDbContext>();
-            services.AddScoped<ApplicationDbContext>();
+            services.AddScoped<AppDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

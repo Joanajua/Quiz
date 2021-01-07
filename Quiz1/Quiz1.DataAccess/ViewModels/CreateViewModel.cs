@@ -7,7 +7,8 @@ namespace Quiz1.DataAccess.ViewModels
 {
     public class CreateViewModel
     {
-        public Book Book { get; set; }
-        public Author Author { get; set; }
+        public Quiz Book { get; set; }
+        public Question Question { get; set; }
+        public Answer Author { get; set; }
     }
 }
