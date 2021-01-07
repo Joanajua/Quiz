@@ -19,9 +19,10 @@ namespace Quiz1.DataAccess
             //}
         }
 
-        public virtual DbSet<Quiz> Quizzes { get; set; }
-        public virtual DbSet<Question> Questions { get; set; }
-        public virtual DbSet<Answer> Answers { get; set; }
+        // For unit test a need to set these methods a virtual to overridethem
+        public DbSet<Quiz> Quizzes { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
 
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)

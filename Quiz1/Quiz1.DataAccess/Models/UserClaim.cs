@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Quiz1.DataAccess.Models
 {
-    public class UserClaims
+    public class UserClaim
     {
         public string ClaimType { get; set; }
         public bool IsSelected { get; set; }
