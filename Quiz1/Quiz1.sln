@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiz1", "Quiz1\Quiz1.csproj", "{49648801-4C4B-403C-BBC3-27B4B8325095}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiz1.DataAccess", "Quiz1.DataAccess\Quiz1.DataAccess.csproj", "{293874D0-B142-4421-9E17-35BEA7976EA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quiz1", "Quiz1\Quiz1.csproj", "{49648801-4C4B-403C-BBC3-27B4B8325095}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{49648801-4C4B-403C-BBC3-27B4B8325095}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49648801-4C4B-403C-BBC3-27B4B8325095}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49648801-4C4B-403C-BBC3-27B4B8325095}.Release|Any CPU.Build.0 = Release|Any CPU
-		{293874D0-B142-4421-9E17-35BEA7976EA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{293874D0-B142-4421-9E17-35BEA7976EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{293874D0-B142-4421-9E17-35BEA7976EA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{293874D0-B142-4421-9E17-35BEA7976EA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
