@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 
-namespace Quiz1.DataAccess.Models.Identity
+namespace Quiz1.Models.Identity
 {
     public class ClaimsStore
     {

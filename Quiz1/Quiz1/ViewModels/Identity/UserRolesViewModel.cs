@@ -1,4 +1,4 @@
-﻿namespace Quiz1.DataAccess.ViewModels.Identity
+﻿namespace Quiz1.ViewModels.Identity
 {
     public class UserRolesViewModel
     {

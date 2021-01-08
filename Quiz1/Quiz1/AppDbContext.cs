@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Quiz1.DataAccess.Models;
-using Quiz1.DataAccess.ViewModels;
+using Quiz1.Models;
+using Quiz1.ViewModels;
 
-namespace Quiz1.DataAccess
+namespace Quiz1
 {
     public class AppDbContext : DbContext
     {

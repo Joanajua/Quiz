@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Quiz1.DataAccess.Models
+namespace Quiz1.Models
 {
     public class Quiz
     {

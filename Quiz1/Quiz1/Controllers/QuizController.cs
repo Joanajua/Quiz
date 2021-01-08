@@ -2,8 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Quiz1.DataAccess;
-using Quiz1.DataAccess.Models;
+using Quiz1.Models;
 
 namespace Quiz1.Controllers
 {

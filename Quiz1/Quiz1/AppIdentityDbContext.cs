@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Quiz1.DataAccess
+namespace Quiz1
 {
     public class AppIdentityDbContext : IdentityDbContext
     {

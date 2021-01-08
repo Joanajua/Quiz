@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -8,8 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Quiz1.DataAccess.Models.Identity;
-using Quiz1.DataAccess.ViewModels.Identity;
+using Quiz1.Models.Identity;
+using Quiz1.ViewModels.Identity;
 
 namespace Quiz1.Controllers
 {

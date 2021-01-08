@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Quiz1.DataAccess.Models.Identity
+﻿namespace Quiz1.Models.Identity
 {
     public class UserClaim
     {

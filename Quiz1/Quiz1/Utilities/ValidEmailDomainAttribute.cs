@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Quiz1.DataAccess.Utilities
+namespace Quiz1.Utilities
 {
     public class ValidEmailDomainAttribute : ValidationAttribute
     {

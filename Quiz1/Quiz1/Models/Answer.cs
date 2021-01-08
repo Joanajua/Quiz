@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Quiz1.DataAccess.Models
+namespace Quiz1.Models
 {
     public class Answer
     {

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Quiz1.DataAccess.ViewModels.Identity;
+using Quiz1.ViewModels.Identity;
 
 namespace Quiz1.Controllers
 {

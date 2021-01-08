@@ -1,6 +1,6 @@
-﻿using Quiz1.DataAccess.Models;
+﻿using Quiz1.Models;
 
-namespace Quiz1.DataAccess.ViewModels
+namespace Quiz1.ViewModels
 {
     public class CreateViewModel
     {
