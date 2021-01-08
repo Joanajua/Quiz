@@ -16,23 +16,8 @@ namespace Quiz1.DataAccess.Models
         public int QuizId { get; set; }
 
         [Required(ErrorMessage = "Please enter a title")]
-        [StringLength(50)]
+        [StringLength(100)]
         public string Title { get; set; }
-
-        [Required(ErrorMessage = "Please enter a subtitle")]
-        [StringLength(100)]
-        public string Subtitle { get; set; }
-
-        [Required(ErrorMessage = "Please enter a short description")]
-        [StringLength(100)]
-        public string ShortDescription { get; set; }
-
-        [Required(ErrorMessage = "Please enter a long description")]
-        [StringLength(400)]
-        public string LongDescription { get; set; }
-
-        [DisplayName("Publishing time")]
-        public DateTime? CreationTime { get; set; }
 
         public List<Question> Questions { get; set; }
     }
