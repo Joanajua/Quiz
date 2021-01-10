@@ -1,0 +1,47 @@
+﻿@using System.Collections
+@model PlayViewModel
+
+@{
+    ViewData["Title"] = "Play Quiz";
+
+}
+
+<h1>@Model.Quiz.Title</h1>
+<div class="row" pt-5>
+    <ul class="list-group">
+        @foreach (var question in @Model.Questions)
+        {
+            <li class="list-group">
+                @question.QuestionText
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        @foreach (var answer in @question.Answers)
+                        {
+                            @answer.AnswerText
+                        }
+                    </li>
+                </ul>
+            </li>
+        }
+    </ul>
+
+    
+</div>
+
+@*<h1>@Model.Quiz.Title</h1>
+<div class="row" pt-5>
+    @foreach (var question in Model.Questions)
+    {
+        <partial name="_CardQuestion" />
+
+    }
+</div>*@
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

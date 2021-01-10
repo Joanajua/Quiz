@@ -14,11 +14,11 @@ namespace Quiz1.Models
 
         [BindProperty]
         [ScaffoldColumn(false)]
-        public string QuizId { get; set; }
+        public int QuizId { get; set; }
 
         [BindProperty]
         [ScaffoldColumn(false)]
-        public string QuestionId { get; set; }
+        public int QuestionId { get; set; }
 
         [Required(ErrorMessage = "Please enter an answer.")]
         [DisplayName("Answer")]

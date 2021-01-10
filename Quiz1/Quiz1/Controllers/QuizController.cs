@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
 using Quiz1.Models;
+using Quiz1.ViewModels;
 
 namespace Quiz1.Controllers
 {
@@ -141,9 +144,86 @@ namespace Quiz1.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: Quiz/Play/5
+        public async Task<IActionResult> Play(int? id)
+        {
+            List<Answer> answersToReturn = new List<Answer>();
+
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            var quiz = await _context.Quizzes
+                .FirstOrDefaultAsync(m => m.QuizId == id);
+
+            var questions =  await _context.Questions
+                .Where(m => m.QuizId == id).ToListAsync();
+
+            //IQueryable<Answer> answers;
+            if (quiz == null)
+            {
+                return NotFound();
+            }
+
+            var answers = await _context.Answers.ToListAsync();
+
+            foreach (var question in questions)
+            {
+                if (answersToReturn.Count > 0)
+                {
+                    answersToReturn.Clear();
+                }
+                
+                var filteredAnswers = answers.Where(a=> a.QuestionId == question.QuestionId).ToList();
+                
+                foreach (var answer in filteredAnswers)
+                {
+                    
+                    if (question.QuestionId == answer.QuestionId)
+                    {
+                        answersToReturn.Add(answer);
+                    }
+                }
+
+            }
+
+            var model = new PlayViewModel
+            {
+                Quiz = quiz,
+                Questions = questions,
+                ////Answers = answersToReturn
+            };
+
+            return View(model);
+
+
+
+
+
+            //var answersByQuestionDicc = new Dictionary<int, List<Answer>>();
+
+            //foreach (var question in questions)
+            //{
+            //    // Select the answers for each question
+            //    var answersByQuestionList = answers.Where(a => a.QuestionId == question.QuestionId).ToList();
+            //    answersByQuestionDicc.Add(question.QuestionId, answersByQuestionList);
+            //}
+
+            //var model = new PlayViewModel
+            //{
+            //    Quiz = quiz,
+            //    Questions = questions,
+            //    AnswersByQuestion = answersByQuestionDicc
+            //};
+
+        }
+
         private bool QuizExists(int id)
         {
             return _context.Quizzes.Any(e => e.QuizId == id);
         }
+
+
     }
 }

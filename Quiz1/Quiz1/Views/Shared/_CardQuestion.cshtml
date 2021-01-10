@@ -1,0 +1,15 @@
+﻿@model CardQuestionViewModel
+<div class="card">
+    <div class="card-header">
+        <h4>@Model.Question.</h4>
+    </div>
+
+    <div class="card-body">
+        
+        @*@answers.Where(a => a.QuestionId == question.QuestionId && a.QuizId == @Model.Quiz.QuizId)*@
+        @foreach (var answer in @Model.Answers)
+        {
+            <h5>answer.AnswerText</h5>
+        }
+    </div>
+</div>

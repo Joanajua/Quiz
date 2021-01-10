@@ -46,27 +46,26 @@ namespace Quiz1.Migrations
                 {
                     AnswerId = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    QuizId = table.Column<string>(nullable: true),
-                    QuestionId = table.Column<string>(nullable: true),
+                    QuizId = table.Column<int>(nullable: false),
+                    QuestionId = table.Column<int>(nullable: false),
                     AnswerText = table.Column<string>(maxLength: 500, nullable: false),
-                    IsCorrect = table.Column<bool>(nullable: false),
-                    QuestionId1 = table.Column<int>(nullable: true)
+                    IsCorrect = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Answers", x => x.AnswerId);
                     table.ForeignKey(
-                        name: "FK_Answers_Questions_QuestionId1",
-                        column: x => x.QuestionId1,
+                        name: "FK_Answers_Questions_QuestionId",
+                        column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "QuestionId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Answers_QuestionId1",
+                name: "IX_Answers_QuestionId",
                 table: "Answers",
-                column: "QuestionId1");
+                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_QuizId",

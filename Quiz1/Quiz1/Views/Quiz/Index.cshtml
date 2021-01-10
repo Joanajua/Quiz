@@ -26,8 +26,8 @@
         {
             @foreach (var item in Model)
             {
-                <tr class="row-clicable" onclick="location.href = '@Url.ActionLink("Details", "Quiz", new {id = item.QuizId})'">
-                    <th scope="row">
+                <tr class="row-clicable" onclick="location.href = '@Url.ActionLink("Play", "Quiz", new {id = item.QuizId})'">
+                    <th>
                         @*Column with int indicating order*@
                         <span>@(i++)</span>
                     </th>
