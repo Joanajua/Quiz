@@ -6,42 +6,75 @@
 
 }
 
-<h1>@Model.Quiz.Title</h1>
-<div class="row" pt-5>
-    <ul class="list-group">
-        @foreach (var question in @Model.Questions)
-        {
-            <li class="list-group">
-                @question.QuestionText
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        @foreach (var answer in @question.Answers)
-                        {
-                            @answer.AnswerText
-                        }
-                    </li>
-                </ul>
-            </li>
-        }
-    </ul>
-
-    
-</div>
-
-@*<h1>@Model.Quiz.Title</h1>
-<div class="row" pt-5>
-    @foreach (var question in Model.Questions)
-    {
-        <partial name="_CardQuestion" />
-
-    }
-</div>*@
-
-
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index"><< Back to List</a>
 </div>
+
+<h1>@Model.Quiz.Title</h1>
+
+<form asp-action="Play" method="post" role="form">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Quiz.QuizId"/>
+
+    @foreach (var question in @Model.Questions)
+    {
+        <div class="card m-3">
+            <div class="card-header card-title">
+                <input type="hidden" asp-for="Question.QuestionId"/>
+                <h5> @question.QuestionText</h5>
+            </div>
+            <div class="card-body">
+                <input type="hidden" asp-for="Question.QuestionId" />
+
+                @foreach (var answer in @question.Answers)
+                {
+                    <input type="hidden" asp-for="Answer.AnswerId"/>
+                    <div class="form-group form-check">
+                        <input type="radio"  class="form-check-input" name="question-@question.QuestionId" value="@answer.AnswerId"
+                               id="answer-@answer.AnswerId" asp-for="Question.QuestionText"/>
+                        <label class="form-check-label" asp-for="Question.QuestionText">
+                            @answer.AnswerText
+                        </label>
+                    </div>
+                }
+             </div>
+        </div>
+    }
+
+    <div class="form-group">
+        <input type="submit" value="Show Result" class="btn btn-primary float-right" />
+    </div>
+</form>
+
+
+@*@foreach (var question in @Model.Questions)
+    {
+        <div class="card m-3">
+            <div class="card-header card-title">
+               <h5> @question.QuestionText</h5>
+            </div>
+            <div class="card-body">
+
+                    @foreach (var answer in @question.Answers)
+                    {
+                        <ul class="list-group" stile ="random">
+                            <li class="list-group-item">
+
+                                @answer.AnswerText
+                            </li>
+                        </ul>
+                    }
+
+
+                <a class="btn btn-primary" style="width:auto"
+                   asp-controller="Account" asp-action="Register">
+                    Add new user
+                </a>
+            </div>
+        </div>
+    }*@
 
 @section Scripts {
+    <script src="~/js/site.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

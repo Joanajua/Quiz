@@ -4,7 +4,11 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<div>
+    <a asp-action="Index"><< Back to List</a>
+</div>
+
+<h1>Edit: @Model.Title</h1>
 <h4>Quiz</h4>
 <hr />
 <div class="row">
@@ -22,10 +26,6 @@
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

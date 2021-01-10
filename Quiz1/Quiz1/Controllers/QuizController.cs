@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
@@ -24,19 +26,57 @@ namespace Quiz1.Controllers
             return View(await _context.Quizzes.ToListAsync());
         }
 
+        /// <summary>
+        /// Gets a list quizzes
+        /// depending if there is an input in the search box.
+        /// The user can look for quizzes on the search box by
+        /// Title or Quiz Id
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns>
+        /// /List
+        /// </returns>
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Index(string searchString)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                IEnumerable<Quiz> quizzes = await _context.Quizzes
+                    .ToListAsync();
+
+                int stringResult = 0;
+
+                if (int.TryParse(searchString, out stringResult))
+                {
+                    // Search by Quiz Id
+                    quizzes = quizzes.Where(s => s.QuizId.Equals(stringResult));
+                }
+                // Search by Quiz Title
+                // The search is NOT case sensitive.
+                quizzes = quizzes.Where(s => s.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase));
+
+                TempData["search"] = searchString;
+
+                return View(quizzes);
+            }
+
+            return RedirectToAction("Index");
+        }
+
         // GET: Quiz/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
             var quiz = await _context.Quizzes
                 .FirstOrDefaultAsync(m => m.QuizId == id);
             if (quiz == null)
             {
-                return NotFound();
+                return NotFound($"Quiz id {id} does not exist.");
             }
 
             return View(quiz);
@@ -69,13 +109,13 @@ namespace Quiz1.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
             var quiz = await _context.Quizzes.FindAsync(id);
             if (quiz == null)
             {
-                return NotFound();
+                return NotFound($"Quiz id {id} does not exist.");
             }
             return View(quiz);
         }
@@ -120,7 +160,7 @@ namespace Quiz1.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
             var quiz = await _context.Quizzes
@@ -147,7 +187,7 @@ namespace Quiz1.Controllers
         // GET: Quiz/Play/5
         public async Task<IActionResult> Play(int? id)
         {
-            List<Answer> answersToReturn = new List<Answer>();
+            var answersToReturn = new List<Answer>();
 
             if (id == null)
             {
@@ -157,13 +197,17 @@ namespace Quiz1.Controllers
             var quiz = await _context.Quizzes
                 .FirstOrDefaultAsync(m => m.QuizId == id);
 
-            var questions =  await _context.Questions
-                .Where(m => m.QuizId == id).ToListAsync();
-
-            //IQueryable<Answer> answers;
             if (quiz == null)
             {
-                return NotFound();
+                return NotFound($"Quiz id {id} does not exist.");
+            }
+
+            var questions = await _context.Questions
+                .Where(m => m.QuizId == id).ToListAsync();
+
+            if (questions == null)
+            {
+                return NotFound($"There are no questions for Quiz id {id}.");
             }
 
             var answers = await _context.Answers.ToListAsync();
@@ -192,38 +236,14 @@ namespace Quiz1.Controllers
             {
                 Quiz = quiz,
                 Questions = questions,
-                ////Answers = answersToReturn
             };
 
             return View(model);
-
-
-
-
-
-            //var answersByQuestionDicc = new Dictionary<int, List<Answer>>();
-
-            //foreach (var question in questions)
-            //{
-            //    // Select the answers for each question
-            //    var answersByQuestionList = answers.Where(a => a.QuestionId == question.QuestionId).ToList();
-            //    answersByQuestionDicc.Add(question.QuestionId, answersByQuestionList);
-            //}
-
-            //var model = new PlayViewModel
-            //{
-            //    Quiz = quiz,
-            //    Questions = questions,
-            //    AnswersByQuestion = answersByQuestionDicc
-            //};
-
         }
 
         private bool QuizExists(int id)
         {
             return _context.Quizzes.Any(e => e.QuizId == id);
         }
-
-
     }
 }
