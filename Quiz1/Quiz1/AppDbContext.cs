@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Quiz1.Models;
 using Quiz1.ViewModels;
 
 namespace Quiz1
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -12,7 +14,7 @@ namespace Quiz1
             // Conditional to migrate database when is not in testing
             //if (Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
             //{
-                Database.Migrate();
+            Database.Migrate();
             //}
         }
 
@@ -20,135 +22,97 @@ namespace Quiz1
         public DbSet<Quiz> Quizzes { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
-        public DbSet<Result> Results { get; set; }
+        //public DbSet<Result> Results { get; set; }
 
-        //private static Quiz[] MockQuizzes = new[]
-        //{
-        //    //new Quiz {QuizId = 1, Title = "Title 1", Subtitle = ""},
-        //    //new Author { AuthorId = 2, AuthorName = "Unamuno"},
-        //    //new Author { AuthorId = 3, AuthorName = "Pier Lecarre"}
-        //};
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    base.OnModelCreating(modelBuilder);
+        private static Quiz[] _mockQuizzes = new[]
+        {
+            new Quiz {QuizId = 1, Title = "Quiz 1"},
+            new Quiz {QuizId = 2, Title = "Quiz 2"},
+            new Quiz {QuizId = 3, Title = "Quiz 3"},
+        };
 
-        //    //seed authors
-        //    modelBuilder.Entity<Author>().HasData(new Author { AuthorId = 1, AuthorName = "Shakespeare" });
-        //    modelBuilder.Entity<Author>().HasData(new Author { AuthorId = 2, AuthorName = "Unamuno" });
-        //    modelBuilder.Entity<Author>().HasData(new Author { AuthorId = 3, AuthorName = "Pier Lecarre" });
+        private static Question[] _mockQuestions = new[]
+        {
+            new Question {QuestionId = 1, QuizId = 1, QuestionText = "Question 1"},
+            new Question {QuestionId = 2, QuizId = 1, QuestionText = "Question 2"},
+            new Question {QuestionId = 3, QuizId = 1, QuestionText = "Question 3"},
+            new Question {QuestionId = 4, QuizId = 1, QuestionText = "Question 4"},
 
-        //    //seed books
+            new Question {QuestionId = 5, QuizId = 2, QuestionText = "Question 1"},
+            new Question {QuestionId = 6, QuizId = 2, QuestionText = "Question 2"},
+            new Question {QuestionId = 7, QuizId = 2, QuestionText = "Question 3"},
+            new Question {QuestionId = 8, QuizId = 2, QuestionText = "Question 4"},
 
-        //    modelBuilder.Entity<Book>().HasData(new Book
-        //    {
-        //        BookId = 1,
-        //        Title = "The first book",
-        //        ISBN = "1111111111",
-        //        Genre = "Novel",
-        //        TotalCopies = 2,
-        //        AvailableCopies = 0,
-        //        AuthorId = 1
-        //    });
+            new Question {QuestionId = 9, QuizId = 3, QuestionText = "Question 1"},
+            new Question {QuestionId = 10, QuizId = 3, QuestionText = "Question 2"},
+            new Question {QuestionId = 11, QuizId = 3, QuestionText = "Question 3"},
+        };
 
-        //    modelBuilder.Entity<Book>().HasData(new Book
-        //    {
-        //        BookId = 2,
-        //        Title = "The second book",
-        //        ISBN = "2-222222-22-2",
-        //        Genre = "History",
-        //        TotalCopies = 1,
-        //        AvailableCopies = 0,
-        //        AuthorId = 2
-        //    });
+        private static Answer[] _mockAnswers = new[]
+        {
+            new Answer {AnswerId = 1, QuizId = 1, QuestionId = 1, AnswerText = "Answer 1", IsCorrect = true},
+            new Answer {AnswerId = 2, QuizId = 1, QuestionId = 1, AnswerText = "Answer 2", IsCorrect = false},
+            new Answer {AnswerId = 3, QuizId = 1, QuestionId = 1, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 4, QuizId = 1, QuestionId = 1, AnswerText = "Answer 4", IsCorrect = false},
 
-        //    modelBuilder.Entity<Book>().HasData(new Book
-        //    {
-        //        BookId = 3,
-        //        Title = "The third book",
-        //        ISBN = "9783161484100",
-        //        Genre = "Drama",
-        //        TotalCopies = 4,
-        //        AvailableCopies = 0,
-        //        AuthorId = 3
-        //    });
+            new Answer {AnswerId = 5, QuizId = 1, QuestionId = 2, AnswerText = "Answer 1", IsCorrect = false},
+            new Answer {AnswerId = 6, QuizId = 1, QuestionId = 2, AnswerText = "Answer 2", IsCorrect = true},
+            new Answer {AnswerId = 7, QuizId = 1, QuestionId = 2, AnswerText = "Answer 3", IsCorrect = false},
 
-        //    modelBuilder.Entity<Book>().HasData(new Book
-        //    {
-        //        BookId = 4,
-        //        Title = "The first book",
-        //        ISBN = "978-3-16-148410-0",
-        //        Genre = "Novel",
-        //        TotalCopies = 2,
-        //        AvailableCopies = 0,
-        //        AuthorId = 1
-        //    });
+            new Answer {AnswerId = 8, QuizId = 1, QuestionId = 3, AnswerText = "Answer 1", IsCorrect = true},
+            new Answer {AnswerId = 9, QuizId = 1, QuestionId = 3, AnswerText = "Answer 2", IsCorrect = false},
+            new Answer {AnswerId = 10, QuizId = 1, QuestionId = 3, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 11, QuizId = 1, QuestionId = 3, AnswerText = "Answer 4", IsCorrect = false},
 
-        //    modelBuilder.Entity<Book>().HasData(new Book
-        //    {
-        //        BookId = 5,
-        //        Title = "The fifth book",
-        //        ISBN = "1888799972",
-        //        Genre = "History",
-        //        TotalCopies = 2,
-        //        AvailableCopies = 0,
-        //        AuthorId = 3
-        //    });
+            new Answer {AnswerId = 12, QuizId = 1, QuestionId = 4, AnswerText = "Answer 1", IsCorrect = false},
+            new Answer {AnswerId = 13, QuizId = 1, QuestionId = 4, AnswerText = "Answer 2", IsCorrect = true},
+            new Answer {AnswerId = 14, QuizId = 1, QuestionId = 4, AnswerText = "Answer 3", IsCorrect = false},
 
-        //    modelBuilder.Entity<Book>().HasData(new Book
-        //    {
-        //        BookId = 6,
-        //        Title = "The fifth book",
-        //        ISBN = "9793161484100",
-        //        Genre = "History",
-        //        TotalCopies = 2,
-        //        AvailableCopies = 0,
-        //        AuthorId = 3
-        //    });
+            new Answer {AnswerId = 15, QuizId = 2, QuestionId = 5, AnswerText = "Answer 1", IsCorrect = true},
+            new Answer {AnswerId = 16, QuizId = 2, QuestionId = 5, AnswerText = "Answer 2", IsCorrect = false},
+            new Answer {AnswerId = 17, QuizId = 2, QuestionId = 5, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 18, QuizId = 2, QuestionId = 5, AnswerText = "Answer 4", IsCorrect = false},
 
-        //    modelBuilder.Entity<Book>().HasData(new Book
-        //    {
-        //        BookId = 7,
-        //        Title = "The seventh book",
-        //        ISBN = "978-3-16-148410-0",
-        //        Genre = "Drama",
-        //        TotalCopies = 4,
-        //        AvailableCopies = 0,
-        //        AuthorId = 3
-        //    });
+            new Answer {AnswerId = 19, QuizId = 2, QuestionId = 6, AnswerText = "Answer 1", IsCorrect = false},
+            new Answer {AnswerId = 20, QuizId = 2, QuestionId = 6, AnswerText = "Answer 2", IsCorrect = true},
+            new Answer {AnswerId = 21, QuizId = 2, QuestionId = 6, AnswerText = "Answer 3", IsCorrect = false},
 
-        //    modelBuilder.Entity<Book>().HasData(new Book
-        //    {
-        //        BookId = 8,
-        //        Title = "The seventh book",
-        //        ISBN = "978-3-16-148410-0",
-        //        Genre = "Drama",
-        //        TotalCopies = 4,
-        //        AvailableCopies = 0,
-        //        AuthorId = 3
-        //    });
+            new Answer {AnswerId = 22, QuizId = 2, QuestionId = 7, AnswerText = "Answer 1", IsCorrect = true},
+            new Answer {AnswerId = 23, QuizId = 2, QuestionId = 7, AnswerText = "Answer 2", IsCorrect = false},
+            new Answer {AnswerId = 24, QuizId = 2, QuestionId = 7, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 25, QuizId = 2, QuestionId = 7, AnswerText = "Answer 4", IsCorrect = false},
 
-        //    modelBuilder.Entity<Book>().HasData(new Book
-        //    {
-        //        BookId = 9,
-        //        Title = "The seventh book",
-        //        ISBN = "979-3-16-148410-0",
-        //        Genre = "Drama",
-        //        TotalCopies = 4,
-        //        AvailableCopies = 0,
-        //        AuthorId = 3
-        //    });
+            new Answer {AnswerId = 26, QuizId = 2, QuestionId = 8, AnswerText = "Answer 1", IsCorrect = false},
+            new Answer {AnswerId = 27, QuizId = 2, QuestionId = 8, AnswerText = "Answer 2", IsCorrect = true},
+            new Answer {AnswerId = 28, QuizId = 2, QuestionId = 8, AnswerText = "Answer 3", IsCorrect = false},
 
-        //    modelBuilder.Entity<Book>().HasData(new Book
-        //    {
-        //        BookId = 10,
-        //        Title = "The seventh book",
-        //        ISBN = "979-3-16-148410-0",
-        //        Genre = "Drama",
-        //        TotalCopies = 4,
-        //        AvailableCopies = 0,
-        //        AuthorId = 3
-        //    });
-        //}
+            new Answer {AnswerId = 29, QuizId = 3, QuestionId = 9, AnswerText = "Answer 1", IsCorrect = true},
+            new Answer {AnswerId = 30, QuizId = 3, QuestionId = 9, AnswerText = "Answer 2", IsCorrect = false},
+            new Answer {AnswerId = 31, QuizId = 3, QuestionId = 9, AnswerText = "Answer 3", IsCorrect = false},
+
+            new Answer {AnswerId = 32, QuizId = 3, QuestionId = 10, AnswerText = "Answer 1", IsCorrect = false},
+            new Answer {AnswerId = 33, QuizId = 3, QuestionId = 10, AnswerText = "Answer 2", IsCorrect = true},
+            new Answer {AnswerId = 34, QuizId = 3, QuestionId = 10, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 35, QuizId = 3, QuestionId = 10, AnswerText = "Answer 4", IsCorrect = false},
+
+            new Answer {AnswerId = 36, QuizId = 3, QuestionId = 11, AnswerText = "Answer 1", IsCorrect = true},
+            new Answer {AnswerId = 37, QuizId = 3, QuestionId = 11, AnswerText = "Answer 2", IsCorrect = false},
+            new Answer {AnswerId = 38, QuizId = 3, QuestionId = 11, AnswerText = "Answer 3", IsCorrect = false},
+        };
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
+            modelBuilder.Entity<Quiz>().HasData(_mockQuizzes);
+            modelBuilder.Entity<Question>().HasData(_mockQuestions);
+            modelBuilder.Entity<Answer>().HasData(_mockAnswers);
+        }
     }
 }

@@ -22,10 +22,6 @@ namespace Quiz1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppIdentityDbContext>(options =>
-                options.UseNpgsql(
-                    _configuration.GetConnectionString("IdentityConnection")));
-
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(
                     _configuration.GetConnectionString("AppConnection")));
@@ -33,7 +29,7 @@ namespace Quiz1
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 10;
-            }).AddEntityFrameworkStores<AppIdentityDbContext>();
+            }).AddEntityFrameworkStores<AppDbContext>();
 
             services.AddControllersWithViews();
 
@@ -56,7 +52,6 @@ namespace Quiz1
                     policy => policy.RequireClaim("Can Play Quizzes"));
             });
 
-            services.AddScoped<AppIdentityDbContext>();
             services.AddScoped<AppDbContext>();
         }
 
