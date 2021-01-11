@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
 using Quiz1.Models;
+using Quiz1.Utilities.CustomExtensions;
 using Quiz1.ViewModels;
 
 namespace Quiz1.Controllers
@@ -187,7 +188,6 @@ namespace Quiz1.Controllers
         // GET: Quiz/Play/5
         public async Task<IActionResult> Play(int? id)
         {
-            var answersToReturn = new List<Answer>();
 
             if (id == null)
             {
@@ -214,22 +214,23 @@ namespace Quiz1.Controllers
 
             foreach (var question in questions)
             {
-                if (answersToReturn.Count > 0)
+                question.Answers = new List<Answer>();
+
+                if (question.Answers.Count > 0)
                 {
-                    answersToReturn.Clear();
-                }
-                
-                var filteredAnswers = answers.Where(a=> a.QuestionId == question.QuestionId).ToList();
-                
-                foreach (var answer in filteredAnswers)
-                {
-                    
-                    if (question.QuestionId == answer.QuestionId)
-                    {
-                        answersToReturn.Add(answer);
-                    }
+                    question.Answers.Clear();
                 }
 
+                var filteredAnswers = answers.Where(a => a.QuestionId == question.QuestionId).ToList();
+                filteredAnswers.Shuffle();
+
+                foreach (var answer in filteredAnswers)
+                {
+                    if (question.QuestionId == answer.QuestionId)
+                    {
+                        question.Answers.Add(answer);
+                    }
+                }
             }
 
             var model = new PlayViewModel
