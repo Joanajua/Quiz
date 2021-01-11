@@ -1,0 +1,33 @@
+MANUAL TESTS-------------------------------------------------------------------
+
+---- USERS
+
+- User
+Loged in with an email account that has the role "User" with the "Manage Check In and Check Out" claims.
+When landing on Home page the menu bar top only shows links to Home (icon) and List page.
+On List page for each book there is a Details button.
+When landing on Details page it shows the details of the book and a "GoBackToList" button.
+
+- BookKeeper
+Loged in with an email account that has the role "BookKeeper" with the "Manage Check In and Check Out" and "Manage Book Records" claims.
+When landing on Home page Menu bar shows links to Home (icon), List page and Add Book page.
+On List page for each book there is Details, Edit and Delete buttons.
+When landing on Details page it shows the details of the book, "GoBackToList" button and the Edit and Remove buttons.
+On Add new book page, the user can see all the elements of the page and is able to add a book into the system.
+On Edit page, the user can see all the elements of the page and is able to update information about a book.
+User is able to delete a book from the system when clicking the delete button.
+
+- Admin
+
+- SuperUser
+
+
+UNIT TESTS----------------------------------------------------------------------
+
+--- HomeController
+- Index Action method returns a ViewResult
+- Index_action_should_be_decorated_with_AllowAnonymous_attribute
+
+--- BookController
+- List_action_result_get_method_should_return_ViewResult_with_correct_Model_type
+  -- This method also checks if the method returns the correct amount of records from the model.

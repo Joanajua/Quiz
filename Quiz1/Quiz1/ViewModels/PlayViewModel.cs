@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Quiz1.Models;
 
 namespace Quiz1.ViewModels
@@ -12,6 +13,7 @@ namespace Quiz1.ViewModels
         public int? CorrectAnswers { get; set; }
         public int? WrongAnswers { get; set; }
 
+        [Required]
         public IEnumerable<Question> Questions { get; set; }
     }
 }

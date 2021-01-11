@@ -11,7 +11,7 @@
 
 <h1>@Model.Quiz.Title</h1>
 
-<form asp-controller="Quiz" asp-action="ShowResult" method="post" role="form">
+<form asp-controller="Result" asp-action="Result" method="post" role="form">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="Quiz.QuizId"/>
 
@@ -30,14 +30,18 @@
                     <input type="hidden" asp-for="Answer.AnswerId"/>
                     <div class="form-group form-check">
                         <input type="radio"  class="form-check-input" name="question-@question.QuestionId" value="@answer.AnswerId"
-                               id="answer-@answer.AnswerId" asp-for="Question.QuestionText"/>
-                        <label for="answer-@answer.AnswerId" class="form-check-label" asp-for="Question.QuestionText">
+                               id="@answer.AnswerId" asp-for="Question.QuestionText"/>
+                        <label for="@answer.AnswerId" class="form-check-label" asp-for="Question.QuestionText">
                             @answer.AnswerText
                         </label>
                     </div>
+                    <span asp-validation-for="Question.Answers" class="text-danger"></span>
                 }
-             </div>
+            </div>
         </div>
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
     }
 
     <div class="form-group">
@@ -45,35 +49,6 @@
     </div>
 </form>
 
-
-@*@foreach (var question in @Model.Questions)
-    {
-        <div class="card m-3">
-            <div class="card-header card-title">
-               <h5> @question.QuestionText</h5>
-            </div>
-            <div class="card-body">
-
-                    @foreach (var answer in @question.Answers)
-                    {
-                        <ul class="list-group" stile ="random">
-                            <li class="list-group-item">
-
-                                @answer.AnswerText
-                            </li>
-                        </ul>
-                    }
-
-
-                <a class="btn btn-primary" style="width:auto"
-                   asp-controller="Account" asp-action="Register">
-                    Add new user
-                </a>
-            </div>
-        </div>
-    }*@
-
 @section Scripts {
-    <script src="~/js/site.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

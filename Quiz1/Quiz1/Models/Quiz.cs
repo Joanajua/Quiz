@@ -7,8 +7,6 @@ namespace Quiz1.Models
 {
     public class Quiz
     {
-        [BindProperty]
-        [ScaffoldColumn(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int QuizId { get; set; }
 

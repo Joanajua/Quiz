@@ -216,21 +216,18 @@ namespace Quiz1.Controllers
             {
                 question.Answers = new List<Answer>();
 
-                if (question.Answers.Count > 0)
-                {
-                    question.Answers.Clear();
-                }
+                //if (question.Answers.Count > 0)
+                //{
+                //    question.Answers.Clear();
+                //}
 
                 var filteredAnswers = answers.Where(a => a.QuestionId == question.QuestionId).ToList();
+
+                // Applying extension method to produce random list
                 filteredAnswers.Shuffle();
 
-                foreach (var answer in filteredAnswers)
-                {
-                    if (question.QuestionId == answer.QuestionId)
-                    {
-                        question.Answers.Add(answer);
-                    }
-                }
+                question.Answers = filteredAnswers;
+
             }
 
             var model = new PlayViewModel

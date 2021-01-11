@@ -7,17 +7,11 @@ namespace Quiz1.Models
 {
     public class Answer
     {
-        [BindProperty]
-        [ScaffoldColumn(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AnswerId { get; set; }
 
-        [BindProperty]
-        [ScaffoldColumn(false)]
         public int QuizId { get; set; }
 
-        [BindProperty]
-        [ScaffoldColumn(false)]
         public int QuestionId { get; set; }
 
         [Required(ErrorMessage = "Please enter an answer.")]

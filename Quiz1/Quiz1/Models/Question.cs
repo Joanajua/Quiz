@@ -8,13 +8,9 @@ namespace Quiz1.Models
 {
     public class Question
     {
-        [BindProperty]
-        [ScaffoldColumn(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int QuestionId { get; set; }
 
-        [BindProperty]
-        [ScaffoldColumn(false)]
         public int QuizId { get; set; }
 
         [Required(ErrorMessage = "Please enter a Question.")]
