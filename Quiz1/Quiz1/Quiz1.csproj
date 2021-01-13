@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210113092602_AddScore.cs" />
+    <Compile Remove="Migrations\20210113092602_AddScore.Designer.cs" />
+    <Compile Remove="Migrations\20210113093150_AddScore.cs" />
+    <Compile Remove="Migrations\20210113093150_AddScore.Designer.cs" />
+    <Compile Remove="Migrations\20210113093453_AddScore.cs" />
+    <Compile Remove="Migrations\20210113093453_AddScore.Designer.cs" />
+    <Compile Remove="Migrations\20210113094452_AddScore.cs" />
+    <Compile Remove="Migrations\20210113094452_AddScore.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
@@ -22,6 +33,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\ScoreViewModels\" />
   </ItemGroup>
 
 </Project>

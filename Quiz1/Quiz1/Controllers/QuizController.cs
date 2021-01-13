@@ -4,11 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
 using Quiz1.Models;
 using Quiz1.Utilities.CustomExtensions;
-using Quiz1.ViewModels;
+using Quiz1.ViewModels.QuizViewModels;
 
 namespace Quiz1.Controllers
 {
@@ -75,12 +74,45 @@ namespace Quiz1.Controllers
 
             var quiz = await _context.Quizzes
                 .FirstOrDefaultAsync(m => m.QuizId == id);
+
             if (quiz == null)
             {
                 return NotFound($"Quiz id {id} does not exist.");
             }
 
-            return View(quiz);
+            /////////////////////
+            var questions = await _context.Questions
+                .Where(m => m.QuizId == id)
+                .OrderBy(q => q.QuestionId)
+                .ToListAsync();
+
+            if (questions == null)
+            {
+                return NotFound($"There are no questions for Quiz id {id}.");
+            }
+
+            var answers = await _context.Answers.ToListAsync();
+
+            foreach (var question in questions)
+            {
+                question.Answers = new List<Answer>();
+
+                var filteredAnswers = answers
+                    .Where(a => a.QuestionId == question.QuestionId)
+                    .OrderByDescending(a => a.IsCorrect)
+                    .ToList();
+
+                question.Answers = filteredAnswers;
+
+            }
+
+            var model = new DetailsViewModel
+            {
+                Quiz = quiz,
+                Questions = questions,
+            };
+
+            return View(model);
         }
 
         // GET: Quiz/Create
@@ -166,6 +198,7 @@ namespace Quiz1.Controllers
 
             var quiz = await _context.Quizzes
                 .FirstOrDefaultAsync(m => m.QuizId == id);
+
             if (quiz == null)
             {
                 return NotFound();
@@ -203,7 +236,8 @@ namespace Quiz1.Controllers
             }
 
             var questions = await _context.Questions
-                .Where(m => m.QuizId == id).ToListAsync();
+                .Where(m => m.QuizId == id)
+                .ToListAsync();
 
             if (questions == null)
             {

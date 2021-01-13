@@ -1,21 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Quiz1.Models;
 
-namespace Quiz1.ViewModels
+namespace Quiz1.ViewModels.QuizViewModels
 {
-    public class CreateViewModel
+    public class PlayViewModel
     {
-        public CreateViewModel()
-        {
-            Questions = new List<Question>();
-            Answers = new List<Question>();
-        }
-
         public Quiz Quiz { get; set; }
         public Question Question { get; set; }
         public Answer Answer { get; set; }
 
+        [Required]
         public IEnumerable<Question> Questions { get; set; }
-        public IEnumerable<Question> Answers { get; set; }
     }
 }

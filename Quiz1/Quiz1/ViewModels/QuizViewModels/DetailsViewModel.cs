@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using Quiz1.Models;
 
-namespace Quiz1.ViewModels
+namespace Quiz1.ViewModels.QuizViewModels
 {
-    public class PlayViewModel
+    public class DetailsViewModel
     {
         public Quiz Quiz { get; set; }
         public Question Question { get; set; }

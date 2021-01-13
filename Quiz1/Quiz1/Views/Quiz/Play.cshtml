@@ -11,7 +11,7 @@
 
 <h1>@Model.Quiz.Title</h1>
 
-<form asp-controller="Result" asp-action="Result" method="post" role="form">
+<form asp-controller="Score" asp-action="Score" method="post" role="form">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="Quiz.QuizId"/>
 

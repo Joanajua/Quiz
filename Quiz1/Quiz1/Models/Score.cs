@@ -1,24 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Quiz1.Models
 {
-    public class Result
+    public class Score
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ResultId { get; set; }
+        public int ScoreId { get; set; }
 
         [BindProperty]
+        [ForeignKey("Id")]
         public string UserId { get; set; }
 
+        [ForeignKey("QuizId")]
         public int QuizId { get; set; }
 
+        [ForeignKey("QuestionId")]
         public int QuestionId { get; set; }
 
+        [ForeignKey("AnswerId")]
         public int UserChoiceId { get; set; }
 
         [DisplayName("Correct")]

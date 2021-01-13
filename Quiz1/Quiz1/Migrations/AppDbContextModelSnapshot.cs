@@ -43,29 +43,6 @@ namespace Quiz1.Migrations
                         .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "02174cf0–9412–4cfe-afbf-59f706d72cf6",
-                            ConcurrencyStamp = "12ef6f7b-6cee-44c1-89ff-2a70878402b2",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "341743f0-asd2–42de-afbf-59kmkkmk72cf6",
-                            ConcurrencyStamp = "378cb095-0d65-4898-b772-365a99f30be2",
-                            Name = "RO-User",
-                            NormalizedName = "RO-USER"
-                        },
-                        new
-                        {
-                            Id = "341743f0-asd2–42de-atsy-59kmkkmk72cf6",
-                            ConcurrencyStamp = "03c2bb27-9703-42ba-801b-0dbb3f2048ec",
-                            Name = "PO-User",
-                            NormalizedName = "PO-USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
