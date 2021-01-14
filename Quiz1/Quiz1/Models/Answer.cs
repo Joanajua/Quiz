@@ -10,7 +10,7 @@ namespace Quiz1.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AnswerId { get; set; }
 
-        public int QuizId { get; set; }
+        //public int QuizId { get; set; }
 
         public int QuestionId { get; set; }
 

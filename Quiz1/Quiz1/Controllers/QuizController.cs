@@ -80,7 +80,6 @@ namespace Quiz1.Controllers
                 return NotFound($"Quiz id {id} does not exist.");
             }
 
-            /////////////////////
             var questions = await _context.Questions
                 .Where(m => m.QuizId == id)
                 .OrderBy(q => q.QuestionId)
@@ -103,7 +102,6 @@ namespace Quiz1.Controllers
                     .ToList();
 
                 question.Answers = filteredAnswers;
-
             }
 
             var model = new DetailsViewModel
@@ -122,8 +120,6 @@ namespace Quiz1.Controllers
         }
 
         // POST: Quiz/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateViewModel model)
@@ -139,17 +135,7 @@ namespace Quiz1.Controllers
                 Questions = model.Quiz.Questions
             };
 
-            //for (int i = 0; i < quiz.Questions.Count; i++)
-            //{
-            //    model.Question.QuestionText = quiz.Questions[0].QuestionText;
-
-            //}
-            
-           
-
             await _context.Quizzes.AddAsync(quiz);
-
-            //await _context.Questions.AddAsync(question);
 
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -172,8 +158,6 @@ namespace Quiz1.Controllers
         }
 
         // POST: Quiz/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Title")] Quiz quiz)

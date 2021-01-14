@@ -231,9 +231,6 @@ namespace Quiz1.Migrations
                     b.Property<int>("QuestionId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("QuizId")
-                        .HasColumnType("integer");
-
                     b.HasKey("AnswerId");
 
                     b.HasIndex("QuestionId");
@@ -246,304 +243,266 @@ namespace Quiz1.Migrations
                             AnswerId = 1,
                             AnswerText = "Answer 1",
                             IsCorrect = true,
-                            QuestionId = 1,
-                            QuizId = 1
+                            QuestionId = 1
                         },
                         new
                         {
                             AnswerId = 2,
                             AnswerText = "Answer 2",
                             IsCorrect = false,
-                            QuestionId = 1,
-                            QuizId = 1
+                            QuestionId = 1
                         },
                         new
                         {
                             AnswerId = 3,
                             AnswerText = "Answer 3",
                             IsCorrect = false,
-                            QuestionId = 1,
-                            QuizId = 1
+                            QuestionId = 1
                         },
                         new
                         {
                             AnswerId = 4,
                             AnswerText = "Answer 4",
                             IsCorrect = false,
-                            QuestionId = 1,
-                            QuizId = 1
+                            QuestionId = 1
                         },
                         new
                         {
                             AnswerId = 5,
                             AnswerText = "Answer 1",
                             IsCorrect = false,
-                            QuestionId = 2,
-                            QuizId = 1
+                            QuestionId = 2
                         },
                         new
                         {
                             AnswerId = 6,
                             AnswerText = "Answer 2",
                             IsCorrect = true,
-                            QuestionId = 2,
-                            QuizId = 1
+                            QuestionId = 2
                         },
                         new
                         {
                             AnswerId = 7,
                             AnswerText = "Answer 3",
                             IsCorrect = false,
-                            QuestionId = 2,
-                            QuizId = 1
+                            QuestionId = 2
                         },
                         new
                         {
                             AnswerId = 8,
                             AnswerText = "Answer 1",
                             IsCorrect = true,
-                            QuestionId = 3,
-                            QuizId = 1
+                            QuestionId = 3
                         },
                         new
                         {
                             AnswerId = 9,
                             AnswerText = "Answer 2",
                             IsCorrect = false,
-                            QuestionId = 3,
-                            QuizId = 1
+                            QuestionId = 3
                         },
                         new
                         {
                             AnswerId = 10,
                             AnswerText = "Answer 3",
                             IsCorrect = false,
-                            QuestionId = 3,
-                            QuizId = 1
+                            QuestionId = 3
                         },
                         new
                         {
                             AnswerId = 11,
                             AnswerText = "Answer 4",
                             IsCorrect = false,
-                            QuestionId = 3,
-                            QuizId = 1
+                            QuestionId = 3
                         },
                         new
                         {
                             AnswerId = 12,
                             AnswerText = "Answer 1",
                             IsCorrect = false,
-                            QuestionId = 4,
-                            QuizId = 1
+                            QuestionId = 4
                         },
                         new
                         {
                             AnswerId = 13,
                             AnswerText = "Answer 2",
                             IsCorrect = true,
-                            QuestionId = 4,
-                            QuizId = 1
+                            QuestionId = 4
                         },
                         new
                         {
                             AnswerId = 14,
                             AnswerText = "Answer 3",
                             IsCorrect = false,
-                            QuestionId = 4,
-                            QuizId = 1
+                            QuestionId = 4
                         },
                         new
                         {
                             AnswerId = 15,
                             AnswerText = "Answer 1",
                             IsCorrect = true,
-                            QuestionId = 5,
-                            QuizId = 2
+                            QuestionId = 5
                         },
                         new
                         {
                             AnswerId = 16,
                             AnswerText = "Answer 2",
                             IsCorrect = false,
-                            QuestionId = 5,
-                            QuizId = 2
+                            QuestionId = 5
                         },
                         new
                         {
                             AnswerId = 17,
                             AnswerText = "Answer 3",
                             IsCorrect = false,
-                            QuestionId = 5,
-                            QuizId = 2
+                            QuestionId = 5
                         },
                         new
                         {
                             AnswerId = 18,
                             AnswerText = "Answer 4",
                             IsCorrect = false,
-                            QuestionId = 5,
-                            QuizId = 2
+                            QuestionId = 5
                         },
                         new
                         {
                             AnswerId = 19,
                             AnswerText = "Answer 1",
                             IsCorrect = false,
-                            QuestionId = 6,
-                            QuizId = 2
+                            QuestionId = 6
                         },
                         new
                         {
                             AnswerId = 20,
                             AnswerText = "Answer 2",
                             IsCorrect = true,
-                            QuestionId = 6,
-                            QuizId = 2
+                            QuestionId = 6
                         },
                         new
                         {
                             AnswerId = 21,
                             AnswerText = "Answer 3",
                             IsCorrect = false,
-                            QuestionId = 6,
-                            QuizId = 2
+                            QuestionId = 6
                         },
                         new
                         {
                             AnswerId = 22,
                             AnswerText = "Answer 1",
                             IsCorrect = true,
-                            QuestionId = 7,
-                            QuizId = 2
+                            QuestionId = 7
                         },
                         new
                         {
                             AnswerId = 23,
                             AnswerText = "Answer 2",
                             IsCorrect = false,
-                            QuestionId = 7,
-                            QuizId = 2
+                            QuestionId = 7
                         },
                         new
                         {
                             AnswerId = 24,
                             AnswerText = "Answer 3",
                             IsCorrect = false,
-                            QuestionId = 7,
-                            QuizId = 2
+                            QuestionId = 7
                         },
                         new
                         {
                             AnswerId = 25,
                             AnswerText = "Answer 4",
                             IsCorrect = false,
-                            QuestionId = 7,
-                            QuizId = 2
+                            QuestionId = 7
                         },
                         new
                         {
                             AnswerId = 26,
                             AnswerText = "Answer 1",
                             IsCorrect = false,
-                            QuestionId = 8,
-                            QuizId = 2
+                            QuestionId = 8
                         },
                         new
                         {
                             AnswerId = 27,
                             AnswerText = "Answer 2",
                             IsCorrect = true,
-                            QuestionId = 8,
-                            QuizId = 2
+                            QuestionId = 8
                         },
                         new
                         {
                             AnswerId = 28,
                             AnswerText = "Answer 3",
                             IsCorrect = false,
-                            QuestionId = 8,
-                            QuizId = 2
+                            QuestionId = 8
                         },
                         new
                         {
                             AnswerId = 29,
                             AnswerText = "Answer 1",
                             IsCorrect = true,
-                            QuestionId = 9,
-                            QuizId = 3
+                            QuestionId = 9
                         },
                         new
                         {
                             AnswerId = 30,
                             AnswerText = "Answer 2",
                             IsCorrect = false,
-                            QuestionId = 9,
-                            QuizId = 3
+                            QuestionId = 9
                         },
                         new
                         {
                             AnswerId = 31,
                             AnswerText = "Answer 3",
                             IsCorrect = false,
-                            QuestionId = 9,
-                            QuizId = 3
+                            QuestionId = 9
                         },
                         new
                         {
                             AnswerId = 32,
                             AnswerText = "Answer 1",
                             IsCorrect = false,
-                            QuestionId = 10,
-                            QuizId = 3
+                            QuestionId = 10
                         },
                         new
                         {
                             AnswerId = 33,
                             AnswerText = "Answer 2",
                             IsCorrect = true,
-                            QuestionId = 10,
-                            QuizId = 3
+                            QuestionId = 10
                         },
                         new
                         {
                             AnswerId = 34,
                             AnswerText = "Answer 3",
                             IsCorrect = false,
-                            QuestionId = 10,
-                            QuizId = 3
+                            QuestionId = 10
                         },
                         new
                         {
                             AnswerId = 35,
                             AnswerText = "Answer 4",
                             IsCorrect = false,
-                            QuestionId = 10,
-                            QuizId = 3
+                            QuestionId = 10
                         },
                         new
                         {
                             AnswerId = 36,
                             AnswerText = "Answer 1",
                             IsCorrect = true,
-                            QuestionId = 11,
-                            QuizId = 3
+                            QuestionId = 11
                         },
                         new
                         {
                             AnswerId = 37,
                             AnswerText = "Answer 2",
                             IsCorrect = false,
-                            QuestionId = 11,
-                            QuizId = 3
+                            QuestionId = 11
                         },
                         new
                         {
                             AnswerId = 38,
                             AnswerText = "Answer 3",
                             IsCorrect = false,
-                            QuestionId = 11,
-                            QuizId = 3
+                            QuestionId = 11
                         });
                 });
 

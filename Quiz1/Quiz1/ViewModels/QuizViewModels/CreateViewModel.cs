@@ -7,10 +7,5 @@ namespace Quiz1.ViewModels.QuizViewModels
     public class CreateViewModel
     {
         public Quiz Quiz { get; set; }
-
-        //public Question Question { get; set; }
-
-        public Answer Answer { get; set; }
-
     }
 }

@@ -70,6 +70,11 @@ namespace Quiz1.Controllers
         [HttpGet]
         public async Task<IActionResult> EditRole(string id)
         {
+            if (id == null)
+            {
+                ViewBag.ErrorMessage = $"Role Id is not in the right format.";
+                return BadRequest();
+            }
             var role = await _roleManager.FindByIdAsync(id);
 
             // Need to call .ToListAsync() in users for it to not throw an InvalidOperation
@@ -78,8 +83,8 @@ namespace Quiz1.Controllers
 
             if (role == null)
             {
-                ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found.";
-                return NotFound();
+                ViewBag.ErrorMessage = $"Role with Id = {role.Id} cannot be found.";
+                return NotFound($"Role with Id = {id} cannot be found.");
             }
 
             var model = new EditRoleViewModel
@@ -107,7 +112,7 @@ namespace Quiz1.Controllers
             if (role == null)
             {
                 ViewBag.ErrorMessage = $"Role with Id = {model.Id} cannot be found.";
-                return NotFound();
+                return NotFound($"Role with Id = {model.Id} cannot be found.");
             }
            
             role.Name = model.RoleName;
@@ -129,12 +134,18 @@ namespace Quiz1.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteRole(string id)
         {
+            if (id == null)
+            {
+                ViewBag.ErrorMessage = $"Role Id is not in the right format.";
+                return BadRequest();
+            }
+
             var role = await _roleManager.FindByIdAsync(id);
 
             if (role == null)
             {
                 ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found";
-                return NotFound();
+                return NotFound($"Role with Id = {id} cannot be found.");
             }
             try
             {
@@ -173,6 +184,12 @@ namespace Quiz1.Controllers
         [HttpGet]
         public async Task<IActionResult> EditUsersInRole(string roleId)
         {
+            if (roleId == null)
+            {
+                ViewBag.ErrorMessage = $"Role Id is not in the right format.";
+                return BadRequest();
+            }
+
             ViewBag.roleId = roleId;
 
             var role = await _roleManager.FindByIdAsync(roleId);
@@ -184,7 +201,7 @@ namespace Quiz1.Controllers
             if (role == null)
             {
                 ViewBag.ErrorMessage = $"Role with Id = {roleId} cannot be found.";
-                return NotFound();
+                return NotFound("Role with Id = {roleId} cannot be found.");
             }
 
             var model = new List<UserRoleViewModel>();
@@ -215,12 +232,18 @@ namespace Quiz1.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
         {
+            if (roleId == null)
+            {
+                ViewBag.ErrorMessage = $"Role Id is not in the right format.";
+                return BadRequest();
+            }
+
             var role = await _roleManager.FindByIdAsync(roleId);
 
             if (role == null)
             {
                 ViewBag.ErrorMessage = $"Role with Id = {roleId} cannot be found.";
-                return NotFound();
+                return NotFound($"Role with Id = {roleId} cannot be found.");
             }
 
             for (int i = 0; i < model.Count; i++)
@@ -268,12 +291,18 @@ namespace Quiz1.Controllers
         [HttpGet]
         public async Task<IActionResult> EditUser(string id)
         {
+            if (id == null)
+            {
+                ViewBag.ErrorMessage = $"User Id is not in the right format.";
+                return BadRequest();
+            }
+
             var user = await _userManager.FindByIdAsync(id);
 
             if (user == null)
             {
                 ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
-                return NotFound();
+                return NotFound($"User with Id = {id} cannot be found");
             }
 
             // GetClaimsAsync retunrs the list of user Claims
@@ -301,7 +330,7 @@ namespace Quiz1.Controllers
             if (user == null)
             {
                 ViewBag.ErrorMessage = $"User with Id = {model.Id} cannot be found";
-                return NotFound();
+                return NotFound($"User with Id = {model.Id} cannot be found");
             }
             else
             {
@@ -327,6 +356,12 @@ namespace Quiz1.Controllers
         [HttpGet]
         public async Task<IActionResult> ManageUserRoles(string userId)
         {
+            if (userId == null)
+            {
+                ViewBag.ErrorMessage = $"User Id is not in the correct format";
+                return BadRequest();
+            }
+
             ViewBag.userId = userId;
 
             var user = await _userManager.FindByIdAsync(userId);
@@ -335,7 +370,7 @@ namespace Quiz1.Controllers
             if (user == null)
             {
                 ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
-                return NotFound();
+                return NotFound($"User with Id = {userId} cannot be found");
             }
 
             var model = new List<UserRolesViewModel>();
@@ -366,6 +401,11 @@ namespace Quiz1.Controllers
         [HttpPost]
         public async Task<IActionResult> ManageUserRoles(List<UserRolesViewModel> model, string userId)
         {
+            if (userId == null)
+            {
+                ViewBag.ErrorMessage = $"User Id is not in the correct format.";
+                return BadRequest();
+            }
             var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
@@ -398,13 +438,19 @@ namespace Quiz1.Controllers
         [HttpGet]
         public async Task<IActionResult> ManageUserClaims(string userId)
         {
+            if (userId == null)
+            {
+                ViewBag.ErrorMessage = $"User Id is not in the correct format";
+                return BadRequest();
+            }
+
             var user = await _userManager.FindByIdAsync(userId);
             var claims = ClaimsStore.AllClaims.ToList();
 
             if (user == null)
             {
                 ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
-                return NotFound();
+                return NotFound($"User with Id = {userId} cannot be found");
             }
 
             // UserManager service GetClaimsAsync method gets all the current claims of the user
@@ -444,7 +490,7 @@ namespace Quiz1.Controllers
             if (user == null)
             {
                 ViewBag.ErrorMessage = $"User with Id = {model.UserId} cannot be found.";
-                return NotFound();
+                return NotFound($"User with Id = {model.UserId} cannot be found.");
             }
 
             // Get all the user existing claims and delete them.
@@ -473,12 +519,18 @@ namespace Quiz1.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteUser(string id)
         {
+            if (id == null)
+            {
+                ViewBag.ErrorMessage = $"Id is not in the correct format";
+                return BadRequest();
+            }
+
             var user = await _userManager.FindByIdAsync(id);
 
             if (user == null)
             {
                 ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
-                return NotFound();
+                return NotFound($"User with Id = {id} cannot be found");
             }
             try
             {

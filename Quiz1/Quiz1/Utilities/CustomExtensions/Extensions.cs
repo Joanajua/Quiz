@@ -53,55 +53,107 @@ namespace Quiz1.Utilities.CustomExtensions
 
         private static Answer[] _mockAnswers = new[]
         {
-            new Answer {AnswerId = 1, QuizId = 1, QuestionId = 1, AnswerText = "Answer 1", IsCorrect = true},
-            new Answer {AnswerId = 2, QuizId = 1, QuestionId = 1, AnswerText = "Answer 2", IsCorrect = false},
-            new Answer {AnswerId = 3, QuizId = 1, QuestionId = 1, AnswerText = "Answer 3", IsCorrect = false},
-            new Answer {AnswerId = 4, QuizId = 1, QuestionId = 1, AnswerText = "Answer 4", IsCorrect = false},
+            new Answer {AnswerId = 1,  QuestionId = 1, AnswerText = "Answer 1", IsCorrect = true},
+            new Answer {AnswerId = 2,  QuestionId = 1, AnswerText = "Answer 2", IsCorrect = false},
+            new Answer {AnswerId = 3,  QuestionId = 1, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 4,  QuestionId = 1, AnswerText = "Answer 4", IsCorrect = false},
 
-            new Answer {AnswerId = 5, QuizId = 1, QuestionId = 2, AnswerText = "Answer 1", IsCorrect = false},
-            new Answer {AnswerId = 6, QuizId = 1, QuestionId = 2, AnswerText = "Answer 2", IsCorrect = true},
-            new Answer {AnswerId = 7, QuizId = 1, QuestionId = 2, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 5,  QuestionId = 2, AnswerText = "Answer 1", IsCorrect = false},
+            new Answer {AnswerId = 6,  QuestionId = 2, AnswerText = "Answer 2", IsCorrect = true},
+            new Answer {AnswerId = 7,  QuestionId = 2, AnswerText = "Answer 3", IsCorrect = false},
 
-            new Answer {AnswerId = 8, QuizId = 1, QuestionId = 3, AnswerText = "Answer 1", IsCorrect = true},
-            new Answer {AnswerId = 9, QuizId = 1, QuestionId = 3, AnswerText = "Answer 2", IsCorrect = false},
-            new Answer {AnswerId = 10, QuizId = 1, QuestionId = 3, AnswerText = "Answer 3", IsCorrect = false},
-            new Answer {AnswerId = 11, QuizId = 1, QuestionId = 3, AnswerText = "Answer 4", IsCorrect = false},
+            new Answer {AnswerId = 8,  QuestionId = 3, AnswerText = "Answer 1", IsCorrect = true},
+            new Answer {AnswerId = 9,  QuestionId = 3, AnswerText = "Answer 2", IsCorrect = false},
+            new Answer {AnswerId = 10,  QuestionId = 3, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 11,  QuestionId = 3, AnswerText = "Answer 4", IsCorrect = false},
 
-            new Answer {AnswerId = 12, QuizId = 1, QuestionId = 4, AnswerText = "Answer 1", IsCorrect = false},
-            new Answer {AnswerId = 13, QuizId = 1, QuestionId = 4, AnswerText = "Answer 2", IsCorrect = true},
-            new Answer {AnswerId = 14, QuizId = 1, QuestionId = 4, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 12,  QuestionId = 4, AnswerText = "Answer 1", IsCorrect = false},
+            new Answer {AnswerId = 13,  QuestionId = 4, AnswerText = "Answer 2", IsCorrect = true},
+            new Answer {AnswerId = 14,  QuestionId = 4, AnswerText = "Answer 3", IsCorrect = false},
 
-            new Answer {AnswerId = 15, QuizId = 2, QuestionId = 5, AnswerText = "Answer 1", IsCorrect = true},
-            new Answer {AnswerId = 16, QuizId = 2, QuestionId = 5, AnswerText = "Answer 2", IsCorrect = false},
-            new Answer {AnswerId = 17, QuizId = 2, QuestionId = 5, AnswerText = "Answer 3", IsCorrect = false},
-            new Answer {AnswerId = 18, QuizId = 2, QuestionId = 5, AnswerText = "Answer 4", IsCorrect = false},
+            new Answer {AnswerId = 15,  QuestionId = 5, AnswerText = "Answer 1", IsCorrect = true},
+            new Answer {AnswerId = 16,  QuestionId = 5, AnswerText = "Answer 2", IsCorrect = false},
+            new Answer {AnswerId = 17,  QuestionId = 5, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 18,  QuestionId = 5, AnswerText = "Answer 4", IsCorrect = false},
 
-            new Answer {AnswerId = 19, QuizId = 2, QuestionId = 6, AnswerText = "Answer 1", IsCorrect = false},
-            new Answer {AnswerId = 20, QuizId = 2, QuestionId = 6, AnswerText = "Answer 2", IsCorrect = true},
-            new Answer {AnswerId = 21, QuizId = 2, QuestionId = 6, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 19,  QuestionId = 6, AnswerText = "Answer 1", IsCorrect = false},
+            new Answer {AnswerId = 20,  QuestionId = 6, AnswerText = "Answer 2", IsCorrect = true},
+            new Answer {AnswerId = 21,  QuestionId = 6, AnswerText = "Answer 3", IsCorrect = false},
 
-            new Answer {AnswerId = 22, QuizId = 2, QuestionId = 7, AnswerText = "Answer 1", IsCorrect = true},
-            new Answer {AnswerId = 23, QuizId = 2, QuestionId = 7, AnswerText = "Answer 2", IsCorrect = false},
-            new Answer {AnswerId = 24, QuizId = 2, QuestionId = 7, AnswerText = "Answer 3", IsCorrect = false},
-            new Answer {AnswerId = 25, QuizId = 2, QuestionId = 7, AnswerText = "Answer 4", IsCorrect = false},
+            new Answer {AnswerId = 22,  QuestionId = 7, AnswerText = "Answer 1", IsCorrect = true},
+            new Answer {AnswerId = 23,  QuestionId = 7, AnswerText = "Answer 2", IsCorrect = false},
+            new Answer {AnswerId = 24,  QuestionId = 7, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 25,  QuestionId = 7, AnswerText = "Answer 4", IsCorrect = false},
 
-            new Answer {AnswerId = 26, QuizId = 2, QuestionId = 8, AnswerText = "Answer 1", IsCorrect = false},
-            new Answer {AnswerId = 27, QuizId = 2, QuestionId = 8, AnswerText = "Answer 2", IsCorrect = true},
-            new Answer {AnswerId = 28, QuizId = 2, QuestionId = 8, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 26,  QuestionId = 8, AnswerText = "Answer 1", IsCorrect = false},
+            new Answer {AnswerId = 27,  QuestionId = 8, AnswerText = "Answer 2", IsCorrect = true},
+            new Answer {AnswerId = 28,  QuestionId = 8, AnswerText = "Answer 3", IsCorrect = false},
 
-            new Answer {AnswerId = 29, QuizId = 3, QuestionId = 9, AnswerText = "Answer 1", IsCorrect = true},
-            new Answer {AnswerId = 30, QuizId = 3, QuestionId = 9, AnswerText = "Answer 2", IsCorrect = false},
-            new Answer {AnswerId = 31, QuizId = 3, QuestionId = 9, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 29,  QuestionId = 9, AnswerText = "Answer 1", IsCorrect = true},
+            new Answer {AnswerId = 30,  QuestionId = 9, AnswerText = "Answer 2", IsCorrect = false},
+            new Answer {AnswerId = 31,  QuestionId = 9, AnswerText = "Answer 3", IsCorrect = false},
 
-            new Answer {AnswerId = 32, QuizId = 3, QuestionId = 10, AnswerText = "Answer 1", IsCorrect = false},
-            new Answer {AnswerId = 33, QuizId = 3, QuestionId = 10, AnswerText = "Answer 2", IsCorrect = true},
-            new Answer {AnswerId = 34, QuizId = 3, QuestionId = 10, AnswerText = "Answer 3", IsCorrect = false},
-            new Answer {AnswerId = 35, QuizId = 3, QuestionId = 10, AnswerText = "Answer 4", IsCorrect = false},
+            new Answer {AnswerId = 32,  QuestionId = 10, AnswerText = "Answer 1", IsCorrect = false},
+            new Answer {AnswerId = 33,  QuestionId = 10, AnswerText = "Answer 2", IsCorrect = true},
+            new Answer {AnswerId = 34,  QuestionId = 10, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 35,  QuestionId = 10, AnswerText = "Answer 4", IsCorrect = false},
 
-            new Answer {AnswerId = 36, QuizId = 3, QuestionId = 11, AnswerText = "Answer 1", IsCorrect = true},
-            new Answer {AnswerId = 37, QuizId = 3, QuestionId = 11, AnswerText = "Answer 2", IsCorrect = false},
-            new Answer {AnswerId = 38, QuizId = 3, QuestionId = 11, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 36,  QuestionId = 11, AnswerText = "Answer 1", IsCorrect = true},
+            new Answer {AnswerId = 37,  QuestionId = 11, AnswerText = "Answer 2", IsCorrect = false},
+            new Answer {AnswerId = 38,  QuestionId = 11, AnswerText = "Answer 3", IsCorrect = false},
         };
+
+        //private static Answer[] _mockAnswers = new[]
+        //{
+        //    new Answer {AnswerId = 1, QuizId = 1, QuestionId = 1, AnswerText = "Answer 1", IsCorrect = true},
+        //    new Answer {AnswerId = 2, QuizId = 1, QuestionId = 1, AnswerText = "Answer 2", IsCorrect = false},
+        //    new Answer {AnswerId = 3, QuizId = 1, QuestionId = 1, AnswerText = "Answer 3", IsCorrect = false},
+        //    new Answer {AnswerId = 4, QuizId = 1, QuestionId = 1, AnswerText = "Answer 4", IsCorrect = false},
+
+        //    new Answer {AnswerId = 5, QuizId = 1, QuestionId = 2, AnswerText = "Answer 1", IsCorrect = false},
+        //    new Answer {AnswerId = 6, QuizId = 1, QuestionId = 2, AnswerText = "Answer 2", IsCorrect = true},
+        //    new Answer {AnswerId = 7, QuizId = 1, QuestionId = 2, AnswerText = "Answer 3", IsCorrect = false},
+
+        //    new Answer {AnswerId = 8, QuizId = 1, QuestionId = 3, AnswerText = "Answer 1", IsCorrect = true},
+        //    new Answer {AnswerId = 9, QuizId = 1, QuestionId = 3, AnswerText = "Answer 2", IsCorrect = false},
+        //    new Answer {AnswerId = 10, QuizId = 1, QuestionId = 3, AnswerText = "Answer 3", IsCorrect = false},
+        //    new Answer {AnswerId = 11, QuizId = 1, QuestionId = 3, AnswerText = "Answer 4", IsCorrect = false},
+
+        //    new Answer {AnswerId = 12, QuizId = 1, QuestionId = 4, AnswerText = "Answer 1", IsCorrect = false},
+        //    new Answer {AnswerId = 13, QuizId = 1, QuestionId = 4, AnswerText = "Answer 2", IsCorrect = true},
+        //    new Answer {AnswerId = 14, QuizId = 1, QuestionId = 4, AnswerText = "Answer 3", IsCorrect = false},
+
+        //    new Answer {AnswerId = 15, QuizId = 2, QuestionId = 5, AnswerText = "Answer 1", IsCorrect = true},
+        //    new Answer {AnswerId = 16, QuizId = 2, QuestionId = 5, AnswerText = "Answer 2", IsCorrect = false},
+        //    new Answer {AnswerId = 17, QuizId = 2, QuestionId = 5, AnswerText = "Answer 3", IsCorrect = false},
+        //    new Answer {AnswerId = 18, QuizId = 2, QuestionId = 5, AnswerText = "Answer 4", IsCorrect = false},
+
+        //    new Answer {AnswerId = 19, QuizId = 2, QuestionId = 6, AnswerText = "Answer 1", IsCorrect = false},
+        //    new Answer {AnswerId = 20, QuizId = 2, QuestionId = 6, AnswerText = "Answer 2", IsCorrect = true},
+        //    new Answer {AnswerId = 21, QuizId = 2, QuestionId = 6, AnswerText = "Answer 3", IsCorrect = false},
+
+        //    new Answer {AnswerId = 22, QuizId = 2, QuestionId = 7, AnswerText = "Answer 1", IsCorrect = true},
+        //    new Answer {AnswerId = 23, QuizId = 2, QuestionId = 7, AnswerText = "Answer 2", IsCorrect = false},
+        //    new Answer {AnswerId = 24, QuizId = 2, QuestionId = 7, AnswerText = "Answer 3", IsCorrect = false},
+        //    new Answer {AnswerId = 25, QuizId = 2, QuestionId = 7, AnswerText = "Answer 4", IsCorrect = false},
+
+        //    new Answer {AnswerId = 26, QuizId = 2, QuestionId = 8, AnswerText = "Answer 1", IsCorrect = false},
+        //    new Answer {AnswerId = 27, QuizId = 2, QuestionId = 8, AnswerText = "Answer 2", IsCorrect = true},
+        //    new Answer {AnswerId = 28, QuizId = 2, QuestionId = 8, AnswerText = "Answer 3", IsCorrect = false},
+
+        //    new Answer {AnswerId = 29, QuizId = 3, QuestionId = 9, AnswerText = "Answer 1", IsCorrect = true},
+        //    new Answer {AnswerId = 30, QuizId = 3, QuestionId = 9, AnswerText = "Answer 2", IsCorrect = false},
+        //    new Answer {AnswerId = 31, QuizId = 3, QuestionId = 9, AnswerText = "Answer 3", IsCorrect = false},
+
+        //    new Answer {AnswerId = 32, QuizId = 3, QuestionId = 10, AnswerText = "Answer 1", IsCorrect = false},
+        //    new Answer {AnswerId = 33, QuizId = 3, QuestionId = 10, AnswerText = "Answer 2", IsCorrect = true},
+        //    new Answer {AnswerId = 34, QuizId = 3, QuestionId = 10, AnswerText = "Answer 3", IsCorrect = false},
+        //    new Answer {AnswerId = 35, QuizId = 3, QuestionId = 10, AnswerText = "Answer 4", IsCorrect = false},
+
+        //    new Answer {AnswerId = 36, QuizId = 3, QuestionId = 11, AnswerText = "Answer 1", IsCorrect = true},
+        //    new Answer {AnswerId = 37, QuizId = 3, QuestionId = 11, AnswerText = "Answer 2", IsCorrect = false},
+        //    new Answer {AnswerId = 38, QuizId = 3, QuestionId = 11, AnswerText = "Answer 3", IsCorrect = false},
+        //};
 
         //private static IdentityRole[] _mockRoles = new[]
         //{
