@@ -126,15 +126,33 @@ namespace Quiz1.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title")] Quiz quiz)
+        public async Task<IActionResult> Create(CreateViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(quiz);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return BadRequest(ModelState);
             }
-            return View(quiz);
+
+            var quiz = new Quiz
+            {
+                Title = model.Quiz.Title,
+                Questions = model.Quiz.Questions
+            };
+
+            //for (int i = 0; i < quiz.Questions.Count; i++)
+            //{
+            //    model.Question.QuestionText = quiz.Questions[0].QuestionText;
+
+            //}
+            
+           
+
+            await _context.Quizzes.AddAsync(quiz);
+
+            //await _context.Questions.AddAsync(question);
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
         // GET: Quiz/Edit/5
