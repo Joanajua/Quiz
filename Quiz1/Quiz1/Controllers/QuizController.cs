@@ -116,7 +116,7 @@ namespace Quiz1.Controllers
         // GET: Quiz/Create
         public IActionResult Create()
         {
-            return View();
+            return View(new CreateViewModel());
         }
 
         // POST: Quiz/Create
@@ -129,11 +129,30 @@ namespace Quiz1.Controllers
                 return BadRequest(ModelState);
             }
 
+            var questions = new List<Question>();
+            foreach (var questionModel in model.Questions)
+            {
+                var question = new Question
+                {
+                    QuestionText = questionModel.QuestionText,
+                    Answers = questionModel.Answers
+                };
+
+                questions.Add(question);
+            }
+
             var quiz = new Quiz
             {
-                Title = model.Quiz.Title,
-                Questions = model.Quiz.Questions
+                Title = model.Title,
+                Questions = questions
             };
+
+            //var quiz = new Quiz
+            //{
+            //    Title = model.Title,
+            //    Questions = model.Questions
+            //};
+
 
             await _context.Quizzes.AddAsync(quiz);
 

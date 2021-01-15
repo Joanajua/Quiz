@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Create";
 }
+@{ int i;}
+@{ int a;}
 
 <div>
     <a asp-action="Index"><< Back to List</a>
@@ -16,84 +18,94 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @*---> Quiz*@
             <div class="form-group">
-                <label asp-for="Quiz.Title" class="control-label"></label>
-                <input asp-for="Quiz.Title" class="form-control" />
-                <span asp-validation-for="Quiz.Title" class="text-danger"></span>
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="card">
+
                 @*---> 1 Question*@
-                <div class="form-group">
-                    <label asp-for="Quiz.Questions[0].QuestionText" class="control-label"></label>
-                    @Html.TextBox("Quiz.Questions[0].QuestionText")
-                    <span asp-validation-for="Quiz.Questions[0].QuestionText" class="text-danger"></span>
-                </div>
-                @*---> 1 Answer*@
-                <div class="form-group">
-                    <label asp-for="Quiz.Questions[0].Answers[0].AnswerText" class="control-label"></label>
-                    @Html.TextBox("Quiz.Questions[0].Answers[0].AnswerText")
-                    <span asp-validation-for="Quiz.Questions[0].Answers[0].AnswerText" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        @Html.CheckBox("Quiz.Questions[0].Answers[0].IsCorrect")
-                        @Html.DisplayNameFor(model => model.Quiz.Questions[0].Answers[0].IsCorrect)
-                    </label>
-                </div>
-                @*---> 2 Answer*@
-                <div class="form-group">
-                    <label asp-for="Quiz.Questions[0].Answers[1].AnswerText" class="control-label"></label>
-                    @Html.TextBox("Quiz.Questions[0].Answers[1].AnswerText")
-                    <span asp-validation-for="Quiz.Questions[0].Answers[1].AnswerText" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        @Html.CheckBox("Quiz.Questions[0].Answers[1].IsCorrect")
-                        @Html.DisplayNameFor(model => model.Quiz.Questions[0].Answers[1].IsCorrect)
-                    </label>
-                </div>
-                @*---> 3 Answer*@
-                <div class="form-group">
-                    <label asp-for="Quiz.Questions[0].Answers[2].AnswerText" class="control-label"></label>
-                    @Html.TextBox("Quiz.Questions[0].Answers[2].AnswerText")
-                    <span asp-validation-for="Quiz.Questions[0].Answers[2].AnswerText" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        @Html.CheckBox("Quiz.Questions[0].Answers[2].IsCorrect")
-                        @Html.DisplayNameFor(model => model.Quiz.Questions[0].Answers[2].IsCorrect)
-                    </label>
-                </div>
-                @*---> 4 Answer*@
-                <div class="form-group">
-                    <label asp-for="Quiz.Questions[0].Answers[3].AnswerText" class="control-label"></label>
-                    @Html.TextBox("Quiz.Questions[0].Answers[3].AnswerText")
-                    <span asp-validation-for="Quiz.Questions[0].Answers[3].AnswerText" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        @Html.CheckBox("Quiz.Questions[0].Answers[3].IsCorrect")
-                        @Html.DisplayNameFor(model => model.Quiz.Questions[0].Answers[3].IsCorrect)
-                    </label>
-                </div>
-                @*---> 2 Question*@
-                <div class="form-group">
-                    <label asp-for="Quiz.Questions[1].QuestionText" class="control-label"></label>
-                    @Html.TextBox("Quiz.Questions[1].QuestionText")
-                    <span asp-validation-for="Quiz.Questions[1].QuestionText" class="text-danger"></span>
-                </div>
+                @for (i = 0; i < 3; i++)
+                {
+                    <div class="form-group" id="Question[i]">
+                        <label asp-for="Questions[i].QuestionText" class="control-label"></label>
+                        @Html.TextBoxFor(m => m.Questions[i].QuestionText)
+                        <span asp-validation-for="Questions[i].QuestionText" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label asp-for="Quiz.Questions[1].Answers[0].AnswerText" class="control-label"></label>
-                    @Html.TextBox("Quiz.Questions[1].Answers[0].AnswerText")
-                    <span asp-validation-for="Quiz.Questions[1].Answers[0].AnswerText" class="text-danger"></span>
-                </div>
+                    @*---> 1 Answer*@
+                    @for (a = 0; a < 3; a++)
+                    {
+                        <div class="form-group" id="Questions[i].Answer[a]">
+                            <label asp-for="Questions[i].Answers[a].AnswerText" class="control-label"></label>
+                            @*@Html.TextBox("Answers[0].AnswerText")*@
+                            @Html.TextBoxFor(m => m.Questions[i].Answers[a].AnswerText)
+                            <span asp-validation-for="Questions[i].Answers[a].AnswerText" class="text-danger"></span>
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                @Html.CheckBoxFor(m=>m.Questions[i].Answers[a].IsCorrect)
+                                @Html.DisplayNameFor(model => model.Questions[i].Answers[a].IsCorrect)
+                            </label>
+                        </div>
+                    }
+                }
 
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        @Html.CheckBox("Quiz.Questions[1].Answers[0].IsCorrect")
-                        @Html.DisplayNameFor(model => model.Quiz.Questions[1].Answers[0].IsCorrect)
-                    </label>
-                </div>
+                @*---> 2 Answer
+                    <div class="form-group">
+                        <label asp-for="Quiz.Questions[0].Answers[1].AnswerText" class="control-label"></label>
+                        @Html.TextBox("Quiz.Questions[0].Answers[1].AnswerText")
+                        <span asp-validation-for="Quiz.Questions[0].Answers[1].AnswerText" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            @Html.CheckBox("Quiz.Questions[0].Answers[1].IsCorrect")
+                            @Html.DisplayNameFor(model => model.Quiz.Questions[0].Answers[1].IsCorrect)
+                        </label>
+                    </div>
+                            @*---> 3 Answer *@
+                @*< div class="form-group">
+                        <label asp-for="Quiz.Questions[0].Answers[2].AnswerText" class="control-label"></label>
+                        @Html.TextBox("Quiz.Questions[0].Answers[2].AnswerText")
+                        <span asp-validation-for="Quiz.Questions[0].Answers[2].AnswerText" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            @Html.CheckBox("Quiz.Questions[0].Answers[2].IsCorrect")
+                            @Html.DisplayNameFor(model => model.Quiz.Questions[0].Answers[2].IsCorrect)
+                        </label>
+                    </div>
+                    ---> 4 Answer
+                    <div class="form-group">
+                        <label asp-for="Quiz.Questions[0].Answers[3].AnswerText" class="control-label"></label>
+                        @Html.TextBox("Quiz.Questions[0].Answers[3].AnswerText")
+                        <span asp-validation-for="Quiz.Questions[0].Answers[3].AnswerText" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            @Html.CheckBox("Quiz.Questions[0].Answers[3].IsCorrect")
+                            @Html.DisplayNameFor(model => model.Quiz.Questions[0].Answers[3].IsCorrect)
+                        </label>
+                    </div>
+                    ---> 2 Question
+                    <div class="form-group">
+                        <label asp-for="Quiz.Questions[1].QuestionText" class="control-label"></label>
+                        @Html.TextBox("Quiz.Questions[1].QuestionText")
+                        <span asp-validation-for="Quiz.Questions[1].QuestionText" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Quiz.Questions[1].Answers[0].AnswerText" class="control-label"></label>
+                        @Html.TextBox("Quiz.Questions[1].Answers[0].AnswerText")
+                        <span asp-validation-for="Quiz.Questions[1].Answers[0].AnswerText" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            @Html.CheckBox("Quiz.Questions[1].Answers[0].IsCorrect")
+                            @Html.DisplayNameFor(model => model.Quiz.Questions[1].Answers[0].IsCorrect)
+                        </label>
+                    </div>*@
 
             </div>
             <div class=" form-group">

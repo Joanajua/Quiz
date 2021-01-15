@@ -18,6 +18,6 @@ namespace Quiz1.Models
         [StringLength(500)]
         public string QuestionText { get; set; }
 
-        public List<Answer> Answers { get; set; }
+        public List<Answer> Answers { get; set; } 
     }
 }
