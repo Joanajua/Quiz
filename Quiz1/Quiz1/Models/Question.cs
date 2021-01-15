@@ -13,7 +13,7 @@ namespace Quiz1.Models
 
         public int QuizId { get; set; }
 
-        [Required(ErrorMessage = "Please enter a Question.")]
+        [Required(ErrorMessage = "Please enter a Question")]
         [DisplayName("Question")]
         [StringLength(500)]
         public string QuestionText { get; set; }
