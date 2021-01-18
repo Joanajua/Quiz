@@ -163,20 +163,32 @@ namespace Quiz1.Controllers
 
                     if (numCheckBoxes != 1)
                     {
-                        ModelState.AddModelError(string.Empty, "Each Question needs to have at least and only 1 correct answer.");
+                        ModelState.AddModelError(string.Empty, "Each Question needs to have at least 1 and only 1 correct answer.");
                         return View(model);
                     }
 
                     questions.Add(newQuestion);
                 }
 
-                var quiz = new Quiz
+                // TODO - VALIDATE QUIZ DOESN'T EXIST IN DB
+                // TODO - MAYBE CHECK IF USER HAS THE RIGHT ROLE TO MODIFY DB
+
+                var newQuiz = new Quiz
                 {
                     Title = model.Title,
                     Questions = questions
                 };
 
-                await _context.Quizzes.AddAsync(quiz);
+                var quiz = await _context.Quizzes.FirstOrDefaultAsync(q=> q.Title == newQuiz.Title);
+
+                // Not sure about the following part
+                if (quiz != null)
+                {
+                    ModelState.AddModelError(string.Empty, "A quiz with the same title already exist in the system.");
+                    return View(model);
+                }
+
+                await _context.Quizzes.AddAsync(newQuiz);
 
                 await _context.SaveChangesAsync();
 
@@ -187,7 +199,7 @@ namespace Quiz1.Controllers
                 // It is to difference the message coming from the Edit page
                 TempData["create"] = "Create";
 
-                return RedirectToAction("Details", new { id = quiz.QuizId });
+                return RedirectToAction("Details", new { id = newQuiz.QuizId });
             }
 
             foreach (var value in ModelState.Values)
@@ -245,13 +257,20 @@ namespace Quiz1.Controllers
                 return BadRequest();
             }
 
-            var quiz = await _context.Quizzes.FindAsync(id);
+            var quiz = await _context.Quizzes.FirstOrDefaultAsync(q=>q.QuizId == id);
+
             if (quiz == null)
             {
                 return NotFound($"Quiz id {id} does not exist.");
             }
 
-            //var questions = await _context.Questions.FindAsync(id).to;
+            quiz.Questions = await _context.Questions.Where(qu => qu.QuizId == id).ToListAsync();
+
+            foreach (var question in quiz.Questions)
+            {
+                question.Answers = await _context.Answers.Where(a => a.QuestionId == question.QuestionId).ToListAsync();
+            }
+
             return View(quiz);
         }
 

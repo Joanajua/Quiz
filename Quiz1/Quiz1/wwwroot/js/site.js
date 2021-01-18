@@ -58,7 +58,3 @@ $(document).ready(function () {
         $(this).prop('checked', true);
     });
 });
-
-//function IsOneBoxChecked() {
-//    if ($("#Q-0 input:checkbox").is('checked', true));
-//}
