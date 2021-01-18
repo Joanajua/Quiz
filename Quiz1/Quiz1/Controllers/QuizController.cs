@@ -147,17 +147,18 @@ namespace Quiz1.Controllers
                 Questions = questions
             };
 
-            //var quiz = new Quiz
-            //{
-            //    Title = model.Title,
-            //    Questions = model.Questions
-            //};
-
-
             await _context.Quizzes.AddAsync(quiz);
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            // Success message to pass to the Details page
+            TempData["message-create"] = "The new Quiz has been added successfully.";
+
+            // Passing which page the user comes from
+            // It is to difference the message coming from the Edit page
+            TempData["create"] = "Create";
+
+            return RedirectToAction("Details", new{ id = quiz.QuizId});
         }
 
         // GET: Quiz/Edit/5

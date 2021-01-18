@@ -9,9 +9,6 @@ namespace Quiz1.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AnswerId { get; set; }
-
-        //public int QuizId { get; set; }
-
         public int QuestionId { get; set; }
 
         [Required(ErrorMessage = "Please enter an answer.")]
@@ -19,8 +16,9 @@ namespace Quiz1.Models
         [StringLength(500)]
         public string AnswerText { get; set; }
 
-        [DisplayName("Correct")]
+        [DisplayName("Correct answer")]
         [DefaultValue(false)]
+
         public bool IsCorrect { get; set; }
     }
 }

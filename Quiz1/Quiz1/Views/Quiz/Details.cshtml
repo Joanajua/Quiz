@@ -4,11 +4,42 @@
 @{
     ViewData["Title"] = "Details";
 
+    // Data coming from Edit page
+    ViewData["Message-edit"] = TempData["message-edit"];
+    ViewData["Edit"] = TempData["edit"];
+
+    // Data coming from Create page
+    ViewData["Message-create"] = TempData["message-create"];
+    ViewData["Create"] = TempData["create"];
 }
 
-<div>
+<p>
     <a asp-action="Index"><< Back to List</a>
-</div>
+</p>
+
+@if (ViewData["Message-edit"] != null || ViewData["Message-create"] != null)
+{
+    @if (ViewData["Edit"] != null)
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading">The Quiz has been successfully updated.</h4>
+            @ViewData["Message-edit"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading">The new Quiz has been added successfully to the system.</h4>
+            @ViewData["Message-create"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+}
 
 <h1 class="py-3">@Model.Quiz.Title</h1>
 
@@ -40,11 +71,11 @@
 
 <div>
     @*@if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-    {*@
-        <form method="post" asp-action="Delete" asp-route-id="@Model.Quiz.QuizId">
-            <a class="btn btn-primary" asp-controller="Quiz" asp-action="Edit" asp-route-id="@Model.Quiz.QuizId">Edit</a>
-            <button type="submit" class="btn btn-dark">Delete</button>
-        </form>
+        {*@
+    <form method="post" asp-action="Delete" asp-route-id="@Model.Quiz.QuizId">
+        <a class="btn btn-primary" asp-controller="Quiz" asp-action="Edit" asp-route-id="@Model.Quiz.QuizId">Edit</a>
+        <button type="submit" class="btn btn-dark">Delete</button>
+    </form>
     @*}*@
 </div>
 

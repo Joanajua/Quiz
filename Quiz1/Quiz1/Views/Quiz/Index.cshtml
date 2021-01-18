@@ -3,9 +3,23 @@
 
 @{
     ViewData["Title"] = "List";
+
+    // Data coming from delete endpoint
+    ViewData["Message"] = TempData["message-delete"];
 }
 
 @{int i = 1;}
+
+@if (ViewData["Message"] != null)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <h4 class="alert-heading">The selected Quiz has been successfully deleted from the system.</h4>
+        @ViewData["Message"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
 
 <h1>List of Quizzes</h1>
 

@@ -14,59 +14,16 @@ namespace Quiz1.ViewModels.QuizViewModels
         {
             new Question()
             {
-                Answers = new List<Answer>
-                {
-                    new Answer(),
-                    new Answer(),
-                    new Answer()
-                }
+                Answers = new List<Answer> { new Answer(), new Answer(), new Answer(), new Answer() }
             },
             new Question()
             {
-                Answers = new List<Answer>
-                {
-                    new Answer(),
-                    new Answer(),
-                    new Answer()
-                }
+                Answers = new List<Answer> { new Answer(), new Answer(), new Answer(), new Answer() }
             },
             new Question()
             {
-                Answers = new List<Answer>
-                {
-                    new Answer(),
-                    new Answer(),
-                    new Answer()
-                }
-            },
-            new Question()
-            {
-                Answers = new List<Answer>
-                {
-                    new Answer(),
-                    new Answer(),
-                    new Answer()
-                }
-            },
+                Answers = new List<Answer> { new Answer(), new Answer(), new Answer(), new Answer() }
+            }
         };
-
-        //public List<Answer> Answers { get; set; } = new List<Answer>
-        //{
-        //    new Answer(),
-        //    new Answer(),
-        //    new Answer(),
-        //    new Answer(),
-        //    new Answer(),
-        //    new Answer(),
-        //    new Answer(),
-        //    new Answer(),
-        //    new Answer(),
-        //    new Answer(),
-        //    new Answer(),
-        //    new Answer()
-        //};
-
-        //public Quiz Quiz { get; set; }
-
     }
 }
