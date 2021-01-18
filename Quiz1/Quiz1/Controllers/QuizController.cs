@@ -50,11 +50,14 @@ namespace Quiz1.Controllers
                 if (int.TryParse(searchString, out stringResult))
                 {
                     // Search by Quiz Id
-                    quizzes = quizzes.Where(s => s.QuizId.Equals(stringResult));
+                    quizzes = quizzes.Where(s => s.QuizId.Equals(stringResult)).ToList();
                 }
-                // Search by Quiz Title
-                // The search is NOT case sensitive.
-                quizzes = quizzes.Where(s => s.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase));
+                else
+                {
+                    // Search by Quiz Title
+                    // The search is NOT case sensitive.
+                    quizzes = quizzes.Where(s => s.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase));
+                }
 
                 TempData["search"] = searchString;
 

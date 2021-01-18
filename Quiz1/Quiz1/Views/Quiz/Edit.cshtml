@@ -21,6 +21,10 @@
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
+            @foreach (var question in @Model.Questions)
+            {
+
+            }
             <div class="form-group">
                 <input type="submit" value="Update" class="btn btn-primary" />
             </div>
