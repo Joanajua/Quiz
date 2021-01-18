@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Quiz1.Models;
 using Quiz1.Utilities.CustomExtensions;
+using Quiz1.Utilities.Constants;
 using Quiz1.ViewModels.QuizViewModels;
 
 namespace Quiz1.Controllers
@@ -127,41 +128,113 @@ namespace Quiz1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return BadRequest(ModelState);
-            }
-
-            var questions = new List<Question>();
-            foreach (var questionModel in model.Questions)
-            {
-                var question = new Question
+                if (model.Questions.Count != QuizConstants.NumQuestions)
                 {
-                    QuestionText = questionModel.QuestionText,
-                    Answers = questionModel.Answers
+                    ModelState.AddModelError(string.Empty, "The three question fields need to be completed.");
+                    return View(model);
+                }
+
+                var questions = new List<Question>();
+                foreach (var question in model.Questions)
+                {
+                    var newQuestion = new Question
+                    {
+                        QuestionText = question.QuestionText,
+                        Answers = question.Answers
+                    };
+
+                    if (question.Answers.Count != QuizConstants.NumAnswers)
+                    {
+                        ModelState.AddModelError(string.Empty, "The four answer fields need to be completed.");
+                        return View(model);
+                    }
+
+                    var numCheckBoxes = 0;
+
+                    foreach (var answer in question.Answers)
+                    {
+                        if (answer.IsCorrect)
+                        {
+                            numCheckBoxes++;
+                        }
+                    }
+
+                    if (numCheckBoxes != 1)
+                    {
+                        ModelState.AddModelError(string.Empty, "Each Question needs to have at least and only 1 correct answer.");
+                        return View(model);
+                    }
+
+                    questions.Add(newQuestion);
+                }
+
+                var quiz = new Quiz
+                {
+                    Title = model.Title,
+                    Questions = questions
                 };
 
-                questions.Add(question);
+                await _context.Quizzes.AddAsync(quiz);
+
+                await _context.SaveChangesAsync();
+
+                // Success message to pass to the Details page
+                //TempData["message-create"] = "The new Quiz has been added successfully.";
+
+                // Passing which page the user comes from
+                // It is to difference the message coming from the Edit page
+                TempData["create"] = "Create";
+
+                return RedirectToAction("Details", new { id = quiz.QuizId });
             }
 
-            var quiz = new Quiz
+            foreach (var value in ModelState.Values)
             {
-                Title = model.Title,
-                Questions = questions
-            };
+                foreach (var error in value.Errors)
+                {
+                    model.Errors.Add(error.ErrorMessage);
+                }
+            }
+            
+            return RedirectToAction("Create", model);
 
-            await _context.Quizzes.AddAsync(quiz);
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
-            await _context.SaveChangesAsync();
+            //var questions = new List<Question>();
+            //foreach (var questionModel in model.Questions)
+            //{
+            //    var question = new Question
+            //    {
+            //        QuestionText = questionModel.QuestionText,
+            //        Answers = questionModel.Answers
+            //    };
 
-            // Success message to pass to the Details page
-            TempData["message-create"] = "The new Quiz has been added successfully.";
+            //    questions.Add(question);
+            //}
 
-            // Passing which page the user comes from
-            // It is to difference the message coming from the Edit page
-            TempData["create"] = "Create";
+            //var quiz = new Quiz
+            //{
+            //    Title = model.Title,
+            //    Questions = questions
+            //};
 
-            return RedirectToAction("Details", new{ id = quiz.QuizId});
+            //await _context.Quizzes.AddAsync(quiz);
+
+            //await _context.SaveChangesAsync();
+
+            //// Success message to pass to the Details page
+            //TempData["message-create"] = "The new Quiz has been added successfully.";
+
+            //// Passing which page the user comes from
+            //// It is to difference the message coming from the Edit page
+            //TempData["create"] = "Create";
+
+            //return RedirectToAction("Details", new{ id = quiz.QuizId});
         }
 
         // GET: Quiz/Edit/5
@@ -177,6 +250,8 @@ namespace Quiz1.Controllers
             {
                 return NotFound($"Quiz id {id} does not exist.");
             }
+
+            //var questions = await _context.Questions.FindAsync(id).to;
             return View(quiz);
         }
 

@@ -26,6 +26,7 @@ namespace Quiz1
                 options.UseNpgsql(
                     _configuration.GetConnectionString("AppConnection")));
 
+            // Custom rules for password
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 10;

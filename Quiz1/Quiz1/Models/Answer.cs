@@ -13,12 +13,11 @@ namespace Quiz1.Models
 
         [Required(ErrorMessage = "Please enter an answer.")]
         [DisplayName("Answer")]
-        [StringLength(500)]
+        [MaxLength(150, ErrorMessage = "Answer cannot exceed 150 characters.")]
         public string AnswerText { get; set; }
 
         [DisplayName("Correct answer")]
         [DefaultValue(false)]
-
         public bool IsCorrect { get; set; }
     }
 }

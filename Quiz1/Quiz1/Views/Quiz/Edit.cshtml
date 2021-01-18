@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Edit";
 }
+@{ int i;}
+@{ int a;}
 
 <p>
     <a asp-action="Index"><< Back to List</a>
@@ -15,18 +17,66 @@
     <div class="col-md-4">
         <form asp-action="Edit" method="post" role="form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="QuizId" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            @foreach (var question in @Model.Questions)
-            {
 
-            }
-            <div class="form-group">
-                <input type="submit" value="Update" class="btn btn-primary" />
+            <div class="card" m-3 id="card-create">
+
+                <div class="card-header">
+
+                    @*---> Quiz*@
+                    <input type="hidden" asp-for="QuizId" />
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="card-body px-5">
+                    @*---> 3 Questions*@
+                    @for (i = 0; i < 3; i++)
+                    {
+                        <div id="Q-@i">
+
+                            <div class="card-title pt-2">
+                                
+                                <input type="hidden" asp-for="@Model.Questions[i].QuestionId" />
+                                <div class="form-group" id="Question">
+                                    <label asp-for="Questions[i].QuestionText" class="control-label"></label>
+                                    @Html.TextAreaFor(m => m.Questions[i].QuestionText, new { @class = "form-control" })
+                                    <span asp-validation-for="Questions[i].QuestionText" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-text pl-3" id="answer-with-checkbox">
+
+                            @*---> 4 Answers*@
+                            @for (a = 0; a < 4; a++)
+                            {
+                                <div class="form-group" id="Answer">
+                                    <input type="hidden" asp-for="Questions[i].Answers[a].AnswerId" />
+
+                                    <label asp-for="Questions[i].Answers[a].AnswerText" class="control-label"></label>
+                                    @Html.TextAreaFor(m => m.Questions[i].Answers[a].AnswerText, new {@class = "form-control"})
+                                    <span asp-validation-for="Questions[i].Answers[a].AnswerText" class="text-danger"></span>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        @Html.CheckBoxFor(m => m.Questions[i].Answers[a].IsCorrect, new { @class = "form-check-input" })
+                                        @Html.DisplayNameFor(model => model.Questions[i].Answers[a].IsCorrect)
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    }
+
+                </div>
+
+                <div class="card-footer">
+                    <div class="form-group">
+                        <input type="submit" value="Update" class="btn btn-primary" />
+                    </div>
+                </div>
+
             </div>
         </form>
     </div>

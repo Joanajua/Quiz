@@ -5,11 +5,11 @@
     ViewData["Title"] = "Details";
 
     // Data coming from Edit page
-    ViewData["Message-edit"] = TempData["message-edit"];
+    //ViewData["Message-edit"] = TempData["message-edit"];
     ViewData["Edit"] = TempData["edit"];
 
     // Data coming from Create page
-    ViewData["Message-create"] = TempData["message-create"];
+    //ViewData["Message-create"] = TempData["message-create"];
     ViewData["Create"] = TempData["create"];
 }
 
@@ -23,7 +23,7 @@
     {
         <div class="alert alert-info alert-dismissible fade show" role="alert">
             <h4 class="alert-heading">The Quiz has been successfully updated.</h4>
-            @ViewData["Message-edit"]
+            @*@ViewData["Message-edit"]*@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -33,7 +33,7 @@
     {
         <div class="alert alert-info alert-dismissible fade show" role="alert">
             <h4 class="alert-heading">The new Quiz has been added successfully to the system.</h4>
-            @ViewData["Message-create"]
+            @*@ViewData["Message-create"]*@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>

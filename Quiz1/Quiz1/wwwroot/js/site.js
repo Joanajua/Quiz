@@ -42,28 +42,23 @@ $(document).ready(function () {
         $("#Q-0 input:checkbox").prop('checked', false);
         $(this).prop('checked', true);
     });
-});
 
-$(document).ready(function () {
     $("#Q-1 input:checkbox").click(function () {
         $("#Q-1 input:checkbox").prop('checked', false);
         $(this).prop('checked', true);
     });
-});
 
-$(document).ready(function () {
     $("#Q-2 input:checkbox").click(function () {
         $("#Q-2 input:checkbox").prop('checked', false);
         $(this).prop('checked', true);
     });
-});
 
-$(document).ready(function () {
     $("#Q-3 input:checkbox").click(function () {
         $("#Q-3 input:checkbox").prop('checked', false);
         $(this).prop('checked', true);
     });
 });
+
 //function IsOneBoxChecked() {
 //    if ($("#Q-0 input:checkbox").is('checked', true));
 //}

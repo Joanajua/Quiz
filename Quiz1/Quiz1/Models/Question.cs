@@ -15,7 +15,7 @@ namespace Quiz1.Models
 
         [Required(ErrorMessage = "Please enter a Question")]
         [DisplayName("Question")]
-        [StringLength(500)]
+        [MaxLength(150, ErrorMessage = "Title cannot exceed 150 characters.")]
         public string QuestionText { get; set; }
 
         public List<Answer> Answers { get; set; } 
