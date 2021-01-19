@@ -13,8 +13,7 @@
 @if (ViewData["Message"] != null)
 {
     <div class="alert alert-info alert-dismissible fade show" role="alert">
-        <h4 class="alert-heading">The selected Quiz has been successfully deleted from the system.</h4>
-        @ViewData["Message"]
+        <h4 class="alert-heading"> @ViewData["Message"] </h4>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>

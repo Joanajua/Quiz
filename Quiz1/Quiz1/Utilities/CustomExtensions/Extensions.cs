@@ -91,10 +91,10 @@ namespace Quiz1.Utilities.CustomExtensions
             new Answer {AnswerId = 31,  QuestionId = 8, AnswerText = "Answer 3", IsCorrect = false},
             new Answer {AnswerId = 32,  QuestionId = 8, AnswerText = "Answer 4", IsCorrect = true},
 
-            new Answer {AnswerId = 30,  QuestionId = 9, AnswerText = "Answer 1", IsCorrect = false},
-            new Answer {AnswerId = 31,  QuestionId = 9, AnswerText = "Answer 2", IsCorrect = false},
-            new Answer {AnswerId = 32,  QuestionId = 9, AnswerText = "Answer 3", IsCorrect = false},
-            new Answer {AnswerId = 33,  QuestionId = 9, AnswerText = "Answer 4", IsCorrect = true}
+            new Answer {AnswerId = 33,  QuestionId = 9, AnswerText = "Answer 1", IsCorrect = false},
+            new Answer {AnswerId = 34,  QuestionId = 9, AnswerText = "Answer 2", IsCorrect = false},
+            new Answer {AnswerId = 35,  QuestionId = 9, AnswerText = "Answer 3", IsCorrect = false},
+            new Answer {AnswerId = 36,  QuestionId = 9, AnswerText = "Answer 4", IsCorrect = true}
 
 
         };

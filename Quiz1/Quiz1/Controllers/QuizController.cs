@@ -193,9 +193,6 @@ namespace Quiz1.Controllers
 
                 await _context.SaveChangesAsync();
 
-                // Success message to pass to the Details page
-                //TempData["message-create"] = "The new Quiz has been added successfully.";
-
                 // Passing which page the user comes from
                 // It is to difference the message coming from the Edit page
                 TempData["create"] = "Create";
@@ -278,7 +275,7 @@ namespace Quiz1.Controllers
         // POST: Quiz/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Title")] Quiz quiz)
+        public async Task<IActionResult> Edit(int id, Quiz quiz)
         {
             if (id != quiz.QuizId)
             {
@@ -333,8 +330,25 @@ namespace Quiz1.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var quiz = await _context.Quizzes.FindAsync(id);
+            var questions = await _context.Questions.Where(q => q.QuizId == id).ToListAsync();
+
+            foreach (var question in questions)
+            {
+                var answers = await _context.Answers.Where(a => a.QuestionId == question.QuestionId).ToListAsync();
+                foreach (var answer in answers)
+                {
+                    _context.Answers.Remove(answer);
+                }
+
+                _context.Questions.Remove(question);
+            }
+
             _context.Quizzes.Remove(quiz);
+
             await _context.SaveChangesAsync();
+
+            TempData["message-delete"] = $"The Quiz with id = {id} has been successfully deleted from the system.";
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -369,11 +383,6 @@ namespace Quiz1.Controllers
             foreach (var question in questions)
             {
                 question.Answers = new List<Answer>();
-
-                //if (question.Answers.Count > 0)
-                //{
-                //    question.Answers.Clear();
-                //}
 
                 var filteredAnswers = answers.Where(a => a.QuestionId == question.QuestionId).ToList();
 
