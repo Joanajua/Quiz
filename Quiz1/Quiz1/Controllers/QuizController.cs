@@ -130,9 +130,10 @@ namespace Quiz1.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Validate input has been added to all answers
                 if (model.Questions.Count != QuizConstants.NumQuestions)
                 {
-                    ModelState.AddModelError(string.Empty, "The three question fields need to be completed.");
+                    ModelState.AddModelError(string.Empty, "All the question fields need to be completed.");
                     return View(model);
                 }
 
@@ -147,7 +148,7 @@ namespace Quiz1.Controllers
 
                     if (question.Answers.Count != QuizConstants.NumAnswers)
                     {
-                        ModelState.AddModelError(string.Empty, "The four answer fields need to be completed.");
+                        ModelState.AddModelError(string.Empty, "All the answer fields need to be completed.");
                         return View(model);
                     }
 
@@ -163,7 +164,7 @@ namespace Quiz1.Controllers
 
                     if (numCheckBoxes != 1)
                     {
-                        ModelState.AddModelError(string.Empty, "Each Question needs to have at least 1 and only 1 correct answer.");
+                        ModelState.AddModelError(string.Empty, "Each Question needs to have at least 1 and only 1 answer selected as correct.");
                         return View(model);
                     }
 
@@ -179,9 +180,9 @@ namespace Quiz1.Controllers
                     Questions = questions
                 };
 
+                // Checking a quiz with same Title does not exist in db
                 var quiz = await _context.Quizzes.FirstOrDefaultAsync(q=> q.Title == newQuiz.Title);
 
-                // Not sure about the following part
                 if (quiz != null)
                 {
                     ModelState.AddModelError(string.Empty, "A quiz with the same title already exist in the system.");
