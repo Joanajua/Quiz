@@ -46,12 +46,14 @@ namespace Quiz1.Controllers
                 IEnumerable<Quiz> quizzes = await _context.Quizzes
                     .ToListAsync();
 
-                int stringResult = 0;
+                // TODO - can take out a search method
 
-                if (int.TryParse(searchString, out stringResult))
+                int stringParsed = 0;
+
+                if (int.TryParse(searchString, out stringParsed))
                 {
                     // Search by Quiz Id
-                    quizzes = quizzes.Where(s => s.QuizId.Equals(stringResult)).ToList();
+                    quizzes = quizzes.Where(s => s.QuizId.Equals(stringParsed)).ToList();
                 }
                 else
                 {
@@ -171,7 +173,7 @@ namespace Quiz1.Controllers
                     questions.Add(newQuestion);
                 }
 
-                // TODO - VALIDATE QUIZ DOESN'T EXIST IN DB
+                // TODO - VALIDATE LENGTH OF QUIZ'S TITLE, QUESTIONS AND ANSWERS
                 // TODO - MAYBE CHECK IF USER HAS THE RIGHT ROLE TO MODIFY DB
 
                 var newQuiz = new Quiz
