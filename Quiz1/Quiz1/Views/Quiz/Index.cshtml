@@ -47,10 +47,10 @@
             @foreach (var item in Model)
             {
                 <tr class="row-clicable" onclick="location.href = '@Url.ActionLink("Details", "Quiz", new {id = item.QuizId})'">
-                    <th>
+                    <td>
                         @*Column with int indicating order*@
                         <span>@(i++)</span>
-                    </th>
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Title)
                     </td>
