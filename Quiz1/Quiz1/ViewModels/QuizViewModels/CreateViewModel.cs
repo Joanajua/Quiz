@@ -25,6 +25,8 @@ namespace Quiz1.ViewModels.QuizViewModels
                     Answers = new List<Answer> { new Answer(), new Answer(), new Answer(), new Answer() }
                 }
             };
+
+            Errors = new List<string>();
         }
         [Required]
         public string Title { get; set; }

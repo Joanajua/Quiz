@@ -132,7 +132,7 @@ namespace Quiz1.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Validate input has been added to all answers
+                // Validate input has been added to all questions
                 if (model.Questions.Count != QuizConstants.NumQuestions)
                 {
                     ModelState.AddModelError(string.Empty, "All the question fields need to be completed.");
@@ -140,6 +140,7 @@ namespace Quiz1.Controllers
                 }
 
                 var questions = new List<Question>();
+
                 foreach (var question in model.Questions)
                 {
                     var newQuestion = new Question
@@ -147,6 +148,12 @@ namespace Quiz1.Controllers
                         QuestionText = question.QuestionText,
                         Answers = question.Answers
                     };
+
+                    if (string.IsNullOrWhiteSpace(question.QuestionText))
+                    {
+                        ModelState.AddModelError(string.Empty, "All the question fields need to be completed.");
+                        return View(model);
+                    }
 
                     if (question.Answers.Count != QuizConstants.NumAnswers)
                     {
@@ -158,6 +165,11 @@ namespace Quiz1.Controllers
 
                     foreach (var answer in question.Answers)
                     {
+                        if (string.IsNullOrWhiteSpace(answer.AnswerText))
+                        {
+                            ModelState.AddModelError(string.Empty, "All the answer fields need to be completed.");
+                            return View(model);
+                        }
                         if (answer.IsCorrect)
                         {
                             numCheckBoxes++;
@@ -209,8 +221,8 @@ namespace Quiz1.Controllers
                     model.Errors.Add(error.ErrorMessage);
                 }
             }
-            
-            return RedirectToAction("Create", model);
+
+            return View("Create", model);
 
             //if (!ModelState.IsValid)
             //{

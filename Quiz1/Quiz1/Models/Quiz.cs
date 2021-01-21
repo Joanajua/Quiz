@@ -10,8 +10,8 @@ namespace Quiz1.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int QuizId { get; set; }
 
-        [Required(ErrorMessage = "Please enter a title")]
-        [MaxLength(100, ErrorMessage = "Title cannot exceed 100 characters.")]
+        //[Required(ErrorMessage = "Please enter a title")]
+        //[MaxLength(100, ErrorMessage = "Title cannot exceed 100 characters.")]
         public string Title { get; set; }
 
         public List<Question> Questions { get; set; }

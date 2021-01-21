@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Quiz1.Validators;
 
 namespace Quiz1
 {
@@ -32,7 +34,12 @@ namespace Quiz1
                 options.Password.RequiredLength = 10;
             }).AddEntityFrameworkStores<AppDbContext>();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddFluentValidation(config=>
+                {
+                    config.RegisterValidatorsFromAssemblyContaining<QuestionValidator>();
+                    config.ImplicitlyValidateChildProperties = true;
+                });
 
             // For Authorisation -- building and using a policy
             services.AddMvc(options =>

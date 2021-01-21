@@ -56,9 +56,10 @@
                                             <span asp-validation-for="Questions[i].Answers[a].AnswerText" class="text-danger"></span>
                                         </div>
                                         <div class="form-group form-check">
-                                            <label class="form-check-label">
+                                            <label asp-for="Questions[i].Answers[a].IsCorrect" class="form-check-label">
                                                 @Html.CheckBoxFor(m => m.Questions[i].Answers[a].IsCorrect, new { @class = "form-check-input" })
                                                 @Html.DisplayNameFor(model => model.Questions[i].Answers[a].IsCorrect)
+                                                <span asp-validation-for="Questions[i].Answers[a].IsCorrect" class="text-danger"></span>
                                             </label>
                                         </div>
                                     }
