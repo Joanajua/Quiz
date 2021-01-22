@@ -28,27 +28,12 @@ namespace Quiz1.ViewModels.QuizViewModels
 
             Errors = new List<string>();
         }
-        [Required]
+
         public string Title { get; set; }
 
         public List<Question> Questions { get; set; }
 
         public List<string> Errors { get; set; }
 
-        //    = new List<Question>
-        //{
-        //    new Question()
-        //    {
-        //        Answers = new List<Answer> { new Answer(), new Answer(), new Answer(), new Answer() }
-        //    },
-        //    new Question()
-        //    {
-        //        Answers = new List<Answer> { new Answer(), new Answer(), new Answer(), new Answer() }
-        //    },
-        //    new Question()
-        //    {
-        //        Answers = new List<Answer> { new Answer(), new Answer(), new Answer(), new Answer() }
-        //    }
-        //};
     }
 }

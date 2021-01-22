@@ -39,20 +39,9 @@ TEST
 - Microsoft.EntityFrameworkcore.InMemory 3.1.10
 - Microsoft.AspNetCore.TestHost 3.1.10
 
-
-**ISBN pattern 
-# 
-Basic format pre-checks (lookahead):
-Require 10 digits/Xs (no separators).[1888799972]
-Or:
-Require 3 separators
-out of 13 characters total.[1-888799-97-2]
-Or:
-978/979 plus 10 digits (13 total).[9783161484100]
-Or:
-Require 4 separators
-out of 17 characters total. [987-3-16-148410-0]
-
+FLUENT VALIDATION
+- NuGet FluentValidation v 9.4.0
+- NuGet FluentValidation.AspNetCore v 9.4.0
 
 **Roles, Claims and Policies
 4 roles:
