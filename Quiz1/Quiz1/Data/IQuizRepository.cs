@@ -11,7 +11,7 @@ namespace Quiz1.Data
     {
         Task<IEnumerable<Quiz>> GetAll();
 
-        Task<Quiz> GetQuizById(int? quizId);
+        Task<Quiz> GetById(int? quizId);
 
         bool QuizExists(int id);
         bool QuizExists(string title);

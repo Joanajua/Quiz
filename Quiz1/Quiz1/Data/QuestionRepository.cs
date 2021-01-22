@@ -37,7 +37,7 @@ namespace Quiz1.Data
 
         public IEnumerable<Question> GetAllByQuizId(int? quizId)
         {
-            return  _context.Questions
+            return _context.Questions
                 .Where(q => q.QuizId == quizId)
                 .OrderBy(q => q.QuestionId)
                 .ToList();

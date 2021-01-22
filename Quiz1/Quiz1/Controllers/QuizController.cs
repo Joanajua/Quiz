@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Quiz1.Data;
 using Quiz1.Models;
+using Quiz1.Services;
 using Quiz1.Utilities.CustomExtensions;
 using Quiz1.Utilities.Constants;
 using Quiz1.Validators;
@@ -17,25 +18,27 @@ namespace Quiz1.Controllers
 {
     public class QuizController : Controller
     {
-        private readonly IQuizRepository _quizRepository;
-        private readonly IQuestionRepository _questionRepository;
-        private readonly IAnswerRepository _answerRepository;
+        private readonly IQuizService _quizService;
 
-        private readonly AppDbContext _context;
+        //private readonly IQuizRepository _quizRepository;
+        //private readonly IQuestionRepository _questionRepository;
+        //private readonly IAnswerRepository _answerRepository;
 
-        public QuizController(IQuizRepository quizRepository, IQuestionRepository questionRepository,
-            IAnswerRepository answerRepository, AppDbContext context)
+        //private readonly AppDbContext _context;
+
+        public QuizController(IQuizService quizService)
         {
-            _quizRepository = quizRepository;
-            _questionRepository = questionRepository;
-            _answerRepository = answerRepository;
-            _context = context;
+            _quizService = quizService;
+            //_quizRepository = quizRepository;
+            //_questionRepository = questionRepository;
+            //_answerRepository = answerRepository;
+            //_context = context;
         }
 
         // GET: Quiz
         public async Task<IActionResult> Index()
         {
-            return View(await _quizRepository.GetAll());
+            return View(await _quizService.GetListQuizzes());
         }
 
         /// <summary>
@@ -54,7 +57,7 @@ namespace Quiz1.Controllers
         {
             if (!String.IsNullOrEmpty(searchString))
             {
-                var quizzes = await _quizRepository.GetAll();
+                var quizzes = await _quizService.GetListQuizzes();
 
                 // TODO - can take out a search method - ProcessSearchString()
 
@@ -87,14 +90,14 @@ namespace Quiz1.Controllers
                 return BadRequest();
             }
 
-            var quiz = await _quizRepository.GetQuizById(id);
+            var quiz = await _quizService.GetQuizById(id);
 
             if (quiz == null)
             {
                 return NotFound($"Quiz id {id} does not exist.");
             }
 
-            var questions = _questionRepository.GetAllByQuizId(id);
+            var questions = _quizService.GetListQuestions(id);
 
             if (questions == null)
             {
@@ -105,7 +108,7 @@ namespace Quiz1.Controllers
 
             foreach (var question in questions)
             {
-                answers = _answerRepository.GetAllByQuestionId(question.QuestionId) as List<Answer>;
+                answers = _quizService.GetListAnswers(question.QuestionId) as List<Answer>;
 
                 question.Answers = answers;
 

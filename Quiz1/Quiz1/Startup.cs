@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Quiz1.Data;
+using Quiz1.Services;
 using Quiz1.Validators;
 
 namespace Quiz1
@@ -62,6 +63,8 @@ namespace Quiz1
             });
 
             services.AddScoped<AppDbContext>();
+            services.AddScoped<IQuizService, QuizService>();
+
             services.AddScoped<IQuizRepository, QuizRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<IAnswerRepository, AnswerRepository>();
