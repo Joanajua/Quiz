@@ -4,27 +4,38 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using Quiz1.Data;
 using Quiz1.Models;
 using Quiz1.Utilities.CustomExtensions;
 using Quiz1.Utilities.Constants;
+using Quiz1.Validators;
 using Quiz1.ViewModels.QuizViewModels;
 
 namespace Quiz1.Controllers
 {
     public class QuizController : Controller
     {
+        private readonly IQuizRepository _quizRepository;
+        private readonly IQuestionRepository _questionRepository;
+        private readonly IAnswerRepository _answerRepository;
+
         private readonly AppDbContext _context;
 
-        public QuizController(AppDbContext context)
+        public QuizController(IQuizRepository quizRepository, IQuestionRepository questionRepository,
+            IAnswerRepository answerRepository, AppDbContext context)
         {
+            _quizRepository = quizRepository;
+            _questionRepository = questionRepository;
+            _answerRepository = answerRepository;
             _context = context;
         }
 
         // GET: Quiz
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Quizzes.ToListAsync());
+            return View(await _quizRepository.GetAll());
         }
 
         /// <summary>
@@ -43,14 +54,12 @@ namespace Quiz1.Controllers
         {
             if (!String.IsNullOrEmpty(searchString))
             {
-                IEnumerable<Quiz> quizzes = await _context.Quizzes
-                    .ToListAsync();
+                var quizzes = await _quizRepository.GetAll();
 
-                // TODO - can take out a search method
+                // TODO - can take out a search method - ProcessSearchString()
 
-                int stringParsed = 0;
 
-                if (int.TryParse(searchString, out stringParsed))
+                if (int.TryParse(searchString, out int stringParsed))
                 {
                     // Search by Quiz Id
                     quizzes = quizzes.Where(s => s.QuizId.Equals(stringParsed)).ToList();
@@ -78,36 +87,28 @@ namespace Quiz1.Controllers
                 return BadRequest();
             }
 
-            var quiz = await _context.Quizzes
-                .FirstOrDefaultAsync(m => m.QuizId == id);
+            var quiz = await _quizRepository.GetQuizById(id);
 
             if (quiz == null)
             {
                 return NotFound($"Quiz id {id} does not exist.");
             }
 
-            var questions = await _context.Questions
-                .Where(m => m.QuizId == id)
-                .OrderBy(q => q.QuestionId)
-                .ToListAsync();
+            var questions = _questionRepository.GetAllByQuizId(id);
 
             if (questions == null)
             {
                 return NotFound($"There are no questions for Quiz id {id}.");
             }
 
-            var answers = await _context.Answers.ToListAsync();
+            var answers = new List<Answer>();
 
             foreach (var question in questions)
             {
-                question.Answers = new List<Answer>();
+                answers = _answerRepository.GetAllByQuestionId(question.QuestionId) as List<Answer>;
 
-                var filteredAnswers = answers
-                    .Where(a => a.QuestionId == question.QuestionId)
-                    .OrderByDescending(a => a.IsCorrect)
-                    .ToList();
+                question.Answers = answers;
 
-                question.Answers = filteredAnswers;
             }
 
             var model = new DetailsViewModel
@@ -132,6 +133,8 @@ namespace Quiz1.Controllers
         {
             if (ModelState.IsValid)
             {
+                //model.CreateViewModelOnServerValidator(ModelState);
+
                 // Validate input has been added to all questions
                 if (model.Questions.Count != QuizConstants.NumQuestions)
                 {
@@ -195,15 +198,22 @@ namespace Quiz1.Controllers
                 };
 
                 // Checking a quiz with same Title does not exist in db
-                var quiz = await _context.Quizzes.FirstOrDefaultAsync(q=> q.Title == newQuiz.Title);
+                //var quiz = await _quizRepository.GetQuizByTitle(newQuiz.Title);
 
-                if (quiz != null)
+                //if (quiz != null)
+                //{
+                //    ModelState.AddModelError(string.Empty, "A quiz with the same title already exist in the system.");
+                //    return View(model);
+                //}
+
+                // Checking if a quiz with same Title exists in the db
+                if (_quizRepository.QuizExists(newQuiz.Title))
                 {
                     ModelState.AddModelError(string.Empty, "A quiz with the same title already exist in the system.");
                     return View(model);
                 }
 
-                await _context.Quizzes.AddAsync(newQuiz);
+                _quizRepository.Save(newQuiz);
 
                 await _context.SaveChangesAsync();
 
@@ -269,18 +279,23 @@ namespace Quiz1.Controllers
                 return BadRequest();
             }
 
-            var quiz = await _context.Quizzes.FirstOrDefaultAsync(q=>q.QuizId == id);
+            var quiz = await _quizRepository.GetQuizById(id);
 
             if (quiz == null)
             {
                 return NotFound($"Quiz id {id} does not exist.");
             }
 
-            quiz.Questions = await _context.Questions.Where(qu => qu.QuizId == id).ToListAsync();
+            quiz.Questions = _questionRepository.GetAllByQuizId(id) as List<Question>;
+
+            if (quiz.Questions == null)
+            {
+                return NotFound($"There are no questions for Quiz with id {id}.");
+            }
 
             foreach (var question in quiz.Questions)
             {
-                question.Answers = await _context.Answers.Where(a => a.QuestionId == question.QuestionId).ToListAsync();
+                question.Answers = _answerRepository.GetAllByQuestionId(question.QuestionId) as List<Answer>;
             }
 
             return View(quiz);
@@ -305,7 +320,7 @@ namespace Quiz1.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!QuizExists(quiz.QuizId))
+                    if (!_quizRepository.QuizExists(quiz.QuizId))
                     {
                         return NotFound();
                     }
@@ -327,8 +342,7 @@ namespace Quiz1.Controllers
                 return BadRequest();
             }
 
-            var quiz = await _context.Quizzes
-                .FirstOrDefaultAsync(m => m.QuizId == id);
+            var quiz = await _quizRepository.GetQuizById(id);
 
             if (quiz == null)
             {
@@ -343,21 +357,23 @@ namespace Quiz1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var quiz = await _context.Quizzes.FindAsync(id);
-            var questions = await _context.Questions.Where(q => q.QuizId == id).ToListAsync();
+            var quiz = await _quizRepository.GetQuizById(id);
+
+            var questions = _questionRepository.GetAllByQuizId(id);
 
             foreach (var question in questions)
             {
-                var answers = await _context.Answers.Where(a => a.QuestionId == question.QuestionId).ToListAsync();
+                var answers = _answerRepository.GetAllByQuestionId(question.QuestionId);
+
                 foreach (var answer in answers)
                 {
-                    _context.Answers.Remove(answer);
+                    _answerRepository.Remove(answer);
                 }
 
-                _context.Questions.Remove(question);
+                _questionRepository.Remove(question);
             }
 
-            _context.Quizzes.Remove(quiz);
+            _quizRepository.Remove(quiz);
 
             await _context.SaveChangesAsync();
 
@@ -375,35 +391,30 @@ namespace Quiz1.Controllers
                 return BadRequest();
             }
 
-            var quiz = await _context.Quizzes
-                .FirstOrDefaultAsync(m => m.QuizId == id);
+            var quiz = await _quizRepository.GetQuizById(id);
 
             if (quiz == null)
             {
                 return NotFound($"Quiz id {id} does not exist.");
             }
 
-            var questions = await _context.Questions
-                .Where(m => m.QuizId == id)
-                .ToListAsync();
+            var questions = _questionRepository.GetAllByQuizId(id);
 
             if (questions == null)
             {
                 return NotFound($"There are no questions for Quiz id {id}.");
             }
 
-            var answers = await _context.Answers.ToListAsync();
+            //var answers = await _context.Answers.ToListAsync();
 
             foreach (var question in questions)
             {
                 question.Answers = new List<Answer>();
 
-                var filteredAnswers = answers.Where(a => a.QuestionId == question.QuestionId).ToList();
+                question.Answers = _answerRepository.GetAllByQuestionId(question.QuestionId) as List<Answer>;
 
                 // Applying extension method to produce random list
-                filteredAnswers.Shuffle();
-
-                question.Answers = filteredAnswers;
+                question.Answers.Shuffle();
 
             }
 
@@ -414,11 +425,6 @@ namespace Quiz1.Controllers
             };
 
             return View(model);
-        }
-
-        private bool QuizExists(int id)
-        {
-            return _context.Quizzes.Any(e => e.QuizId == id);
         }
     }
 }

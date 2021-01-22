@@ -16,18 +16,30 @@ namespace Quiz1.Data
             _context = context;
         }
 
-        public IEnumerable<Quiz> GetAllQuizzes => _context.Quizzes;
-        
-        public Quiz GetQuizById (int quizId)
+        public async Task<IEnumerable<Quiz>> GetAll()
         {
-            return _context.Quizzes
-                .FirstOrDefault(q=> q.QuizId == quizId);
+            return await _context.Quizzes.ToListAsync();
         }
 
-        public Quiz GetQuizByTitle (string quizTitle)
+        public async Task<Quiz> GetQuizById (int? quizId)
         {
-            return _context.Quizzes
-                .FirstOrDefault(q => q.Title == quizTitle);
+            return await _context.Quizzes
+                .FirstOrDefaultAsync(q=> q.QuizId == quizId);
         }
+
+        public bool QuizExists(string title)
+        {
+            return _context.Quizzes.Any(e => e.Title == title);
+        }
+
+        public bool QuizExists(int id)
+        {
+            return _context.Quizzes.Any(e => e.QuizId == id);
+        }
+
+        public void Save(Quiz quiz) => _context.Quizzes.Add(quiz);
+        public void Edit(Quiz quiz) => _context.Quizzes.Update(quiz);
+        public void Remove(Quiz quiz) => _context.Quizzes.Remove(quiz);
+
     }
 }

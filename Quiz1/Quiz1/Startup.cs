@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Quiz1.Data;
 using Quiz1.Validators;
 
 namespace Quiz1
@@ -61,6 +62,11 @@ namespace Quiz1
             });
 
             services.AddScoped<AppDbContext>();
+            services.AddScoped<IQuizRepository, QuizRepository>();
+            services.AddScoped<IQuestionRepository, QuestionRepository>();
+            services.AddScoped<IAnswerRepository, AnswerRepository>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
