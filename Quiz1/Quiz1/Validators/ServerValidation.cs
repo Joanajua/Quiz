@@ -96,28 +96,5 @@ namespace Quiz1.Validators
 
             return true;
         }
-
-        // TODO - Assess if this is the place for this class or should be place into another class
-        public void AddModelStateErrorsOnCreate(CreateViewModel model, ModelStateDictionary modelState)
-        {
-            foreach (var value in modelState.Values)
-            {
-                foreach (var error in value.Errors)
-                {
-                    model.Errors.Add(error.ErrorMessage);
-                }
-            }
-        }
-
-        public void AddModelStateErrorsOnEdit(EditViewModel model, ModelStateDictionary modelState)
-        {
-            foreach (var value in modelState.Values)
-            {
-                foreach (var error in value.Errors)
-                {
-                    model.Errors.Add(error.ErrorMessage);
-                }
-            }
-        }
     }
 }

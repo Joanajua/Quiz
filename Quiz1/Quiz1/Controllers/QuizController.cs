@@ -180,12 +180,8 @@ namespace Quiz1.Controllers
                     return RedirectToAction("Details", new { id = quiz.QuizId });
                 }
 
-                //serverValidation.AddModelStateErrorsOnCreate(model, ModelState);
-
                 return View(model);
             }
-
-            //serverValidation.AddModelStateErrorsOnCreate(model, ModelState);
 
             return View(model);
         }
@@ -268,7 +264,6 @@ namespace Quiz1.Controllers
                 }
 
                 return View(quiz);
-
             }
 
             return View(quiz);

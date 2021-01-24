@@ -17,13 +17,13 @@
     <a asp-action="Index"><< Back to List</a>
 </p>
 
-@if (ViewData["Message-edit"] != null || ViewData["Message-create"] != null)
+@if (ViewData["Edit"] != null || ViewData["Create"] != null)
 {
     @if (ViewData["Edit"] != null)
     {
         <div class="alert alert-info alert-dismissible fade show" role="alert">
             <h4 class="alert-heading">The Quiz has been successfully updated.</h4>
-            @*@ViewData["Message-edit"]*@
+            @ViewData["Message-edit"]
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -33,7 +33,7 @@
     {
         <div class="alert alert-info alert-dismissible fade show" role="alert">
             <h4 class="alert-heading">The new Quiz has been added successfully to the system.</h4>
-            @*@ViewData["Message-create"]*@
+            @ViewData["Message-create"]
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
