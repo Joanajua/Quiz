@@ -33,6 +33,10 @@ namespace Quiz1.Controllers
         }
 
         // GET: Quiz
+        /// <summary>
+        /// Shows the list of all the quizzes
+        /// </summary>
+        /// <returns>Quiz/Index</returns>
         public async Task<IActionResult> Index()
         {
             return View(await _quizRepository.GetAll());
@@ -46,7 +50,7 @@ namespace Quiz1.Controllers
         /// </summary>
         /// <param name="searchString"></param>
         /// <returns>
-        /// /List
+        /// Quiz/Index/searchString
         /// </returns>
         [HttpPost]
         [AllowAnonymous]
@@ -56,20 +60,7 @@ namespace Quiz1.Controllers
             {
                 var quizzes = await _quizRepository.GetAll();
 
-                // TODO - can take out a search method - ProcessSearchString()
-
-
-                if (int.TryParse(searchString, out int stringParsed))
-                {
-                    // Search by Quiz Id
-                    quizzes = quizzes.Where(s => s.QuizId.Equals(stringParsed)).ToList();
-                }
-                else
-                {
-                    // Search by Quiz Title
-                    // The search is NOT case sensitive.
-                    quizzes = quizzes.Where(s => s.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase));
-                }
+                quizzes = SearchForQuiz(searchString, quizzes);
 
                 TempData["search"] = searchString;
 
@@ -79,7 +70,36 @@ namespace Quiz1.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Quiz/Details/5
+        /// <summary>
+        /// Search throw a given list of quizzes for a string or an id
+        /// Tries to parse the string into an id
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <param name="quizzes"></param>
+        /// <returns>A list of quizzes</returns>
+        private static IEnumerable<Quiz> SearchForQuiz(string searchString, IEnumerable<Quiz> quizzes)
+        {
+            if (int.TryParse(searchString, out int stringParsed))
+            {
+                // Search by Quiz Id
+                quizzes = quizzes.Where(s => s.QuizId.Equals(stringParsed)).ToList();
+            }
+            else
+            {
+                // Search by Quiz Title
+                // The search is NOT case sensitive.
+                quizzes = quizzes.Where(s => s.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase));
+            }
+
+            return quizzes;
+        }
+
+        /// GET: Quiz/Details/5
+        /// <summary>
+        /// Shows the details of a quiz by a given id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Quiz/Details/id</returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -108,7 +128,6 @@ namespace Quiz1.Controllers
                 answers = _answerRepository.GetAllByQuestionId(question.QuestionId) as List<Answer>;
 
                 question.Answers = answers;
-
             }
 
             var model = new DetailsViewModel
@@ -120,7 +139,10 @@ namespace Quiz1.Controllers
             return View(model);
         }
 
-        // GET: Quiz/Create
+        /// <summary>
+        /// Shows the Create view with an empty form
+        /// </summary>
+        /// <returns>Quiz/Create</returns>
         public IActionResult Create()
         {
             return View(new CreateViewModel());
@@ -128,147 +150,44 @@ namespace Quiz1.Controllers
 
         // POST: Quiz/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateViewModel model)
         {
+            var serverValidation = new ServerValidation(_quizRepository);
+
             if (ModelState.IsValid)
             {
-                //model.CreateViewModelOnServerValidator(ModelState);
-
-                // Validate input has been added to all questions
-                if (model.Questions.Count != QuizConstants.NumQuestions)
-                {
-                    ModelState.AddModelError(string.Empty, "All the question fields need to be completed.");
-                    return View(model);
-                }
-
-                var questions = new List<Question>();
-
-                foreach (var question in model.Questions)
-                {
-                    var newQuestion = new Question
-                    {
-                        QuestionText = question.QuestionText,
-                        Answers = question.Answers
-                    };
-
-                    if (string.IsNullOrWhiteSpace(question.QuestionText))
-                    {
-                        ModelState.AddModelError(string.Empty, "All the question fields need to be completed.");
-                        return View(model);
-                    }
-
-                    if (question.Answers.Count != QuizConstants.NumAnswers)
-                    {
-                        ModelState.AddModelError(string.Empty, "All the answer fields need to be completed.");
-                        return View(model);
-                    }
-
-                    var numCheckBoxes = 0;
-
-                    foreach (var answer in question.Answers)
-                    {
-                        if (string.IsNullOrWhiteSpace(answer.AnswerText))
-                        {
-                            ModelState.AddModelError(string.Empty, "All the answer fields need to be completed.");
-                            return View(model);
-                        }
-                        if (answer.IsCorrect)
-                        {
-                            numCheckBoxes++;
-                        }
-                    }
-
-                    if (numCheckBoxes != 1)
-                    {
-                        ModelState.AddModelError(string.Empty, "Each Question needs to have at least 1 and only 1 answer selected as correct.");
-                        return View(model);
-                    }
-
-                    questions.Add(newQuestion);
-                }
-
-                // TODO - VALIDATE LENGTH OF QUIZ'S TITLE, QUESTIONS AND ANSWERS
-                // TODO - MAYBE CHECK IF USER HAS THE RIGHT ROLE TO MODIFY DB
-
-                var newQuiz = new Quiz
+                var quiz = new Quiz
                 {
                     Title = model.Title,
-                    Questions = questions
+                    Questions = model.Questions
                 };
 
-                // Checking a quiz with same Title does not exist in db
-                //var quiz = await _quizRepository.GetQuizByTitle(newQuiz.Title);
+                // A second validation on top of the client-side validation
+                // It makes sure the inputs the client-side validation covers are correct
+                // and performs other validation that is not executed in the client-side
+                var isModelValidInServer = serverValidation.IsModelValidInServer(quiz, ModelState);
 
-                //if (quiz != null)
-                //{
-                //    ModelState.AddModelError(string.Empty, "A quiz with the same title already exist in the system.");
-                //    return View(model);
-                //}
-
-                // Checking if a quiz with same Title exists in the db
-                if (_quizRepository.QuizExists(newQuiz.Title))
+                if (isModelValidInServer)
                 {
-                    ModelState.AddModelError(string.Empty, "A quiz with the same title already exist in the system.");
-                    return View(model);
+                    _quizRepository.Save(quiz);
+
+                    await _context.SaveChangesAsync();
+
+                    // Passing which page the user comes from
+                    // It is to difference the message coming from the Edit page
+                    TempData["create"] = "Create";
+
+                    return RedirectToAction("Details", new { id = quiz.QuizId });
                 }
 
-                _quizRepository.Save(newQuiz);
+                serverValidation.AddModelStateErrorsOnCreate(model, ModelState);
 
-                await _context.SaveChangesAsync();
-
-                // Passing which page the user comes from
-                // It is to difference the message coming from the Edit page
-                TempData["create"] = "Create";
-
-                return RedirectToAction("Details", new { id = newQuiz.QuizId });
+                return View(model);
             }
 
-            foreach (var value in ModelState.Values)
-            {
-                foreach (var error in value.Errors)
-                {
-                    model.Errors.Add(error.ErrorMessage);
-                }
-            }
+            serverValidation.AddModelStateErrorsOnCreate(model, ModelState);
 
-            return View("Create", model);
-
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-
-            //var questions = new List<Question>();
-            //foreach (var questionModel in model.Questions)
-            //{
-            //    var question = new Question
-            //    {
-            //        QuestionText = questionModel.QuestionText,
-            //        Answers = questionModel.Answers
-            //    };
-
-            //    questions.Add(question);
-            //}
-
-            //var quiz = new Quiz
-            //{
-            //    Title = model.Title,
-            //    Questions = questions
-            //};
-
-            //await _context.Quizzes.AddAsync(quiz);
-
-            //await _context.SaveChangesAsync();
-
-            //// Success message to pass to the Details page
-            //TempData["message-create"] = "The new Quiz has been added successfully.";
-
-            //// Passing which page the user comes from
-            //// It is to difference the message coming from the Edit page
-            //TempData["create"] = "Create";
-
-            //return RedirectToAction("Details", new{ id = quiz.QuizId});
+            return View(model);
         }
 
         // GET: Quiz/Edit/5
@@ -333,6 +252,7 @@ namespace Quiz1.Controllers
             }
             return View(quiz);
         }
+
 
         // GET: Quiz/Delete/5
         public async Task<IActionResult> Delete(int? id)

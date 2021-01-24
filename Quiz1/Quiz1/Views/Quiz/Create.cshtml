@@ -16,88 +16,70 @@
 <div class="row">
     <div class="col">
         <form asp-action="Create" method="post" role="form">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="card" m-3 id="card-create">
-                    
-                    <div class="card-header">
-                    
-                        @*---> Quiz*@
-                        <div class="form-group">
-                            <label asp-for="Title" class="control-label"></label>
-                            <input asp-for="Title" class="form-control"/>
-                            <span asp-validation-for="Title" class="text-danger"></span>
-                        </div>
+            <div class="card m-3" id="card-create">
+
+                <div class="card-header">
+
+                    @*---> Quiz*@
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control"/>
+                        <span asp-validation-for="Title" class="text-danger"></span>
                     </div>
+                </div>
 
-                    <div class="card-body px-5">
-                        @*---> 3 Questions*@
-                        @for (i = 0; i < 3; i++)
-                        {   
-                            <div id="Q-@i">
-                                
-                                <div class="card-title pt-2">
+                <div class="card-body px-5">
+                    @*---> 3 Questions*@
+                    @for (i = 0; i < 3; i++)
+                    {
+                        <div id="Q-@i">
 
-                                    <div class="form-group" id="Question">
-                                        <label asp-for="Questions[i].QuestionText" class="control-label"></label>
-                                        @Html.TextAreaFor(m => m.Questions[i].QuestionText, new {@class = "form-control"})
-                                        <span asp-validation-for="Questions[i].QuestionText" class="text-danger"></span>
-                                    </div>
-                                </div>
+                            <div class="card-title pt-2">
 
-                                <div class="card-text pl-3" id="answer-with-checkbox">
-
-                                    @*---> 4 Answers*@
-                                    @for (a = 0; a < 4; a++)
-                                    {
-                                        <div class="form-group" id="Answer">
-                                            <label asp-for="Questions[i].Answers[a].AnswerText" class="control-label"></label>
-                                            @Html.TextAreaFor(m => m.Questions[i].Answers[a].AnswerText, new {@class = "form-control"})
-                                            <span asp-validation-for="Questions[i].Answers[a].AnswerText" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group form-check">
-                                            <label asp-for="Questions[i].Answers[a].IsCorrect" class="form-check-label">
-                                                @Html.CheckBoxFor(m => m.Questions[i].Answers[a].IsCorrect, new { @class = "form-check-input" })
-                                                @Html.DisplayNameFor(model => model.Questions[i].Answers[a].IsCorrect)
-                                                <span asp-validation-for="Questions[i].Answers[a].IsCorrect" class="text-danger"></span>
-                                            </label>
-                                        </div>
-                                    }
+                                <div class="form-group" id="Question">
+                                    <label asp-for="Questions[i].QuestionText" class="control-label"></label>
+                                    @Html.TextAreaFor(m => m.Questions[i].QuestionText, new {@class = "form-control"})
+                                    <span asp-validation-for="Questions[i].QuestionText" class="text-danger"></span>
                                 </div>
                             </div>
-                            
-                        }
-                    </div>
-                    <div class="card-footer">
-                        <div class=" form-group">
-                            <input type="submit" value="Create" class="btn btn-primary"/>
-                            @*<input type="button" onclick="IsOneBoxChecked()" value="Show" />*@
 
+                            <div class="card-text pl-3" id="answer-with-checkbox">
+
+                                @*---> 4 Answers*@
+                                @for (a = 0; a < 4; a++)
+                                {
+                                    <div class="form-group" id="Answer">
+                                        <label asp-for="Questions[i].Answers[a].AnswerText" class="control-label"></label>
+                                        @Html.TextAreaFor(m => m.Questions[i].Answers[a].AnswerText, new {@class = "form-control"})
+                                        <span asp-validation-for="Questions[i].Answers[a].AnswerText" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <label asp-for="Questions[i].Answers[a].IsCorrect" class="form-check-label">
+                                            @Html.CheckBoxFor(m => m.Questions[i].Answers[a].IsCorrect, new {@class = "form-check-input"})
+                                            @Html.DisplayNameFor(model => model.Questions[i].Answers[a].IsCorrect)
+                                            <span asp-validation-for="Questions[i].Answers[a].IsCorrect" class="text-danger"></span>
+                                        </label>
+                                    </div>
+                                }
+                            </div>
                         </div>
-                    </div>
 
+                    }
                 </div>
+                <div class="card-footer">
+                    <div class=" form-group">
+                        <input type="submit" value="Create" class="btn btn-primary"/>
+                    </div>
+                </div>
+
+            </div>
         </form>
     </div>
 </div>
 
-@section Scripts {
+@*@section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-
-@*<script>
-    function checkout(){
-        var checkBoxes = document.getElementById("#Q-0") && document.getElementsByClassName( 'form-check-input' );
-        var nbChecked = 0;
-        for (var i = 0; i < checkBoxes.length; i++) {
-            if ( checkBoxes[i].checked ) {
-                nbChecked++;
-            };
-        };
-        if (nbChecked == 0) {
-            alert('Please, check at least one checkbox!');
-            return false;
-        } else
-            submit();
-</script>*@
-
+}*@

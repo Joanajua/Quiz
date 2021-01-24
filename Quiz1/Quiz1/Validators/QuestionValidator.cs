@@ -13,8 +13,7 @@ namespace Quiz1.Validators
     {
         public QuestionValidator()
         {
-            // Validation 1 question
-            // The questionText must be not empty, with a minimum length of 10
+            // Validation for 1 question - A white space counts as empty
             // and a max length of 150
             RuleFor(q => q.QuestionText)
                 .NotEmpty()

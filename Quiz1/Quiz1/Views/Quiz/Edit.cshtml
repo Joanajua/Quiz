@@ -1,4 +1,5 @@
-﻿@model Quiz
+﻿@using Microsoft.AspNetCore.Razor.Language.Intermediate
+@model Quiz
 
 @{
     ViewData["Title"] = "Edit";
@@ -16,17 +17,18 @@
     <div class="col">
         <form asp-action="Edit" method="post" role="form">
 
-            <div asp-validation-summary="All" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="card" m-3 id="card-create">
+            <div class="card m-3" id="card-create">
 
                 <div class="card-header">
 
                     @*---> Quiz*@
-                    <input type="hidden" asp-for="QuizId"/>
+                    <input type="hidden" asp-for="QuizId" />
+
                     <div class="form-group">
                         <label asp-for="Title" class="control-label"></label>
-                        <input asp-for="Title" class="form-control"/>
+                        <input asp-for="Title" class="form-control" />
                         <span asp-validation-for="Title" class="text-danger"></span>
                     </div>
                 </div>
@@ -39,11 +41,11 @@
 
                             <div class="card-title pt-2">
 
-                                <input type="hidden" asp-for="@Model.Questions[i].QuestionId"/>
+                                <input type="hidden" asp-for="@Model.Questions[i].QuestionId" />
 
                                 <div class="form-group" id="Question">
                                     <label asp-for="Questions[i].QuestionText" class="control-label"></label>
-                                    @Html.TextAreaFor(m => m.Questions[i].QuestionText, new {@class = "form-control"})
+                                    @Html.TextAreaFor(m => m.Questions[i].QuestionText, new { @class = "form-control" })
                                     <span asp-validation-for="Questions[i].QuestionText" class="text-danger"></span>
                                 </div>
                             </div>
@@ -53,17 +55,18 @@
                             @*---> 4 Answers*@
                             @for (a = 0; a < 4; a++)
                             {
-                                <input type="hidden" asp-for="Questions[i].Answers[a].AnswerId"/>
+                                <input type="hidden" asp-for="Questions[i].Answers[a].AnswerId" />
 
                                 <div class="form-group" id="Answer">
                                     <label asp-for="Questions[i].Answers[a].AnswerText" class="control-label"></label>
-                                    @Html.TextAreaFor(m => m.Questions[i].Answers[a].AnswerText, new {@class = "form-control"})
+                                    @Html.TextAreaFor(m => m.Questions[i].Answers[a].AnswerText, new { @class = "form-control" })
                                     <span asp-validation-for="Questions[i].Answers[a].AnswerText" class="text-danger"></span>
                                 </div>
                                 <div class="form-group form-check">
-                                    <label class="form-check-label">
-                                        @Html.CheckBoxFor(m => m.Questions[i].Answers[a].IsCorrect, new {@class = "form-check-input"})
+                                    <label asp-for="Questions[i].Answers[a].IsCorrect" class="form-check-label">
+                                        @Html.CheckBoxFor(m => m.Questions[i].Answers[a].IsCorrect, new { @class = "form-check-input" })
                                         @Html.DisplayNameFor(model => model.Questions[i].Answers[a].IsCorrect)
+                                        <span asp-validation-for="Questions[i].Answers[a].IsCorrect" class="text-danger"></span>
                                     </label>
                                 </div>
                             }
@@ -73,7 +76,7 @@
 
                 <div class="card-footer">
                     <div class="form-group">
-                        <input type="submit" value="Update" class="btn btn-primary"/>
+                        <input type="submit" value="Update" class="btn btn-primary" />
                     </div>
                 </div>
 
@@ -83,5 +86,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }*@
