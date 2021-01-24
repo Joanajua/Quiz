@@ -234,18 +234,29 @@ namespace Quiz1.Controllers
 
             if (!_quizRepository.QuizExists(quiz.QuizId))
             {
-                return NotFound($"The Quiz with id - {quiz.QuizId} does not exist in the server.");
+                return NotFound($"The Quiz with id - {quiz.QuizId} does not exist in the system.");
             }
 
             if (ModelState.IsValid)
             {
-                var isModelValidInServer = serverValidation.IsModelValidInServer(quiz, ModelState);
+                _context.Entry(quiz).State = EntityState.Modified;
 
-                if (isModelValidInServer)
+                foreach (var question in quiz.Questions)
                 {
-                    _quizRepository.Edit(quiz);
-                    await _context.SaveChangesAsync();
+                    _context.Entry(question).State = EntityState.Modified;
+                    _questionRepository.Edit(question);
+
+                    foreach (var answer in question.Answers)
+                    {
+                        _context.Entry(answer).State = EntityState.Modified;
+                        _answerRepository.Edit(answer);
+                    }
+
                 }
+
+                _quizRepository.Edit(quiz);
+
+                await _context.SaveChangesAsync();
 
                 TempData["edit"] = "Edit";
 
