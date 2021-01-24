@@ -180,12 +180,12 @@ namespace Quiz1.Controllers
                     return RedirectToAction("Details", new { id = quiz.QuizId });
                 }
 
-                serverValidation.AddModelStateErrorsOnCreate(model, ModelState);
+                //serverValidation.AddModelStateErrorsOnCreate(model, ModelState);
 
                 return View(model);
             }
 
-            serverValidation.AddModelStateErrorsOnCreate(model, ModelState);
+            //serverValidation.AddModelStateErrorsOnCreate(model, ModelState);
 
             return View(model);
         }
@@ -239,31 +239,37 @@ namespace Quiz1.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Entry(quiz).State = EntityState.Modified;
+                var isModelValidInServer = serverValidation.IsModelValidInServer(quiz, ModelState);
 
-                foreach (var question in quiz.Questions)
+                if (isModelValidInServer)
                 {
-                    _context.Entry(question).State = EntityState.Modified;
-                    _questionRepository.Edit(question);
 
-                    foreach (var answer in question.Answers)
+                    foreach (var question in quiz.Questions)
                     {
-                        _context.Entry(answer).State = EntityState.Modified;
-                        _answerRepository.Edit(answer);
+                        foreach (var answer in question.Answers)
+                        {
+                            _context.Entry(answer).State = EntityState.Modified;
+                            _answerRepository.Edit(answer);
+                        }
+
+                        _context.Entry(question).State = EntityState.Modified;
+                        _questionRepository.Edit(question);
                     }
 
+                    _context.Entry(quiz).State = EntityState.Modified;
+
+                    _quizRepository.Edit(quiz);
+
+                    await _context.SaveChangesAsync();
+
+                    TempData["edit"] = "Edit";
+
+                    return RedirectToAction("Details", new {id = quiz.QuizId});
                 }
 
-                _quizRepository.Edit(quiz);
+                return View(quiz);
 
-                await _context.SaveChangesAsync();
-
-                TempData["edit"] = "Edit";
-
-                return RedirectToAction("Details", new { id = quiz.QuizId });
             }
-
-            // TODO - 
 
             return View(quiz);
         }

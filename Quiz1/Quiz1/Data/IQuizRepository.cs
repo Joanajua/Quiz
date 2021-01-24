@@ -14,7 +14,7 @@ namespace Quiz1.Data
         Task<Quiz> GetQuizById(int? quizId);
 
         bool QuizExists(int id);
-        bool QuizExists(string title);
+        bool QuizExists(Quiz quiz);
 
         void Save(Quiz quiz);
         void Edit(Quiz quiz);

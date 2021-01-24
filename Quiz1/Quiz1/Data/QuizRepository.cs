@@ -27,9 +27,11 @@ namespace Quiz1.Data
                 .FirstOrDefaultAsync(q=> q.QuizId == quizId);
         }
 
-        public bool QuizExists(string title)
+        public bool QuizExists(Quiz quiz)
         {
-            return _context.Quizzes.Any(e => e.Title == title);
+            // Needs to return true just when title is of a quiz with different id
+            // if id is the same means the quiz is being updated.
+            return _context.Quizzes.Any(e => e.Title == quiz.Title && e.QuizId != quiz.QuizId);
         }
 
         public bool QuizExists(int id)

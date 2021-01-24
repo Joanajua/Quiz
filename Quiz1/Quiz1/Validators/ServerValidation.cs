@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
 using Quiz1.Data;
 using Quiz1.Models;
 using Quiz1.Utilities.Constants;
@@ -26,7 +27,7 @@ namespace Quiz1.Validators
         {
             // TODO - CHECK IF USER HAS THE RIGHT ROLE TO MODIFY DB
 
-            if (_quizRepository.QuizExists(quiz.Title))
+            if (_quizRepository.QuizExists(quiz))
             {
                 modelState.AddModelError(string.Empty, "A quiz with the same title already exist in the system.");
                 return false;
