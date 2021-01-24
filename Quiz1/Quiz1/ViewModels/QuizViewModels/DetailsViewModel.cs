@@ -8,7 +8,6 @@ namespace Quiz1.ViewModels.QuizViewModels
     {
         public Quiz Quiz { get; set; }
 
-        [Required]
         public IEnumerable<Question> Questions { get; set; }
     }
 }

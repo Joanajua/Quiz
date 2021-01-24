@@ -10,15 +10,12 @@ namespace Quiz1.ViewModels.QuizViewModels
     {
         public EditViewModel()
         {
-            Quiz = new Quiz
-            {
-                Questions = new List<Question>()
-            };
-
             Errors = new List<string>();
         }
 
         public Quiz Quiz { get; set; }
+
+        public IEnumerable<Question> Questions { get; set; }
 
         public List<string> Errors { get; set; }
 

@@ -225,31 +225,35 @@ namespace Quiz1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Quiz quiz)
         {
+            var serverValidation = new ServerValidation(_quizRepository);
+
             if (id != quiz.QuizId)
             {
                 return NotFound();
             }
 
+            if (!_quizRepository.QuizExists(quiz.QuizId))
+            {
+                return NotFound($"The Quiz with id - {quiz.QuizId} does not exist in the server.");
+            }
+
             if (ModelState.IsValid)
             {
-                try
+                var isModelValidInServer = serverValidation.IsModelValidInServer(quiz, ModelState);
+
+                if (isModelValidInServer)
                 {
-                    _context.Update(quiz);
+                    _quizRepository.Edit(quiz);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_quizRepository.QuizExists(quiz.QuizId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+
+                TempData["edit"] = "Edit";
+
+                return RedirectToAction("Details", new { id = quiz.QuizId });
             }
+
+            // TODO - 
+
             return View(quiz);
         }
 
