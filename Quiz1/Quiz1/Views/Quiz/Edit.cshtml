@@ -49,28 +49,30 @@
                                     <span asp-validation-for="Questions[i].QuestionText" class="text-danger"></span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-text pl-3" id="answer-with-checkbox">
+                            
+                            <div class="card-text pl-3" id="answer-with-checkbox">
 
-                            @*---> 4 Answers*@
-                            @for (a = 0; a < 4; a++)
-                            {
-                                <input type="hidden" asp-for="Questions[i].Answers[a].AnswerId" />
+                                @*---> 4 Answers*@
+                                @for (a = 0; a < 4; a++)
+                                {
+                                    <input type="hidden" asp-for="Questions[i].Answers[a].AnswerId" />
 
-                                <div class="form-group" id="Answer">
-                                    <label asp-for="Questions[i].Answers[a].AnswerText" class="control-label"></label>
-                                    @Html.TextAreaFor(m => m.Questions[i].Answers[a].AnswerText, new { @class = "form-control" })
-                                    <span asp-validation-for="Questions[i].Answers[a].AnswerText" class="text-danger"></span>
-                                </div>
-                                <div class="form-group form-check">
-                                    <label asp-for="Questions[i].Answers[a].IsCorrect" class="form-check-label">
-                                        @Html.CheckBoxFor(m => m.Questions[i].Answers[a].IsCorrect, new { @class = "form-check-input" })
-                                        @Html.DisplayNameFor(model => model.Questions[i].Answers[a].IsCorrect)
-                                        <span asp-validation-for="Questions[i].Answers[a].IsCorrect" class="text-danger"></span>
-                                    </label>
-                                </div>
-                            }
+                                    <div class="form-group" id="Answer">
+                                        <label asp-for="Questions[i].Answers[a].AnswerText" class="control-label"></label>
+                                        @Html.TextAreaFor(m => m.Questions[i].Answers[a].AnswerText, new { @class = "form-control" })
+                                        <span asp-validation-for="Questions[i].Answers[a].AnswerText" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <label asp-for="Questions[i].Answers[a].IsCorrect" class="form-check-label">
+                                            @Html.CheckBoxFor(m => m.Questions[i].Answers[a].IsCorrect, new { @class = "form-check-input" })
+                                            @Html.DisplayNameFor(model => model.Questions[i].Answers[a].IsCorrect)
+                                            <span asp-validation-for="Questions[i].Answers[a].IsCorrect" class="text-danger"></span>
+                                        </label>
+                                    </div>
+                                }
+                            </div>
                         </div>
+                        
                     }
                 </div>
 
@@ -85,6 +87,6 @@
     </div>
 </div>
 
-@section Scripts {
+@*@section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     }*@
