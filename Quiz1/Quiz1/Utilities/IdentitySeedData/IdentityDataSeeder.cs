@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Quiz1.Controllers;
 
-namespace Quiz1.Utilities.SeedData
+namespace Quiz1.Utilities.IdentitySeedData
 {
 
     public class IdentityDataSeeder

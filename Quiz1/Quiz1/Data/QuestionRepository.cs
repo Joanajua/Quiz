@@ -16,6 +16,7 @@ namespace Quiz1.Data
             _context = context;
         }
 
+
         public IEnumerable<Question> GetAllByQuizId(int? quizId)
         {
             return  _context.Questions

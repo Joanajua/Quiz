@@ -14,7 +14,7 @@ namespace Quiz1
             // Conditional to migrate database when is not in testing
             //if (Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
             //{
-            Database.Migrate();
+            //Database.Migrate();
             //}
         }
 
@@ -22,8 +22,6 @@ namespace Quiz1
         public DbSet<Quiz> Quizzes { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
-
-
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

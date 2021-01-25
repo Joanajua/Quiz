@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Quiz1.Data;
+using Quiz1.Models;
 using Quiz1.Validators;
 
 namespace Quiz1
@@ -42,6 +43,8 @@ namespace Quiz1
                     config.ImplicitlyValidateChildProperties = true;
                 });
 
+            services.AddTransient<AppDbContextSeedData>();
+
             // For Authorisation -- building and using a policy
             services.AddMvc(options =>
             {
@@ -65,16 +68,17 @@ namespace Quiz1
             services.AddScoped<IQuizRepository, QuizRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<IAnswerRepository, AnswerRepository>();
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext context)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                context.Database.Migrate();
+                var identitySeeder = new AppDbContextSeedData(context);
+                identitySeeder.SeedAdminUser();
             }
             else
             {
