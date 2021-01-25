@@ -43,7 +43,7 @@ namespace Quiz1
                     config.ImplicitlyValidateChildProperties = true;
                 });
 
-            services.AddTransient<AppDbContextSeedData>();
+            //services.AddTransient<AppDbContextSeedData>();
 
             // For Authorisation -- building and using a policy
             services.AddMvc(options =>

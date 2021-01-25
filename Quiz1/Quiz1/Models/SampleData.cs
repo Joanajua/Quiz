@@ -20,10 +20,10 @@ namespace Quiz1.Models
         {
             var user = new IdentityUser()
             {
-                UserName = "email@email.com",
-                NormalizedUserName = "EMAIL@EMAIL.COM",
-                Email = "email@email.com",
-                NormalizedEmail = "EMAIL@EMAIL.COM",
+                UserName = "admin@mailinator.com",
+                NormalizedUserName = "ADMIN@MAILINATOR.COM",
+                Email = "admin@mailinator.com",
+                NormalizedEmail = "ADMIN@MAILINATOR.COM",
                 EmailConfirmed = true,
                 LockoutEnabled = false,
                 SecurityStamp = Guid.NewGuid().ToString()
@@ -35,7 +35,6 @@ namespace Quiz1.Models
                 Name = "admin",
                 NormalizedName = "ADMIN"
             };
-
 
             if (!_context.Roles.Any(r => r.Name == "admin"))
             {
@@ -63,6 +62,5 @@ namespace Quiz1.Models
 
             await _context.SaveChangesAsync();
         }
-
     }
 }
