@@ -38,11 +38,11 @@ namespace Quiz1.Utilities.IdentitySeedData
 
             var roUserRole = new IdentityRole
             {
-                Name = "ro-user",
-                NormalizedName = "RO-USER"
+                Name = "readonly",
+                NormalizedName = "READONLY"
             };
 
-            if (!_context.Roles.Any(r => r.Name == "admin"))
+            if (!_context.Roles.Any(r => r.Name == "admin" || r.Name == "readonly"))
             {
                 roleStore.CreateAsync(adminRole);
                 roleStore.CreateAsync(roUserRole);
