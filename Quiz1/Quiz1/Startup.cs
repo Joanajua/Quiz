@@ -57,8 +57,6 @@ namespace Quiz1
                     policy => policy.RequireRole("admin"));
                 options.AddPolicy("ReadOnly",
                     policy => policy.RequireRole("readonly"));
-                options.AddPolicy("ManageUsers",
-                    policy => policy.RequireRole("admin"));
             });
 
             services.AddScoped<AppDbContext>();
