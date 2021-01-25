@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace Quiz1.Models
+namespace Quiz1.Utilities.IdentitySeedData
 {
     public class AppDbContextSeedData
     {
@@ -16,7 +16,7 @@ namespace Quiz1.Models
             _context = context;
         }
 
-        public async Task SeedAdminUser()
+        public void SeedAdminUser()
         {
             var user = new IdentityUser()
             {
@@ -30,21 +30,28 @@ namespace Quiz1.Models
             };
 
             var roleStore = new RoleStore<IdentityRole>(_context);
-            var newRole = new IdentityRole
+            var adminRole = new IdentityRole
             {
                 Name = "admin",
                 NormalizedName = "ADMIN"
             };
 
+            var roUserRole = new IdentityRole
+            {
+                Name = "ro-user",
+                NormalizedName = "RO-USER"
+            };
+
             if (!_context.Roles.Any(r => r.Name == "admin"))
             {
-                await roleStore.CreateAsync(newRole);
+                roleStore.CreateAsync(adminRole);
+                roleStore.CreateAsync(roUserRole);
             }
 
             var newUserRole = new IdentityUserRole<string>
             {
-                RoleId = newRole.Id, // for Ro-User - po-user@mailinator.com username
-                UserId = user.Id // for PlayOnly role
+                RoleId = adminRole.Id, // for admin user - admin@mailinator.com username
+                UserId = user.Id // for admin role
             };
 
             _context.UserRoles.Add(newUserRole);
@@ -54,13 +61,14 @@ namespace Quiz1.Models
                 var password = new PasswordHasher<IdentityUser>();
                 var hashed = password.HashPassword(user, "Abcd123456@");
                 user.PasswordHash = hashed;
-                var userStore = new UserStore<IdentityUser>(_context);
-                await userStore.CreateAsync(user);
 
-                await _context.SaveChangesAsync();
+                var userStore = new UserStore<IdentityUser>(_context);
+                userStore.CreateAsync(user);
+
+                _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
         }
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Quiz1.Data;
-using Quiz1.Models;
+using Quiz1.Utilities.IdentitySeedData;
 using Quiz1.Validators;
 
 namespace Quiz1
