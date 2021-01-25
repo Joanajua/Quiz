@@ -12,7 +12,7 @@ using Quiz1.ViewModels.Identity;
 
 namespace Quiz1.Controllers
 {
-    //[Authorize(Policy = "ManageRolesAndUsers")]
+    [Authorize(Policy = "ManageUsers")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

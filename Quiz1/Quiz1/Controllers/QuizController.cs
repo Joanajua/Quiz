@@ -37,6 +37,7 @@ namespace Quiz1.Controllers
         /// Shows the list of all the quizzes
         /// </summary>
         /// <returns>Quiz/Index</returns>
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _quizRepository.GetAll());
@@ -77,6 +78,7 @@ namespace Quiz1.Controllers
         /// <param name="searchString"></param>
         /// <param name="quizzes"></param>
         /// <returns>A list of quizzes</returns>
+        [AllowAnonymous]
         private static IEnumerable<Quiz> SearchForQuiz(string searchString, IEnumerable<Quiz> quizzes)
         {
             if (int.TryParse(searchString, out int stringParsed))
@@ -100,6 +102,7 @@ namespace Quiz1.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Quiz/Details/id</returns>
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -143,6 +146,7 @@ namespace Quiz1.Controllers
         /// Shows the Create view with an empty form
         /// </summary>
         /// <returns>Quiz/Create</returns>
+        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             return View(new CreateViewModel());
@@ -150,6 +154,7 @@ namespace Quiz1.Controllers
 
         // POST: Quiz/Create
         [HttpPost]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create(CreateViewModel model)
         {
             var serverValidation = new ServerValidation(_quizRepository);
@@ -187,6 +192,7 @@ namespace Quiz1.Controllers
         }
 
         // GET: Quiz/Edit/5
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -218,7 +224,7 @@ namespace Quiz1.Controllers
 
         // POST: Quiz/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Edit(int id, Quiz quiz)
         {
             var serverValidation = new ServerValidation(_quizRepository);
@@ -271,6 +277,7 @@ namespace Quiz1.Controllers
 
 
         // GET: Quiz/Delete/5
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -290,7 +297,7 @@ namespace Quiz1.Controllers
 
         // POST: Quiz/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var quiz = await _quizRepository.GetQuizById(id);

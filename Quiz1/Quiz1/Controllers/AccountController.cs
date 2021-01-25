@@ -55,15 +55,10 @@ namespace Quiz1.Controllers
                     {
                         return RedirectToAction("ListUsers", "Administration");
                     }
-
-                    //var newUserRole = new IdentityUserRole<string>
-                    //{
-                    //    RoleId = .Id, // for admin user - admin@mailinator.com username
-                    //    UserId = user.Id // for admin role
-                    //};
-                    //var userRole = _roleManager.GetRoleIdAsync("ro-user");
                     //isPersistent: false -- creates a session cookie instead of a permanent cookie.
                     await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    // Assign new user to the readonly role
                     await _userManager.AddToRoleAsync(user, "readonly");
                     return RedirectToAction("Index", "Home");
                 }

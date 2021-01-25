@@ -23,7 +23,6 @@ namespace Quiz1
             _configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options =>
@@ -43,8 +42,6 @@ namespace Quiz1
                     config.ImplicitlyValidateChildProperties = true;
                 });
 
-            //services.AddTransient<AppDbContextSeedData>();
-
             // For Authorisation -- building and using a policy
             services.AddMvc(options =>
             {
@@ -57,11 +54,11 @@ namespace Quiz1
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Admin",
-                    policy => policy.RequireClaim("Can Manage Roles and Users", "Can Manage Quizzes"));
-                options.AddPolicy("PlayOnly",
-                    policy => policy.RequireClaim("Can Play Quizzes"));
+                    policy => policy.RequireRole("admin"));
                 options.AddPolicy("ReadOnly",
-                    policy => policy.RequireClaim("Can Play Quizzes"));
+                    policy => policy.RequireRole("readonly"));
+                options.AddPolicy("ManageUsers",
+                    policy => policy.RequireRole("admin"));
             });
 
             services.AddScoped<AppDbContext>();
@@ -70,15 +67,11 @@ namespace Quiz1
             services.AddScoped<IAnswerRepository, AnswerRepository>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext context)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                context.Database.Migrate();
-                var identitySeeder = new AppDbContextSeedData(context);
-                identitySeeder.SeedAdminUser();
             }
             else
             {
@@ -87,6 +80,10 @@ namespace Quiz1
                 app.UseStatusCodePagesWithReExecute("/Error/{0}");
                 app.UseHsts();
             }
+
+            context.Database.Migrate();
+            var identitySeeder = new AppDbContextSeedData(context);
+            identitySeeder.SeedAdminUser();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

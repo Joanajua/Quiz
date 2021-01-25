@@ -15,6 +15,8 @@
         <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
         <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
     </environment>
 
     <environment exclude="Development">
@@ -45,15 +47,15 @@
                         </li>
 
                         @*If claim is "Can Manage Quizzes" user can see "Add Quiz" button*@
-                        @if (signInManager.IsSignedIn(User) && User.HasClaim("Can Manage Quizzes", "Can Manage Quizzes"))
+                        @if (signInManager.IsSignedIn(User) && User.IsInRole("admin"))
                         {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="Create">Add Quiz</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="Create">Add Quiz</a>
+                            </li>
                         }  
 
                         @*If claim is "Manage Roles and Users" user can see "Manage" buttons*@
-                        @if (signInManager.IsSignedIn(User) && User.HasClaim("Can Manage Roles and Users", "Can Manage Roles and Users"))
+                        @if (signInManager.IsSignedIn(User) && User.IsInRole("admin"))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
@@ -115,7 +117,7 @@
     {
         @RenderSection("Scripts", required: true)
     }
-<script src="~/js/site.js" asp-append-version="true"></script>
+
 
 </body>
 </html>
