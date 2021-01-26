@@ -1,9 +1,11 @@
 ASP .NET Core 3.1
 - Needs Visual Studio 2019 (v16.7)
-- NuGet	Microsoft.VisualStudio.Web.CodeGeneration.Design v3.1.4 (TheBookLounge.Web)
-	To create controlers and views.
+- NuGet	Microsoft.VisualStudio.Web.CodeGeneration.Design v3.1.4 
+
+- Open-source and community-focused.
+- Ability to develop and run on Windows, macOS, and Linux.
 - Dependency injection is built-in
-- Has middleware components that together build up the request pipeline
+- A lightweight, high-performance, and modular HTTP request pipeline.
 
 MVC
 - Is an arquitectural pattern - This project starts with an empty template
@@ -12,7 +14,7 @@ MVC
 - Uses razor pages to integrate C# inside HTML
 
 EF Core 3.1
-- Open source OMR framework for ADO.Met
+- Open source OMR framework for ADO.Net
 - Allows us to work directly with the database without writing SQL statements, in most cases.
 - Allows us work with types that behind the sceens will be persistant in the database.
 - Allows us to work with LINQ queries to work with data.
@@ -23,11 +25,12 @@ EF Core 3.1
 - NuGet	- Microsoft.EntityFrameworkCore.Design v3.1.4 (TheBookLounge.Web)
 
 SQL Server - Postgres Database
--NuGet	- Microsoft.EntityFramework.SqlServer v3.1.4 (TheBookLounge.Web)
+- Is opensource and relational database.
+- Well suited for systems that require execution of complex queries.
+- With tools to protect data integrity and manage data.
+- NuGet	- Microsoft.EntityFramework.SqlServer v3.1.4 (TheBookLounge.Web)
 		- Microsoft.EntityFramework.Tools v3.1.4 (TheBookLounge.DataAccess)
 		- Npgsql.EntityFrameworkCore.PostgreSQL v3.1.4 (TheBookLounge.DataAccess)
-
-	
 
 ASP .NET Identity API
 - NuGet - Microsoft.AspNetCore.Identity.EntityFrameworkCore 3.1.9
@@ -43,24 +46,19 @@ FLUENT VALIDATION
 - NuGet FluentValidation v 9.4.0
 - NuGet FluentValidation.AspNetCore v 9.4.0
 
-**Roles, Claims and Policies
-4 roles:
-- User
-- BookKeeper
+**Roles and Policies
+2 roles:
+- admin
+- readonly
+
+2 Policies
 - Admin
-- SuperUser
-3 Policies
-- ManageCheckInAndCheckOut
-- ManageBookRecords
-- ManageRolesAndUsers
-3 Claims
-- Manage Check In and Check Out
-- Manage Book Records
-- Manage Roles and Users
-4 users
-- user@mailinator.com: Role "User" - Owns a Policy with one claim - Manage check in and check out.
-- bookkeeper@mailinator.com: Role "BookKeeper" - 2 Policies with one claim each - Manage check in and check out and Manage book records.
-- admin@mailinator.com: Role "Admin" - Owns 2 Policies with 1 claim each - Manage check in and check out and Manage Roles and Users.
-- superuser@mailinator.com: Role "SuperUser" - Owns 2 Policies with 1 claim each - Manage check in and check out, Manage Book Records and Manage Roles and Users.
+- ReadOnly
+
+1 user created
+- admin@mailinator.com: Role "admin" - Owns 1 Policy - Manage roles, users and the CRUD operations with quizzes.
+
+- users with a readonly role can see quizzes, questions and answers.
+- No logged or registerd users can see quizzes and questions but not answers.
 
 
