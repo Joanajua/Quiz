@@ -18,7 +18,7 @@ namespace Quiz1
             //}
         }
 
-        // For unit test a need to set these methods a virtual to override them
+        // For unit test a need to set these to virtual to override them
         public DbSet<Quiz> Quizzes { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
