@@ -79,10 +79,13 @@ namespace Quiz1
                 app.UseHsts();
             }
 
-            context.Database.Migrate();
-            var identitySeeder = new AppDbContextSeedData(context);
-            identitySeeder.SeedAdminUser();
-
+            //if (Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+            //{
+                context.Database.Migrate();
+                var identitySeeder = new AppDbContextSeedData(context);
+                identitySeeder.SeedAdminUser();
+            //}
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
