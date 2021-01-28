@@ -3,12 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Moq;
-using TheBookLounge.Web.Controllers;
+using Quiz1.Controllers;
 
-namespace TheBookLounge.UnitTests.Controllers
+namespace Quiz1.UnitTests.Controllers
 {
-    
-
     public class HomeControllerTest
     {
         private readonly Mock<ILogger<HomeController>> _mockLogger;

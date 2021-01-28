@@ -58,6 +58,8 @@ FLUENT VALIDATION
 1 user created
 - admin@mailinator.com: Role "admin" - Owns 1 Policy - Manage roles, users and the CRUD operations with quizzes.
 
+** Database initialises with the user specified above and with 2 roles, admin an readonly.
+
 - users with a readonly role can see quizzes, questions and answers.
 - No logged or registerd users can see quizzes and questions but not answers.
 
