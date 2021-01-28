@@ -55,7 +55,7 @@ namespace Quiz1.Controllers
         /// </returns>
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Search(string searchString)
         {
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -65,7 +65,7 @@ namespace Quiz1.Controllers
 
                 TempData["search"] = searchString;
 
-                return View(quizzes);
+                return View("Index", quizzes);
             }
 
             return RedirectToAction("Index");

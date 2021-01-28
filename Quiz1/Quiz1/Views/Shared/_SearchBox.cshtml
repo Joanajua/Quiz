@@ -1,8 +1,11 @@
-﻿<form asp-controller="Quiz" asp-action="Index">
+﻿@{
+    ViewData["Search"] = TempData["search"];
+}
+<form asp-controller="Quiz" asp-action="Search">
     @if (ViewData["Search"] != null)
     {
         <div class="d-flex">
-            <input class="form-control ml-auto" type="search" id="SearchBox" name="SearchString" value=@ViewData["Search"]>
+            <input class="form-control ml-auto" type="search" id="SearchBox" name="SearchString" value="@ViewData["Search"]">
             <input type="submit" value="Search" class="btn btn-outline-primary" size="50"/>
         </div>
     }
