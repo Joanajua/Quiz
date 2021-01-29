@@ -20,31 +20,43 @@ EF Core 3.1
 - Allows us to work with LINQ queries to work with data.
 - Is a lightweight framework and works well with ASP.NET Core MVC web apps.
 - it is cross-platform, so allows us to work with Linux, Windows and Mac.
-- Supports relational and non-relational DB. (need to know which types of db supports).
+- Supports relational and non-relational DB.
 - Supports Code-first approach and still you can create a model from database.
-- NuGet	- Microsoft.EntityFrameworkCore.Design v3.1.4 (TheBookLounge.Web)
+- NuGet	- Microsoft.EntityFrameworkCore.Design v3.1.10
 
 SQL Server - Postgres Database
 - Is opensource and relational database.
 - Well suited for systems that require execution of complex queries.
 - With tools to protect data integrity and manage data.
-- NuGet	- Microsoft.EntityFramework.SqlServer v3.1.4 (TheBookLounge.Web)
-		- Microsoft.EntityFramework.Tools v3.1.4 (TheBookLounge.DataAccess)
-		- Npgsql.EntityFrameworkCore.PostgreSQL v3.1.4 (TheBookLounge.DataAccess)
+- NuGet	- Microsoft.EntityFrameworkCore.SqlServer v3.1.10
+		- Microsoft.EntityFramework.Tools v3.1.10 
+		- Npgsql.EntityFrameworkCore.PostgreSQL v3.1.1
 
 ASP .NET Identity API
-- NuGet - Microsoft.AspNetCore.Identity.EntityFrameworkCore 3.1.9
-		- Microsoft.AspNetCore.Identity.UI 3.1.9
+- Supports user interface (UI) login functionality.
+- Manages users, passwords, profile data, roles, claims, tokens, email confirmation, etc.
+- NuGet - Microsoft.AspNetCore.Identity.EntityFrameworkCore 3.1.10
+		- Microsoft.AspNetCore.Identity.UI 3.1.10
 
-TEST
-- NuGet in Test project- XUnit 2.4.1
-- Moq 4.15.2
-- Microsoft.EntityFrameworkcore.InMemory 3.1.10
-- Microsoft.AspNetCore.TestHost 3.1.10
+nUnit as unit testing tool
+- Open source unit testing tool that works for .Net and .Net core frameworks
+- It works with ReSharper
+- Supports data-driven tests.
+- NuGet - Microsoft.NET.Test.Sdk v16.7.1
+		- xunit v2.4.1
+		- xunit.runner.visualstudio v2.4.3
+		- Microsoft.EntityFrameworkCore.InMemory  v3.1.10
+		- Microsoft.AspNetCore.TestHost v3.1.10
+		- coverlet.collector v1.3.0
+		- Moq v4.15.2
 
 FLUENT VALIDATION
-- NuGet FluentValidation v 9.4.0
-- NuGet FluentValidation.AspNetCore v 9.4.0
+- Library for server-side data validation
+- Cleaner models as decouples validation rules and models
+- Efficient unit testing
+- NuGet - FluentValidation v 9.4.0
+		- FluentValidation.AspNetCore v 9.4.0
+
 
 **Roles and Policies
 2 roles:

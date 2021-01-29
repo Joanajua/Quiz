@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Quiz1.Data;
 using Quiz1.Models;
@@ -105,23 +104,23 @@ namespace Quiz1.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if (!id.HasValue)
             {
-                return BadRequest();
+                return BadRequest(ErrorMessages.BadRequest);
             }
 
             var quiz = await _quizRepository.GetQuizById(id);
 
             if (quiz == null)
             {
-                return NotFound($"Quiz id {id} does not exist.");
+                return NotFound(ErrorMessages.NotFound);
             }
 
             var questions = _questionRepository.GetAllByQuizId(id);
 
             if (questions == null)
             {
-                return NotFound($"There are no questions for Quiz id {id}.");
+                return NotFound(ErrorMessages.NotFoundQuestion);
             }
 
             var answers = new List<Answer>();
@@ -129,6 +128,10 @@ namespace Quiz1.Controllers
             foreach (var question in questions)
             {
                 answers = _answerRepository.GetAllByQuestionId(question.QuestionId) as List<Answer>;
+                if (answers == null)
+                {
+                    return NotFound(ErrorMessages.NotFoundAnswer);
+                }
 
                 question.Answers = answers;
             }
@@ -195,28 +198,32 @@ namespace Quiz1.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (!id.HasValue)
             {
-                return BadRequest();
+                return BadRequest(ErrorMessages.BadRequest);
             }
 
             var quiz = await _quizRepository.GetQuizById(id);
 
             if (quiz == null)
             {
-                return NotFound($"Quiz id {id} does not exist.");
+                return NotFound(ErrorMessages.NotFound);
             }
 
             quiz.Questions = _questionRepository.GetAllByQuizId(id) as List<Question>;
 
             if (quiz.Questions == null)
             {
-                return NotFound($"There are no questions for Quiz with id {id}.");
+                return NotFound(ErrorMessages.NotFoundQuestion);
             }
 
             foreach (var question in quiz.Questions)
             {
                 question.Answers = _answerRepository.GetAllByQuestionId(question.QuestionId) as List<Answer>;
+                if (question.Answers == null)
+                {
+                    return NotFound(ErrorMessages.NotFoundAnswer);
+                }
             }
 
             return View(quiz);
@@ -280,16 +287,16 @@ namespace Quiz1.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if (!id.HasValue)
             {
-                return BadRequest();
+                return BadRequest(ErrorMessages.BadRequest);
             }
 
             var quiz = await _quizRepository.GetQuizById(id);
 
             if (quiz == null)
             {
-                return NotFound();
+                return NotFound(ErrorMessages.NotFound);
             }
 
             return View(quiz);
@@ -304,9 +311,19 @@ namespace Quiz1.Controllers
 
             var questions = _questionRepository.GetAllByQuizId(id);
 
+            if (questions == null)
+            {
+                return NotFound(ErrorMessages.NotFoundQuestion);
+            }
+
             foreach (var question in questions)
             {
                 var answers = _answerRepository.GetAllByQuestionId(question.QuestionId);
+
+                if (answers == null)
+                {
+                    return NotFound(ErrorMessages.NotFoundAnswer);
+                }
 
                 foreach (var answer in answers)
                 {
@@ -329,9 +346,9 @@ namespace Quiz1.Controllers
         public async Task<IActionResult> Play(int? id)
         {
 
-            if (id == null)
+            if (!id.HasValue)
             {
-                return BadRequest();
+                return BadRequest(ErrorMessages.BadRequest);
             }
 
             var quiz = await _quizRepository.GetQuizById(id);
