@@ -275,7 +275,7 @@ namespace Quiz1.Controllers
 
                     TempData["edit"] = "Edit";
 
-                    return RedirectToAction("Details", new {id = quiz.QuizId});
+                    return RedirectToAction("Details", new { id = quiz.QuizId });
                 }
 
                 return View(quiz);
@@ -287,6 +287,7 @@ namespace Quiz1.Controllers
 
         // GET: Quiz/Delete/5
         [Authorize(Policy = "Admin")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int? id)
         {
             if (!id.HasValue)
@@ -306,6 +307,7 @@ namespace Quiz1.Controllers
 
         // POST: Quiz/Delete/5
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
