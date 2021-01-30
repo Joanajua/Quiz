@@ -16,8 +16,9 @@ namespace Quiz1.Data
         bool QuizExists(int id);
         bool QuizExists(Quiz quiz);
 
-        void Save(Quiz quiz);
-        void Edit(Quiz quiz);
+        void Add(Quiz quiz);
+        void Update(Quiz quiz);
         void Remove(Quiz quiz);
+        Task Save();
     }
 }

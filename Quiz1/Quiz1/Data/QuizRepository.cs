@@ -39,9 +39,11 @@ namespace Quiz1.Data
             return _context.Quizzes.Any(e => e.QuizId == id);
         }
 
-        public void Save(Quiz quiz) => _context.Quizzes.Add(quiz);
-        public void Edit(Quiz quiz) => _context.Quizzes.Update(quiz);
+        public void Add(Quiz quiz) => _context.Quizzes.Add(quiz);
+        public void Update(Quiz quiz) => _context.Quizzes.Update(quiz);
         public void Remove(Quiz quiz) => _context.Quizzes.Remove(quiz);
+        public async Task Save() => await _context.SaveChangesAsync();
+
 
     }
 }

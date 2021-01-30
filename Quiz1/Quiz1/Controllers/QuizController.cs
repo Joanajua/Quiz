@@ -177,9 +177,11 @@ namespace Quiz1.Controllers
 
                 if (isModelValidInServer)
                 {
-                    _quizRepository.Save(quiz);
+                    _quizRepository.Add(quiz);
 
-                    await _context.SaveChangesAsync();
+                    await _quizRepository.Save();
+
+                    //await _context.SaveChangesAsync();
 
                     // Passing which page the user comes from
                     // It is to difference the message coming from the Edit page
@@ -267,9 +269,9 @@ namespace Quiz1.Controllers
 
                     _context.Entry(quiz).State = EntityState.Modified;
 
-                    _quizRepository.Edit(quiz);
+                    _quizRepository.Update(quiz);
 
-                    await _context.SaveChangesAsync();
+                    await _quizRepository.Save();
 
                     TempData["edit"] = "Edit";
 
@@ -335,7 +337,7 @@ namespace Quiz1.Controllers
 
             _quizRepository.Remove(quiz);
 
-            await _context.SaveChangesAsync();
+            await _quizRepository.Save();
 
             TempData["message-delete"] = $"The Quiz with id = {id} has been successfully deleted from the system.";
 
