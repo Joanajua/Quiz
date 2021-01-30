@@ -286,8 +286,7 @@ namespace Quiz1.Controllers
 
 
         // GET: Quiz/Delete/5
-        [Authorize(Policy = "Admin")]
-        [ValidateAntiForgeryToken]
+        //[Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (!id.HasValue)
