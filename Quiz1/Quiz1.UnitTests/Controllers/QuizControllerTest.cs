@@ -188,7 +188,18 @@ namespace Quiz1.UnitTests.Controllers
                 var badRequestObjectResult = Assert.IsType<BadRequestObjectResult>(result);
                 var model = Assert.IsAssignableFrom<BadRequestObjectResult>(badRequestObjectResult);
                 Assert.Equal(model.StatusCode, badRequestObjectResult.StatusCode);
+                Assert.NotNull(result);
             }
+        }
+
+        [Fact]
+        public void Details_action_result_should_be_decorated_with_AllowAnonymous_attribute()
+        {
+            var controller = new QuizController(_quizRepository.Object, _questionRepository.Object, _answerRepository.Object, _testDbContext);
+            var type = controller.GetType();
+            var methodInfo = type.GetMethod("Details");
+            var attributes = methodInfo?.GetCustomAttributes(typeof(AllowAnonymousAttribute), true);
+            Assert.Equal(typeof(AllowAnonymousAttribute), attributes?[0].GetType());
         }
     }
 }

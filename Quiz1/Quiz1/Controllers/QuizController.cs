@@ -60,7 +60,7 @@ namespace Quiz1.Controllers
             {
                 var quizzes = await _quizRepository.GetAll();
 
-                quizzes = SearchForQuiz(searchString, quizzes);
+                quizzes = SearchParsing(searchString, quizzes);
 
                 TempData["search"] = searchString;
 
@@ -78,7 +78,7 @@ namespace Quiz1.Controllers
         /// <param name="quizzes"></param>
         /// <returns>A list of quizzes</returns>
         [AllowAnonymous]
-        private static IEnumerable<Quiz> SearchForQuiz(string searchString, IEnumerable<Quiz> quizzes)
+        private static IEnumerable<Quiz> SearchParsing(string searchString, IEnumerable<Quiz> quizzes)
         {
             if (int.TryParse(searchString, out int stringParsed))
             {
