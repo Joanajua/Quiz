@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Castle.Core.Internal;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -13,8 +14,10 @@ using Quiz1.UnitTests.Utilities;
 using Quiz1.Data;
 using Quiz1.Models;
 using Quiz1.Controllers;
+using Quiz1.Utilities.Constants;
 using Quiz1.ViewModels.QuizViewModels;
 using Xunit;
+using Xunit.Sdk;
 
 namespace Quiz1.UnitTests.Controllers
 {
@@ -169,7 +172,7 @@ namespace Quiz1.UnitTests.Controllers
                 var viewResult = Assert.IsType<ViewResult>(result);
                 var model = Assert.IsAssignableFrom<DetailsViewModel>(viewResult.ViewData.Model);
                 Assert.NotNull(result);
-                Assert.Equal(model.Quiz.QuizId, expectedQuiz.QuizId);
+                Assert.Equal(expectedQuiz.QuizId, model.Quiz.QuizId);
             }
         }
 
@@ -179,6 +182,7 @@ namespace Quiz1.UnitTests.Controllers
             // Initialising a testDbContext instance for each test scenario
             await using (_testDbContext = new AppDbContext(TestDbContextOptions.GetTestDbContextOptions()))
             {
+                // Arrange
                 var controller = new QuizController(_quizRepository.Object, _questionRepository.Object, _answerRepository.Object, _testDbContext);
 
                 // Act
@@ -193,6 +197,81 @@ namespace Quiz1.UnitTests.Controllers
         }
 
         [Fact]
+        public async Task Details_action_result_method_should_return_NotFound_when_server_returns_no_quizzes()
+        {
+            // Initialising a testDbContext instance for each test scenario
+            await using (_testDbContext = new AppDbContext(TestDbContextOptions.GetTestDbContextOptions()))
+            {
+                // Arrange
+                var id = 0;
+                var expectedQuiz = _testData.GetTestQuizzes().FirstOrDefault(q => q.QuizId == id);
+
+                _quizRepository.Setup(repo => repo.GetQuizById(id)).ReturnsAsync(expectedQuiz);
+                var controller = new QuizController(_quizRepository.Object, _questionRepository.Object, _answerRepository.Object, _testDbContext);
+
+                // Act
+                var result = await controller.Details(id);
+
+                // Assert
+                var notFoundObjectResult = Assert.IsType<NotFoundObjectResult>(result);
+                var model = Assert.IsAssignableFrom<NotFoundObjectResult>(notFoundObjectResult);
+                Assert.Equal(model.StatusCode, notFoundObjectResult.StatusCode);
+                Assert.Equal(model.Value, notFoundObjectResult.Value);
+                Assert.NotNull(result);
+            }
+        }
+
+        [Fact]
+        public async Task Details_action_result_method_should_return_NotFound_when_server_returns_no_questions()
+        {
+            // Initialising a testDbContext instance for each test scenario
+            await using (_testDbContext = new AppDbContext(TestDbContextOptions.GetTestDbContextOptions()))
+            {
+                // Arrange
+                var id = 0;
+                var expectedQuestions = _testData.GetTestQuestions().Where(q => q.QuizId == id);
+
+                _questionRepository.Setup(repo => repo.GetAllByQuizId(id)).Returns(expectedQuestions);
+                var controller = new QuizController(_quizRepository.Object, _questionRepository.Object, _answerRepository.Object, _testDbContext);
+
+                // Act
+                var result = await controller.Details(id);
+
+                // Assert
+                var notFoundObjectResult = Assert.IsType<NotFoundObjectResult>(result);
+                var model = Assert.IsAssignableFrom<NotFoundObjectResult>(notFoundObjectResult);
+                Assert.Equal(model.StatusCode, notFoundObjectResult.StatusCode);
+                Assert.Equal(model.Value, notFoundObjectResult.Value);
+                Assert.NotNull(result);
+            }
+        }
+
+        [Fact]
+        public async Task Details_action_result_method_should_return_NotFound_when_server_returns_no_answers()
+        {
+            // Initialising a testDbContext instance for each test scenario
+            await using (_testDbContext = new AppDbContext(TestDbContextOptions.GetTestDbContextOptions()))
+            {
+                // Arrange
+                var id = 0;
+                var expectedAnswers = _testData.GetTestAnswers().Where(q => q.QuestionId == id);
+
+                _answerRepository.Setup(repo => repo.GetAllByQuestionId(id)).Returns(expectedAnswers);
+                var controller = new QuizController(_quizRepository.Object, _questionRepository.Object, _answerRepository.Object, _testDbContext);
+
+                // Act
+                var result = await controller.Details(id);
+
+                // Assert
+                var notFoundObjectResult = Assert.IsType<NotFoundObjectResult>(result);
+                var model = Assert.IsAssignableFrom<NotFoundObjectResult>(notFoundObjectResult);
+                Assert.Equal(model.StatusCode, notFoundObjectResult.StatusCode);
+                Assert.Equal(model.Value, notFoundObjectResult.Value);
+                Assert.NotNull(result);
+            }
+        }
+
+        [Fact]
         public void Details_action_result_should_be_decorated_with_AllowAnonymous_attribute()
         {
             var controller = new QuizController(_quizRepository.Object, _questionRepository.Object, _answerRepository.Object, _testDbContext);
@@ -200,6 +279,50 @@ namespace Quiz1.UnitTests.Controllers
             var methodInfo = type.GetMethod("Details");
             var attributes = methodInfo?.GetCustomAttributes(typeof(AllowAnonymousAttribute), true);
             Assert.Equal(typeof(AllowAnonymousAttribute), attributes?[0].GetType());
+        }
+
+        [Fact]
+        public void Create_action_result_should_return_ViewResult_with_correct_Model_type()
+        {
+            // Initialising a testDbContext instance for each test scenario
+            using (_testDbContext = new AppDbContext(TestDbContextOptions.GetTestDbContextOptions()))
+            {
+                // Arrange
+                _quizRepository.Setup(repo => repo.GetAll()).ReturnsAsync(_testData.GetTestQuizzes);
+                var controller = new QuizController(_quizRepository.Object, _questionRepository.Object, _answerRepository.Object, _testDbContext);
+
+                // Act
+                var result = controller.Create();
+
+                // Assert
+                var viewResult = Assert.IsType<ViewResult>(result);
+                var model = Assert.IsAssignableFrom<CreateViewModel>(viewResult.ViewData.Model);
+                Assert.NotNull(result);
+
+                Assert.Null(model.Title);
+
+                Assert.IsType<List<Question>>(model.Questions);
+                Assert.NotEmpty(model.Questions);
+                Assert.All(model.Questions, q => q.QuestionText.IsNullOrEmpty());
+
+                Assert.All(model.Questions, q => q.Answers.ForEach(a=>a.AnswerText.IsNullOrEmpty()));
+                Assert.All(model.Questions, q => q.Answers.ForEach(a => a.IsCorrect.Equals(false)));
+
+                Assert.IsType<List<string>>(model.Errors);
+                Assert.Empty(model.Errors);
+
+            }
+        }
+
+
+        [Fact]
+        public void Create_action_result_get_method_should_be_decorated_with_AllowAnonymous_attribute()
+        {
+            var controller = new QuizController(_quizRepository.Object, _questionRepository.Object, _answerRepository.Object, _testDbContext);
+            var type = controller.GetType();
+            var methodInfo = type.GetMethod(nameof("Create"));
+            var attributes = methodInfo?.GetCustomAttributes(typeof(AuthorizeAttribute), true);
+            Assert.Equal(typeof(AuthorizeAttribute), attributes?[1].GetType());
         }
     }
 }
