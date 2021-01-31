@@ -1,6 +1,7 @@
 ﻿@inject SignInManager<IdentityUser> signInManager
 @using Microsoft.CodeAnalysis.CSharp.Syntax
 @model DetailsViewModel
+@{int i = 1;}
 
 @{
     ViewData["Title"] = "Details";
@@ -49,7 +50,8 @@
 {
     <div class="card my-3">
         <div class="card-header card-title">
-            <h4> @question.QuestionText </h4>
+            <h4>Q@(i++) - @question.QuestionText </h4>
+            
         </div>
 
         @if (signInManager.IsSignedIn(User))
@@ -75,8 +77,8 @@
 @if (!signInManager.IsSignedIn(User))
 {
     @*<div class="alert alert-info alert-dismissible fade show" role="alert">
-        <h4 class="alert-heading alert-info">There are no quizzes for the requested search.</h4>
-    </div>*@
+            <h4 class="alert-heading alert-info">There are no quizzes for the requested search.</h4>
+        </div>*@
     <div class="alert alert-info" role="alert">
         <h5 class="alert-heading alert-info">Log in or register to be able to see the answers.</h5>
         <p>
