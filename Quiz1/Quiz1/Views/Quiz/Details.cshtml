@@ -74,8 +74,15 @@
 }
 @if (!signInManager.IsSignedIn(User))
 {
-    <div class="text-info">
-        <h5>Log in or register to see the answers.</h5>
+    @*<div class="alert alert-info alert-dismissible fade show" role="alert">
+        <h4 class="alert-heading alert-info">There are no quizzes for the requested search.</h4>
+    </div>*@
+    <div class="alert alert-info" role="alert">
+        <h5 class="alert-heading alert-info">Log in or register to be able to see the answers.</h5>
+        <p>
+            <a asp-controller="Account" asp-action="Login">Login |</a>
+            <a asp-controller="Account" asp-action="Register"> Register</a>
+        </p>
     </div>
 }
 
