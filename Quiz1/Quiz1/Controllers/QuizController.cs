@@ -146,19 +146,24 @@ namespace Quiz1.Controllers
         }
 
         /// <summary>
-        /// Shows the Create view with an empty form
+        /// Displays the Create view with an empty form to the user
         /// </summary>
         /// <returns>Quiz/Create</returns>
         [Authorize(Policy = "Admin")]
-        public IActionResult Create()
+        public ActionResult Create()
         {
             return View(new CreateViewModel());
         }
 
         // POST: Quiz/Create
+        /// <summary>
+        /// Manages user inputs and creates a new quiz
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "Admin")]
-        public async Task<IActionResult> Create(CreateViewModel model)
+        public async Task<IActionResult> SubmitNew(CreateViewModel model)
         {
             var serverValidation = new ServerValidation(_quizRepository);
 
@@ -190,13 +195,18 @@ namespace Quiz1.Controllers
                     return RedirectToAction("Details", new { id = quiz.QuizId });
                 }
 
-                return View(model);
+                return View("Create", model);
             }
 
-            return View(model);
+            return View("Create", model);
         }
 
         // GET: Quiz/Edit/5
+        /// <summary>
+        /// Displays a form with the selected quiz to the user to be edited
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -232,6 +242,12 @@ namespace Quiz1.Controllers
         }
 
         // POST: Quiz/Edit/5
+        /// <summary>
+        /// Manages and updates user changes on an existing quiz
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="quiz"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Edit(int id, Quiz quiz)
@@ -240,12 +256,12 @@ namespace Quiz1.Controllers
 
             if (id != quiz.QuizId)
             {
-                return NotFound();
+                return BadRequest(ErrorMessages.BadRequest);
             }
 
             if (!_quizRepository.QuizExists(quiz.QuizId))
             {
-                return NotFound($"The Quiz with id - {quiz.QuizId} does not exist in the system.");
+                return NotFound(ErrorMessages.NotFound);
             }
 
             if (ModelState.IsValid)
@@ -286,6 +302,11 @@ namespace Quiz1.Controllers
 
 
         // GET: Quiz/Delete/5
+        /// <summary>
+        /// Prompts user to confirm deletion of a quiz 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -305,6 +326,11 @@ namespace Quiz1.Controllers
         }
 
         // POST: Quiz/Delete/5
+        /// <summary>
+        /// Manages deletion of a quiz when user confirms deletion
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Policy = "Admin")]

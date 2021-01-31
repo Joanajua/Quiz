@@ -1,23 +1,19 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
-using Microsoft.Extensions.Logging;
 using Quiz1.UnitTests.Utilities;
 using Quiz1.Data;
 using Quiz1.Models;
 using Quiz1.Controllers;
-using Quiz1.Utilities.Constants;
 using Quiz1.ViewModels.QuizViewModels;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Quiz1.UnitTests.Controllers
 {
@@ -282,7 +278,7 @@ namespace Quiz1.UnitTests.Controllers
         }
 
         [Fact]
-        public void Create_action_result_should_return_ViewResult_with_correct_Model_type()
+        public void SubmitNew_action_result_should_return_ViewResult_with_correct_Model_type()
         {
             // Initialising a testDbContext instance for each test scenario
             using (_testDbContext = new AppDbContext(TestDbContextOptions.GetTestDbContextOptions()))
@@ -314,15 +310,14 @@ namespace Quiz1.UnitTests.Controllers
             }
         }
 
-
         [Fact]
-        public void Create_action_result_get_method_should_be_decorated_with_AllowAnonymous_attribute()
+        public void SubmitNew_action_result_get_method_should_be_decorated_with_AllowAnonymous_attribute()
         {
             var controller = new QuizController(_quizRepository.Object, _questionRepository.Object, _answerRepository.Object, _testDbContext);
             var type = controller.GetType();
-            var methodInfo = type.GetMethod(nameof("Create"));
+            var methodInfo = type.GetMethod("Create");
             var attributes = methodInfo?.GetCustomAttributes(typeof(AuthorizeAttribute), true);
-            Assert.Equal(typeof(AuthorizeAttribute), attributes?[1].GetType());
+            Assert.Equal(typeof(AuthorizeAttribute), attributes?[0].GetType());
         }
     }
 }
